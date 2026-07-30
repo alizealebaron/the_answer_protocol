@@ -1,0 +1,69 @@
+
+------
+Objet
+------
+
+Nom: "Kana pêche"
+Description_fr: "Ça mord ? Ça mord pas ? Ohh !!! Un Kayou !"
+Description_en: "Are they biting? Not biting? Ohh!!! A Kayou!"
+
+Nom: "Calcium en barre"
+Description_fr: "On dirait que vous êtes tombés sur un os."
+Description_en: "Looks like you've hit a bone."
+
+---
+Arme
+---
+
+Nom: "Baguette de pain"
+Description_fr: "Aussi curieux que cela puisse paraître, cette baguette permet de lancer des sorts."
+Description_en: "As strange as it may seem, this baguette can be used to cast spells."
+
+Nom: "Épée en bwa"
+Description_fr: "Épée faite en bwa, un arbre très spécifique provenant de la région "
+Description_en: ""
+
+Nom: "Hache en mousse"
+Description_fr: ""
+Description_en: ""
+
+Nom: "Propulseur de fléchette"
+Description_fr: ""
+Description_en: ""
+
+Nom: "Gourdin en cobalt"
+Description_fr: ""
+Description_en: ""
+
+Nom: "Couteau Grandement Terrifiant"
+Description_fr: ""
+Description_en: ""
+
+---
+Edible
+---
+
+Nom: "Jambon Beurre"
+Description_fr: "Un délicieux sandouich. On raconte qu'il a été donné à celui qui avait dit qu'il l'avait fait."
+Description_en: "A delicious sandwich. The story goes that it was given to the person who claimed to have made it."
+
+Nom: "Jambon"
+Description_fr: "Voilà un beau jambon qui saura ravir les papilles des grands et des petits."
+Description_en: "Here's a beautiful ham that's sure to delight the taste buds of young and old alike."
+
+Nom: "Krukinaj"
+Description_fr: "Petit poisson deviendra grand."
+Description_en: "A little fish will grow up to be big."
+
+Nom: "Délicieux bâtonnets de poisson"
+Description_fr: "Le trésor du capitaine."
+Description_en: "The Captain's Treasure."
+
+------
+NPC
+------
+
+
+------
+Quête
+------

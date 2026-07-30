@@ -22,3 +22,7 @@ target
 
 test*
 sujet.md
+
+# Added by cargo
+
+/target
