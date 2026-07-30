@@ -28,3 +28,11 @@
 **Commencé le :** 27/07/2026
 
 **Rendu le :** Non rendu.
+
+## 🦆 Ressources
+
+### Organisation du travail d'équipe
+
+- [Excalidraw](https://excalidraw.com/)
+- [Google Sheet](https://docs.google.com/spreadsheets)
+- [Backlog produit : présentation et étapes de création](https://asana.com/fr/resources/product-backlog)
