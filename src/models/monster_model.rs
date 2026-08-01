@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* edible_model.rs                                   :+:      :+:    :+:   */
+/* monster_model.rs                                  :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/01 09:43:19 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 15:37:36 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/01 16:26:59 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/01 16:31:50 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -14,15 +14,21 @@
 /*                              Importation                                */
 /* ----------------------------------------------------------------------- */
 
-use crate::models::loot_model::Loot;
+use crate::models::item_model::Item;
+use crate::models::npc_model::Npc;
 
 /* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
 #[derive(Debug)]
-pub struct Edible<'a> {
-    pub loot: Loot<'a>,
-    pub effect: &'a str,
-    pub var_nb: i16
+pub struct Monster<'a> {
+    pub npc: Npc<'a>,
+    pub pv: u16,
+    pub attack: u16,
+    pub defense: u16,
+    pub is_boss: bool,
+    pub loot: Item<'a>,
+    pub quantity_min: u16,
+    pub quantity_max: u16,
 }

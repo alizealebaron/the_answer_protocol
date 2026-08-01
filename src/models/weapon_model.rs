@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* edible_model.rs                                   :+:      :+:    :+:   */
+/* weapon_model.rs                                   :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/01 09:43:19 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 15:37:36 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/01 12:02:18 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/01 15:37:16 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -21,8 +21,7 @@ use crate::models::loot_model::Loot;
 /* ----------------------------------------------------------------------- */
 
 #[derive(Debug)]
-pub struct Edible<'a> {
+pub struct Weapon<'a> {
     pub loot: Loot<'a>,
-    pub effect: &'a str,
-    pub var_nb: i16
+    pub damage: i16,
 }

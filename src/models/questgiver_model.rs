@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* edible_model.rs                                   :+:      :+:    :+:   */
+/* questgiver_model.rs                               :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/01 09:43:19 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 15:37:36 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/01 16:23:41 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/01 16:45:46 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -14,15 +14,18 @@
 /*                              Importation                                */
 /* ----------------------------------------------------------------------- */
 
-use crate::models::loot_model::Loot;
+use crate::models::item_model::Item;
+use crate::models::npc_model::Npc;
 
 /* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
 #[derive(Debug)]
-pub struct Edible<'a> {
-    pub loot: Loot<'a>,
-    pub effect: &'a str,
-    pub var_nb: i16
+pub struct QuestGiver<'a> {
+    pub npc: Npc<'a>,
+    pub loot: Item<'a>,
+    pub quantity: u16,
+    pub dialogue_fin_fr: Vec<&'a str>,
+    pub dialogue_fin_en: Vec<&'a str>,
 }

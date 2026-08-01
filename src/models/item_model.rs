@@ -5,57 +5,28 @@
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/07/30 15:56:48 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 09:43:44 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/01 14:59:37 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/01 15:37:47 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
+
+/* ----------------------------------------------------------------------- */
+/*                              Importation                                */
+/* ----------------------------------------------------------------------- */
+
+use crate::models::loot_model::Loot;
+use crate::models::weapon_model::Weapon;
+use crate::models::edible_model::Edible;
 
 /* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
-pub struct Item<'a> {
-    pub id: u16,
-    pub name: &'a str,
-    pub description_fr: &'a str,
-    pub description_en: &'a str,
-    pub nb_copies: i16,
-    pub nb_avail: i16,
-}
+// Obligatoire en Rust pour simplifier les liaisons de classe sans héritage
 
-/* ----------------------------------------------------------------------- */
-/*                                Méthodes                                 */
-/* ----------------------------------------------------------------------- */
-
-impl<'a> Item<'a> {
-
-    /* ------------------------------------------------------------------- */
-    /*                              Constructeur                           */
-    /* ------------------------------------------------------------------- */
-
-    pub fn new(
-        id: u16,
-        name: &'a str,
-        description_fr: &'a str,
-        description_en: &'a str,
-        nb_copies: i16,
-        nb_avail: i16,
-    ) -> Self {
-        Self {
-            id,
-            name,
-            description_fr,
-            description_en,
-            nb_copies,
-            nb_avail,
-        }
-    }
-
-    /* ------------------------------------------------------------------- */
-    /*                             Modificateurs                           */
-    /* ------------------------------------------------------------------- */
-
-    pub fn set_nb_avail(&mut self, new_value: i16) {
-        self.nb_avail = new_value;
-    }
+#[derive(Debug)]
+pub enum Item<'a> {
+    Loot(Loot<'a>),
+    Weapon(Weapon<'a>),
+    Edible(Edible<'a>),
 }

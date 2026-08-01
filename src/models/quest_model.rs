@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* edible_model.rs                                   :+:      :+:    :+:   */
+/* quest_model.rs                                    :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/01 09:43:19 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 15:37:36 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/01 12:34:25 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/01 15:39:22 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -14,15 +14,18 @@
 /*                              Importation                                */
 /* ----------------------------------------------------------------------- */
 
-use crate::models::loot_model::Loot;
+use crate::models::item_model::Item;
 
 /* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
 #[derive(Debug)]
-pub struct Edible<'a> {
-    pub loot: Loot<'a>,
-    pub effect: &'a str,
-    pub var_nb: i16
+pub struct Quest<'a> {
+    pub id: u16,
+    pub title: &'a str,
+    pub description_fr: &'a str,
+    pub description_en: &'a str,
+    pub reward: Item<'a>,
+    pub quantity: u16,
 }
