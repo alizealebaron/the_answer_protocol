@@ -6,8 +6,9 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/07/30 17:40:50 by alebaron        #+#    #+#              */
-/* Updated: 2026/07/30 17:44:50 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/01 10:28:21 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
 pub mod item_model;
+pub mod edible_model;
