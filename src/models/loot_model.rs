@@ -20,6 +20,7 @@ pub struct Loot<'a> {
     pub name: &'a str,
     pub description_fr: &'a str,
     pub description_en: &'a str,
+    pub value: u16,
     pub nb_copies: i16,
     pub nb_avail: i16,
 }
@@ -39,6 +40,7 @@ impl<'a> Loot<'a> {
         name: &'a str,
         description_fr: &'a str,
         description_en: &'a str,
+        cost: u16,
         nb_copies: i16,
         nb_avail: i16,
     ) -> Self {
@@ -47,6 +49,7 @@ impl<'a> Loot<'a> {
             name,
             description_fr,
             description_en,
+            cost,
             nb_copies,
             nb_avail,
         }
