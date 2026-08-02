@@ -1,0 +1,158 @@
+{
+	"reward": {
+		"loot": [
+			{
+				"id": 1,
+				"name": "Kana pêche",
+				"description_fr": "Ça mord ? Ça mord pas ? Ohh !!! Un Kayou !",
+				"description_en": "Are they biting? Not biting? Ohh!!! A Kayou!",
+				"nb_copies": -1,
+				"nb_avail": -1
+			},
+			{
+				"id": 2,
+				"name": "Calcium en barre",
+				"description_fr": "On dirait que vous êtes tombés sur un os.",
+				"description_en": "Looks like you've hit a bone.",
+				"nb_copies": -1,
+				"nb_avail": -1
+			}
+		],
+		"weapon": [
+			{
+				"id": 3,
+				"name": "Baguette de pain",
+				"description_fr": "Aussi curieux que cela puisse paraître, cette baguette permet de lancer des sorts.",
+				"description_en": "As strange as it may seem, this baguette can be used to cast spells.",
+				"nb_copies": -1,
+				"nb_avail": -1,
+				"damage": 10
+			},
+			{
+				"id": 4,
+				"name": "Épée de bwa",
+				"description_fr": "Épée faite en bwa, un arbre très spécifique provenant de la région de Baguette-Sur-Plaque.",
+				"description_en": "A sword made from bwa, a very specific type of tree native to the Baguette-Sur-Plaque region.",
+				"nb_copies": -1,
+				"nb_avail": -1,
+				"damage": 10
+			},
+			{
+				"id": 5,
+				"name": "Hache en mousse",
+				"description_fr": "A ne pas donner à un pyrobarbare sous peine de la voir partir en fumée.",
+				"description_en": "Do not give this to a pyrobarbarian, or it will go up in smoke.",
+				"nb_copies": -1,
+				"nb_avail": -1,
+				"damage": 10
+			},
+			{
+				"id": 6,
+				"name": "Propulseur de fléchette",
+				"description_fr": "Très apprécié par les joueurs de fléchette, son utilisation en tant qu'arme reste cependant assez douteuse.",
+				"description_en": "Although it is very popular among dart players, its use as a weapon remains somewhat questionable.",
+				"nb_copies": -1,
+				"nb_avail": -1,
+				"damage": 10
+			},
+			{
+				"id": 7,
+				"name": "Gourdin en cobalt",
+				"description_fr": "Les fins connaisseurs sauront reconnaître le méga \"BONK\" produit par cette arme.",
+				"description_en": "Experts will recognize the mega “BONK” this weapon produces.",
+				"nb_copies": -1,
+				"nb_avail": -1,
+				"damage": 15
+			},
+			{
+				"id": 8,
+				"name": "Couteau Grandement Terrifiant",
+				"description_fr": "Attention à ne pas trop le brusquer, il a tendance à facilement vouloir se révolter.",
+				"description_en": "Be careful not to push him too hard, he tends to rebel easily.",
+				"nb_copies": -1,
+				"nb_avail": -1,
+				"damage": 20
+			}
+		],
+		"edible": [
+			{
+				"id": 9,
+				"name": "Jambon Beurre",
+				"description_fr": "Un délicieux sandouich. On raconte qu'il a été donné à celui qui avait dit qu'il l'avait fait.",
+				"description_en": "A delicious sandwich. The story goes that it was given to the person who claimed to have made it.",
+				"nb_copies": -1,
+				"nb_avail": -1,
+				"effect": "HEAL",
+				"value": 10
+			},
+			{
+				"id": 10,
+				"name": "Jambon",
+				"description_fr": "Voilà un beau jambon qui saura ravir les papilles des grands et des petits. (ND)",
+				"description_en": "Here's a beautiful ham that's sure to delight the taste buds of young and old alike. (ND)",
+				"nb_copies": -1,
+				"nb_avail": -1,
+				"effect": "HEAL",
+				"value": 2
+			},
+			{
+				"id": 11,
+				"name": "Krukinaj",
+				"description_fr": "Petit poisson deviendra grand. (ND)",
+				"description_en": "A little fish will grow up to be big. (ND)",
+				"nb_copies": -1,
+				"nb_avail": -1,
+				"effect": "HEAL",
+				"value": 3
+			},
+			{
+				"id": 12,
+				"name": "Délicieux bâtonnets de poisson",
+				"description_fr": "Le trésor du capitaine.",
+				"description_en": "The Captain's Treasure.",
+				"nb_copies": -1,
+				"nb_avail": -1,
+				"effect": "HEAL",
+				"value": 2
+			}
+		]
+	},
+	"character":
+	{
+		"npc": [
+			{
+				"id": 1,
+				"name": "Grégoin",
+				"dialogue_fr": ["(TODO)", "(TODO)"],
+				"dialogue_en": ["(TODO)", "(TODO)"]
+			},
+			{
+				"id": 2,
+				"name": "Jeanne",
+				"dialogue_fr": ["(TODO)", "(TODO)"],
+				"dialogue_en": ["(TODO)", "(TODO)"]
+			},
+			{
+				"id": 3,
+				"name": "Vieux Sénile",
+				"dialogue_fr": ["(TODO)", "(TODO)"],
+				"dialogue_en": ["(TODO)", "(TODO)"]
+			}
+		],
+		"quest_giver": [
+			{
+				"id": 4,
+				"name": "Bertrand",
+				"dialogue_fr": ["(TODO)", "(TODO)"],
+				"dialogue_en": ["(TODO)", "(TODO)"]
+			},
+			{
+				"id": 5,
+				"name": "Léon",
+				"dialogue_fr": ["(TODO)", "(TODO)"],
+				"dialogue_en": ["(TODO)", "(TODO)"]
+			}
+		]
+
+	}
+}

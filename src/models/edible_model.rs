@@ -24,5 +24,5 @@ use crate::models::loot_model::Loot;
 pub struct Edible<'a> {
     pub loot: Loot<'a>,
     pub effect: &'a str,
-    pub var_nb: i16
+    pub value: i16
 }
