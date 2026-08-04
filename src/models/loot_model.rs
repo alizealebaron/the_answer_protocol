@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* item_model.rs                                     :+:      :+:    :+:   */
+/* loot_model.rs                                     :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/07/30 15:56:48 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 15:35:39 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/04 09:06:52 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -20,7 +20,7 @@ pub struct Loot<'a> {
     pub name: &'a str,
     pub description_fr: &'a str,
     pub description_en: &'a str,
-    pub value: u16,
+    pub cost: u16,
     pub nb_copies: i16,
     pub nb_avail: i16,
 }

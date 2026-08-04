@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/07/30 17:23:43 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 16:57:51 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/04 09:06:25 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -17,8 +17,7 @@
 // === Utiliser pour load les models depuis le dossier models ===
 
 mod models;
-use models::character_model::Character;
-use models::loot_model::Loot;
+use models::tapManager_model::TapManager;
 
 /* ----------------------------------------------------------------------- */
 /*                                  Main                                   */

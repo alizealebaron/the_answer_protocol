@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/07/30 17:40:50 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 16:51:42 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/04 08:56:15 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -21,3 +21,4 @@ pub mod monster_model;
 pub mod questgiver_model;
 pub mod character_model;
 pub mod room_model;
+pub mod tapManager_model;
