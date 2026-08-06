@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/04 08:53:06 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/04 09:05:54 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/04 12:48:17 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -24,8 +24,9 @@ use crate::models::player_model::Player;
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
+#[derive(Debug)]
 pub struct TapManager<'a> {
-    pub lst_reward: Vec<Item<'a>>,
+    pub lst_item: Vec<Item<'a>>,
     pub lst_character: Vec<Character<'a>>,
     pub lst_player: Vec<Player<'a>>,
     pub lst_quest: Vec<Quest<'a>>,
@@ -45,7 +46,7 @@ impl<'a> TapManager<'a> {
     pub fn new() -> Self 
     {
         TapManager {
-            lst_reward: Vec::new(),
+            lst_item: Vec::new(),
             lst_character: Vec::new(),
             lst_player: Vec::new(),
             lst_quest: Vec::new(),
@@ -57,8 +58,8 @@ impl<'a> TapManager<'a> {
     /*                           Méthodes d'ajout                              */
     /* ----------------------------------------------------------------------- */
 
-    pub fn add_reward(&mut self, reward: Item<'a>) {
-        self.lst_reward.push(reward);
+    pub fn add_item(&mut self, reward: Item<'a>) {
+        self.lst_item.push(reward);
     }
 
     pub fn add_character(&mut self, charac: Character<'a>) {

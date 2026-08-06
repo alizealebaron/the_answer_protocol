@@ -36,3 +36,9 @@
 - [Excalidraw](https://excalidraw.com/)
 - [Google Sheet](https://docs.google.com/spreadsheets)
 - [Backlog produit : présentation et étapes de création](https://asana.com/fr/resources/product-backlog)
+
+### Documentation du Rust
+
+- [Tutoriel Rust](https://blog.guillaume-gomez.fr/Rust/tuto.pdf)
+- [Clear explanation of Rust’s module system](https://www.sheshbabu.com/posts/rust-module-system/)
+- [Crate serde_json](https://docs.rs/serde_json/latest/serde_json/)

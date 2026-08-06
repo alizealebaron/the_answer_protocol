@@ -21,7 +21,7 @@ use crate::models::loot_model::Loot;
 /* ----------------------------------------------------------------------- */
 
 #[derive(Debug)]
-pub struct Weapon<'a> {
-    pub loot: Loot<'a>,
+pub struct Weapon {
+    pub loot: Loot,
     pub damage: i16,
 }

@@ -11,15 +11,22 @@
 /* *********************************************************************** */
 
 /* ----------------------------------------------------------------------- */
+/*                              Importation                                */
+/* ----------------------------------------------------------------------- */
+
+use serde::Deserialize;
+
+/* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug)]
-pub struct Loot<'a> {
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Loot {
     pub id: u16,
-    pub name: &'a str,
-    pub description_fr: &'a str,
-    pub description_en: &'a str,
+    pub name: String,
+    pub description_fr: String,
+    pub description_en: String,
     pub cost: u16,
     pub nb_copies: i16,
     pub nb_avail: i16,
@@ -29,31 +36,7 @@ pub struct Loot<'a> {
 /*                                Méthodes                                 */
 /* ----------------------------------------------------------------------- */
 
-impl<'a> Loot<'a> {
-
-    /* ------------------------------------------------------------------- */
-    /*                              Constructeur                           */
-    /* ------------------------------------------------------------------- */
-
-    pub fn new(
-        id: u16,
-        name: &'a str,
-        description_fr: &'a str,
-        description_en: &'a str,
-        cost: u16,
-        nb_copies: i16,
-        nb_avail: i16,
-    ) -> Self {
-        Self {
-            id,
-            name,
-            description_fr,
-            description_en,
-            cost,
-            nb_copies,
-            nb_avail,
-        }
-    }
+impl Loot {
 
     /* ------------------------------------------------------------------- */
     /*                             Modificateurs                           */

@@ -342,6 +342,30 @@
 			"ennemies": [8],
 			"items": [],
 			"lst_neighbor_room": [8]
+		},
+		{
+			"id": 12,
+			"name": "Forêt 5 (ND)",
+			"allies": [],
+			"ennemies": [6, 7],
+			"items": [],
+			"lst_neighbor_room": [10, 13]
+		},
+		{
+			"id": 13,
+			"name": "Forêt 6 (ND)",
+			"allies": [],
+			"ennemies": [6, 7],
+			"items": [],
+			"lst_neighbor_room": [12, 14]
+		},
+		{
+			"id": 14,
+			"name": "Forêt 7 (ND)",
+			"allies": [],
+			"ennemies": [6, 7],
+			"items": [],
+			"lst_neighbor_room": [13, 4]
 		}
 	]
 }

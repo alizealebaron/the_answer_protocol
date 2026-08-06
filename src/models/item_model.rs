@@ -26,7 +26,7 @@ use crate::models::edible_model::Edible;
 
 #[derive(Debug)]
 pub enum Item<'a> {
-    Loot(Loot<'a>),
-    Weapon(Weapon<'a>),
+    Loot(Loot),
+    Weapon(Weapon),
     Edible(Edible<'a>),
 }
