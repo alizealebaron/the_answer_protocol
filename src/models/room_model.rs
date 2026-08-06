@@ -28,6 +28,6 @@ pub struct Room<'a> {
     pub name: &'a str,
     pub allies: Vec<&'a Character<'a>>,
     pub ennemies: Vec<&'a Monster<'a>>,
-    pub items: Vec<&'a Item<'a>>,
+    pub items: Vec<&'a Item>,
     pub lst_neighbor_room: [Option<&'a Room<'a>>; 4], // Option permet d'avoir 'None' s'il n'y a pas de pièce voisine
 }

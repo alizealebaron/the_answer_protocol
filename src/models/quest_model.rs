@@ -26,6 +26,6 @@ pub struct Quest<'a> {
     pub title: &'a str,
     pub description_fr: &'a str,
     pub description_en: &'a str,
-    pub reward: Item<'a>,
+    pub reward: Item,
     pub quantity: u16,
 }

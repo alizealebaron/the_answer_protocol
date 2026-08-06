@@ -15,12 +15,14 @@
 /* ----------------------------------------------------------------------- */
 
 use crate::models::loot_model::Loot;
+use serde::Deserialize;
 
 /* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Weapon {
     pub loot: Loot,
     pub damage: i16,

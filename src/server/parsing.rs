@@ -18,12 +18,15 @@
 
 use std::fs::File;
 use std::path::Path;
+use serde::de::DeserializeOwned;
 use crate::models::tap_manager_model::TapManager;
 use crate::models::item_model::Item;
 use crate::models::loot_model::Loot;
+use crate::models::weapon_model::Weapon;
+use crate::models::edible_model::Edible;
 
 /* ----------------------------------------------------------------------- */
-/*                                  Main                                   */
+/*                             Main Fonction                               */
 /* ----------------------------------------------------------------------- */
 
 pub fn get_tap_manager<'a>() -> TapManager<'a> {
@@ -34,11 +37,29 @@ pub fn get_tap_manager<'a>() -> TapManager<'a> {
 
     // === Récupération des datas du fichier === //
 
-    let json_file_path = Path::new("data/loot_data.json");
-    let file = File::open(json_file_path).expect("impossible d'ouvrir le fichier");
+    // == Item Object == //
 
-    let loots:Vec<Loot> = serde_json::from_reader(file).expect("error while reading or parsing");
-    tap_manager.lst_item.extend(loots.into_iter().map(Item::Loot));
-    
+    tap_manager.lst_item.extend(load_items("data/loot_data.json", Item::Loot));
+    tap_manager.lst_item.extend(load_items("data/weapon_data.json", Item::Weapon));
+    tap_manager.lst_item.extend(load_items("data/edible_data.json", Item::Edible));
+
     return tap_manager;
+}
+
+/* ----------------------------------------------------------------------- */
+/*                             Helpful Fonction                            */
+/* ----------------------------------------------------------------------- */
+
+fn load_items<T, F>(path: &str, map_fn: F) -> impl Iterator<Item = Item>
+where
+    T: DeserializeOwned,
+    F: Fn(T) -> Item,
+{
+    let file = File::open(path)
+        .unwrap_or_else(|e| panic!("Error: Cannot find or read {}: {}", path, e));
+
+    let items: Vec<T> = serde_json::from_reader(file)
+        .unwrap_or_else(|e| panic!("Error while parsing {}: {}", path, e));
+
+    items.into_iter().map(map_fn)
 }

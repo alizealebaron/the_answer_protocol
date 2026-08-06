@@ -27,7 +27,7 @@ pub struct Player<'a> {
     pub ip: &'a str,
     pub pv: u16,
     pub attack: u16,
-    pub inventory: Vec<Item<'a>> // Structure à revoir, peut-être utilisé un dico ou équivalent pour gérer la quantité plus facilement
+    pub inventory: Vec<Item> // Structure à revoir, peut-être utilisé un dico ou équivalent pour gérer la quantité plus facilement
 }
 
 /* ----------------------------------------------------------------------- */
@@ -46,7 +46,7 @@ impl<'a> Player<'a> {
         }
     }
 
-    pub fn add_reward(&mut self, reward: Item<'a>) {
+    pub fn add_reward(&mut self, reward: Item) {
         self.inventory.push(reward);
     }
 }

@@ -28,7 +28,7 @@ pub struct Monster<'a> {
     pub attack: u16,
     pub defense: u16,
     pub is_boss: bool,
-    pub loot: Item<'a>,
+    pub loot: Item,
     pub quantity_min: u16,
     pub quantity_max: u16,
 }

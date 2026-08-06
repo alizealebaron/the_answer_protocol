@@ -15,14 +15,16 @@
 /* ----------------------------------------------------------------------- */
 
 use crate::models::loot_model::Loot;
+use serde::Deserialize;
 
 /* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug)]
-pub struct Edible<'a> {
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Edible {
     pub loot: Loot,
-    pub effect: &'a str,
+    pub effect: String,
     pub value: i16
 }

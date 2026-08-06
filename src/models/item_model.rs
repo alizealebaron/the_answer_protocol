@@ -25,8 +25,8 @@ use crate::models::edible_model::Edible;
 // Obligatoire en Rust pour simplifier les liaisons de classe sans héritage
 
 #[derive(Debug)]
-pub enum Item<'a> {
+pub enum Item {
     Loot(Loot),
     Weapon(Weapon),
-    Edible(Edible<'a>),
+    Edible(Edible),
 }

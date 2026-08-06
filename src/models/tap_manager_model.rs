@@ -26,7 +26,7 @@ use crate::models::player_model::Player;
 
 #[derive(Debug)]
 pub struct TapManager<'a> {
-    pub lst_item: Vec<Item<'a>>,
+    pub lst_item: Vec<Item>,
     pub lst_character: Vec<Character<'a>>,
     pub lst_player: Vec<Player<'a>>,
     pub lst_quest: Vec<Quest<'a>>,
@@ -58,7 +58,7 @@ impl<'a> TapManager<'a> {
     /*                           Méthodes d'ajout                              */
     /* ----------------------------------------------------------------------- */
 
-    pub fn add_item(&mut self, reward: Item<'a>) {
+    pub fn add_item(&mut self, reward: Item) {
         self.lst_item.push(reward);
     }
 
