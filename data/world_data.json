@@ -265,7 +265,7 @@
 		},
 		{
 			"id": 2,
-			"name": "Village 1 (ND)",
+			"name": "Place Sénile",
 			"allies": [3],
 			"ennemies": [],
 			"items": [],
@@ -273,7 +273,7 @@
 		},
 		{
 			"id": 3,
-			"name": "Village 2 (ND)",
+			"name": "Rue de l'avenue",
 			"allies": [4],
 			"ennemies": [],
 			"items": [],
@@ -289,7 +289,7 @@
 		},
 		{
 			"id": 5,
-			"name": "Taverne",
+			"name": "Taverne de la pucelle",
 			"allies": [2],
 			"ennemies": [],
 			"items": [10],
@@ -297,7 +297,7 @@
 		},
 		{
 			"id": 6,
-			"name": "Forêt 1 (ND)",
+			"name": "Forêt, épisode 1",
 			"allies": [],
 			"ennemies": [6, 7],
 			"items": [],
@@ -305,7 +305,7 @@
 		},
 		{
 			"id": 7,
-			"name": "Forêt 2 (ND)",
+			"name": "Forêt fantôme",
 			"allies": [],
 			"ennemies": [6, 7],
 			"items": [],
@@ -313,7 +313,7 @@
 		},
 		{
 			"id": 8,
-			"name": "Forêt 3 (ND)",
+			"name": "Forêt des clones",
 			"allies": [],
 			"ennemies": [6, 7],
 			"items": [],
@@ -321,7 +321,7 @@
 		},
 		{
 			"id": 9,
-			"name": "Forêt 4 (ND)",
+			"name": "Forêt la revanche",
 			"allies": [5],
 			"ennemies": [6, 7],
 			"items": [],
@@ -345,7 +345,7 @@
 		},
 		{
 			"id": 12,
-			"name": "Forêt 5 (ND)",
+			"name": "La nouvelle forêt",
 			"allies": [],
 			"ennemies": [6, 7],
 			"items": [],
@@ -353,7 +353,7 @@
 		},
 		{
 			"id": 13,
-			"name": "Forêt 6 (ND)",
+			"name": "Le retour de la forêt",
 			"allies": [],
 			"ennemies": [6, 7],
 			"items": [],
@@ -361,7 +361,7 @@
 		},
 		{
 			"id": 14,
-			"name": "Forêt 7 (ND)",
+			"name": "Forêt the gump",
 			"allies": [],
 			"ennemies": [6, 7],
 			"items": [],

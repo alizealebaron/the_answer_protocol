@@ -15,8 +15,8 @@
         "loot": {
             "id": 5,
             "name": "Épée de bwa",
-            "descriptionFr": "Épée faite en bwa, un arbre très spécifique provenant de la région de Baguette-Sur-Plaque.",
-            "descriptionEn": "A sword made from bwa, a very specific type of tree native to the Baguette-Sur-Plaque region.",
+            "descriptionFr": "Épée faite en bwa, un arbre très spécifique provenant de la région de Mousse-en-Arbre.",
+            "descriptionEn": "A sword made from bwa, a very specific type of tree native to the Mousse-en-Arbre region.",
             "cost": 20,
             "nbCopies": -1,
             "nbAvail": -1
@@ -39,8 +39,8 @@
         "loot": {
             "id": 7,
             "name": "Propulseur de fléchette",
-            "descriptionFr": "Très apprécié par les joueurs de fléchette, son utilisation en tant qu'arme reste cependant assez douteuse.",
-            "descriptionEn": "Although it is very popular among dart players, its use as a weapon remains somewhat questionable.",
+            "descriptionFr": "Pourquoi ne pas mettre un Kayou ?",
+            "descriptionEn": "Why not have a Kayou ?",
             "cost": 20,
             "nbCopies": -1,
             "nbAvail": -1

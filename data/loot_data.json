@@ -2,8 +2,8 @@
 	{
 		"id": 1,
 		"name": "Gambling Coin",
-		"descriptionFr": "Ca brille ! (ND)",
-		"descriptionEn": "Shiny ! (ND)",
+		"descriptionFr": "C'est tout shiney !",
+		"descriptionEn": "Shiny !",
 		"cost": 1,
 		"nbCopies": -1,
 		"nbAvail": -1

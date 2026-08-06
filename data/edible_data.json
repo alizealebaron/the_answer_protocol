@@ -16,8 +16,8 @@
         "loot": {
             "id": 11,
             "name": "Jambon",
-            "descriptionFr": "Voilà un beau jambon qui saura ravir les papilles des grands et des petits. (ND)",
-            "descriptionEn": "Here's a beautiful ham that's sure to delight the taste buds of young and old alike. (ND)",
+            "descriptionFr": "Le jambon c'est bon la vie pour les grands et les petits.",
+            "descriptionEn": "Jambon macht Kinder froh, und Erwachsene ebenso.",
             "cost": 5,
             "nbCopies": -1,
             "nbAvail": -1
@@ -29,8 +29,8 @@
         "loot": {
             "id": 12,
             "name": "Krukinaj",
-            "descriptionFr": "Petit poisson deviendra grand. (ND)",
-            "descriptionEn": "A little fish will grow up to be big. (ND)",
+            "descriptionFr": "Petit poisson deviendra grand.",
+            "descriptionEn": "A little fish will grow up to be big.",
             "cost": 10,
             "nbCopies": -1,
             "nbAvail": -1
