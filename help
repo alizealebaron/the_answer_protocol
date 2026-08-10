@@ -1,0 +1,48 @@
+le user utilise la commande 'nc [ip dest] 4343'
+  - explication simple et explication du help
+
+il doit ensuite utiliser la commande 'CONNECT' pour ce connecter
+ - message d'introduction dans le monde (didactitiel possible)
+
+```
+>> nc 127.0.0.1 4343
+   bienvenu sur tap execute la commande connect suivi de ton nom et
+  de ta langue pour commencer
+   -> CONNECT gerard francais
+   Je ne t'ai jamais vu avant blabla va parler a leon au marche du village
+   -> ect 
+```
+
+Liste des Commandes:
+  Server:
+    CONNECT [Name] [Language] {
+      1ere chose a faire bloquer la possibilite de faire autre chose si joueur pas connecter
+      comment savoir si joueur connecte ??
+    }
+    QUIT
+    CHAT [Dest] [Message]
+    WHO
+    *HELP [COMMAND]
+
+  Game:
+    *WHERE
+    MOVE [Direction]
+    LOOK
+    *SEARCH
+
+    TAKE [ITEM_NAME]
+    DROP [ITEM_NAME]
+    INVENTORY
+
+    STATUS
+    ATTACK [NPC_NAME]
+
+    TALK [NPC_NAME]
+    QUEST [NPC_NAME]
+    QUESTS
+
+  Groups:
+    GROUP CREATE [Group_Name]
+    GROUP INVITE [Player_Name]
+    GROUP JOIN   [Group_Name] // invite is needed ??
+    GROUP LEAVE
