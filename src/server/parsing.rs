@@ -43,6 +43,10 @@ pub fn get_tap_manager<'a>() -> TapManager<'a> {
     tap_manager.lst_item.extend(load_items("data/weapon_data.json", Item::Weapon));
     tap_manager.lst_item.extend(load_items("data/edible_data.json", Item::Edible));
 
+    // == Quest Object == //
+
+    
+
     return tap_manager;
 }
 
@@ -57,7 +61,6 @@ where
 {
     let file = File::open(path)
         .unwrap_or_else(|e| panic!("Error: Cannot find or read {}: {}", path, e));
-
     let items: Vec<T> = serde_json::from_reader(file)
         .unwrap_or_else(|e| panic!("Error while parsing {}: {}", path, e));
 
