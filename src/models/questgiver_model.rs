@@ -24,7 +24,7 @@ use crate::models::quest_model::Quest;
 #[derive(Debug)]
 pub struct QuestGiver<'a> {
     pub npc: Npc<'a>,
-    pub quest: Quest<'a>,
+    pub quest: Quest,
     pub dialogue_fin_fr: Vec<&'a str>,
     pub dialogue_fin_en: Vec<&'a str>,
 }

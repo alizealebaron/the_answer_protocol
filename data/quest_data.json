@@ -2,16 +2,16 @@
     {
 		"id": 1,
 		"title": "Mon village, mon jambon beurre.",
-		"description_fr": "Léon vous a demandé de ramener 5 Jambon pour sa fameuse recette de jambon.",
-		"description_en": "Léon has asked you to bring back 5 hams for his famous ham recipe.",
+		"descriptionFr": "Léon vous a demandé de ramener 5 Jambon pour sa fameuse recette de jambon.",
+		"descriptionEn": "Léon has asked you to bring back 5 hams for his famous ham recipe.",
 		"reward": 1,
 		"quantity": 20
 	},
 	{
 		"id": 2,
 		"title": "Le fou du village.",
-		"description_fr": "Le fou de la forêt vous demande de tabasser le fou du village (Vieux Sénile).",
-		"description_en": "The Forest Madman asks you to beat up the village madman (Vieux Sénile).",
+		"descriptionFr": "Le fou de la forêt vous demande de tabasser le fou du village (Vieux Sénile).",
+		"descriptionEn": "The Forest Madman asks you to beat up the village madman (Vieux Sénile).",
 		"reward": 7,
 		"quantity": 1
 	}

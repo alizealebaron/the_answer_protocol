@@ -1,53 +1,45 @@
 [
     {
-        "loot": {
-            "id": 10,
-            "name": "Jambon Beurre",
-            "descriptionFr": "Un délicieux sandouich. On raconte qu'il a été donné à celui qui avait dit qu'il l'avait fait.",
-            "descriptionEn": "A delicious sandwich. The story goes that it was given to the person who claimed to have made it.",
-            "cost": 20,
-            "nbCopies": -1,
-            "nbAvail": -1
-        },
+        "id": 10,
+        "name": "Jambon Beurre",
+        "descriptionFr": "Un délicieux sandouich. On raconte qu'il a été donné à celui qui avait dit qu'il l'avait fait.",
+        "descriptionEn": "A delicious sandwich. The story goes that it was given to the person who claimed to have made it.",
+        "cost": 20,
+        "nbCopies": -1,
+        "nbAvail": -1,
         "effect": "HEAL",
 		"value": 10
 	},
 	{
-        "loot": {
-            "id": 11,
-            "name": "Jambon",
-            "descriptionFr": "Le jambon c'est bon la vie pour les grands et les petits.",
-            "descriptionEn": "Jambon macht Kinder froh, und Erwachsene ebenso.",
-            "cost": 5,
-            "nbCopies": -1,
-            "nbAvail": -1
-        },
+        "id": 11,
+        "name": "Jambon",
+        "descriptionFr": "Le jambon c'est bon la vie pour les grands et les petits.",
+        "descriptionEn": "Jambon macht Kinder froh, und Erwachsene ebenso.",
+        "cost": 5,
+        "nbCopies": -1,
+        "nbAvail": -1,
 		"effect": "HEAL",
 		"value": 2
 	},
 	{
-        "loot": {
-            "id": 12,
-            "name": "Krukinaj",
-            "descriptionFr": "Petit poisson deviendra grand.",
-            "descriptionEn": "A little fish will grow up to be big.",
-            "cost": 10,
-            "nbCopies": -1,
-            "nbAvail": -1
-        },
+        "id": 12,
+        "name": "Krukinaj",
+        "descriptionFr": "Petit poisson deviendra grand.",
+        "descriptionEn": "A little fish will grow up to be big.",
+        "cost": 10,
+        "nbCopies": -1,
+        "nbAvail": -1,
 		"effect": "HEAL",
 		"value": 3
 	},
 	{
-        "loot": {
-            "id": 13,
-            "name": "Délicieux bâtonnets de poisson",
-            "descriptionFr": "Le trésor du capitaine.",
-            "descriptionEn": "The Captain's Treasure.",
-            "cost": 15,
-            "nbCopies": -1,
-            "nbAvail": -1
-        },
+        "id": 13,
+        "name": "Délicieux bâtonnets de poisson",
+        "descriptionFr": "Le trésor du capitaine.",
+        "descriptionEn": "The Captain's Treasure.",
+        "cost": 15,
+        "nbCopies": -1,
+        "nbAvail": -1,
 		"effect": "HEAL",
 		"value": 2
 	}
