@@ -33,7 +33,7 @@ pub struct QuestRaw{
     pub quantity: u16,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Quest{
     pub id: u16,
     pub title: String,
@@ -60,5 +60,4 @@ impl Quest {
             quantity: raw.quantity,
         })
     }
-
 }

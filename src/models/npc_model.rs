@@ -11,13 +11,20 @@
 /* *********************************************************************** */
 
 /* ----------------------------------------------------------------------- */
+/*                              Importation                                */
+/* ----------------------------------------------------------------------- */
+
+use serde::Deserialize;
+
+/* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug)]
-pub struct Npc<'a> {
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Npc {
     pub id: u16,
-    pub name: &'a str,
-    pub dialogue_fr: Vec<&'a str>,
-    pub dialogue_en: Vec<&'a str>,
+    pub name: String,
+    pub dialogue_fr: Vec<String>,
+    pub dialogue_en: Vec<String>,
 }

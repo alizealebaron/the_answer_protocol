@@ -27,7 +27,7 @@ use crate::models::player_model::Player;
 #[derive(Debug)]
 pub struct TapManager<'a> {
     pub lst_item: Vec<Item>,
-    pub lst_character: Vec<Character<'a>>,
+    pub lst_character: Vec<Character>,
     pub lst_player: Vec<Player<'a>>,
     pub lst_quest: Vec<Quest>,
     pub lst_room: Vec<Room<'a>>,
@@ -62,7 +62,7 @@ impl<'a> TapManager<'a> {
         self.lst_item.push(reward);
     }
 
-    pub fn add_character(&mut self, charac: Character<'a>) {
+    pub fn add_character(&mut self, charac: Character) {
         self.lst_character.push(charac);
     }
 

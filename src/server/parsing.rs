@@ -27,6 +27,10 @@ use crate::models::weapon_model::Weapon;
 use crate::models::edible_model::Edible;
 use crate::models::quest_model::QuestRaw;
 use crate::models::quest_model::Quest;
+use crate::models::character_model::Character;
+use crate::models::npc_model::Npc;
+use crate::models::questgiver_model::QuestGiver;
+use crate::models::questgiver_model::QuestGiverRaw;
 
 /* ----------------------------------------------------------------------- */
 /*                             Main Fonction                               */
@@ -54,16 +58,35 @@ pub fn get_tap_manager<'a>() -> TapManager<'a> {
         .map(|item| (item.id(), item.clone()))
         .collect();
 
-    let path = "data/quest_data.json";
-    let file = File::open(path).unwrap_or_else(|e| panic!("Error: Cannot find or read {}: {}", path, e));
-    let lst_questraw: Vec<QuestRaw> = serde_json::from_reader(file)
-        .unwrap_or_else(|e| panic!("Error while parsing {}: {}", path, e));
+    let lst_questraw: Vec<QuestRaw> = load_data_from_json("data/quest_data.json");
 
     tap_manager.lst_quest = lst_questraw
         .into_iter()
         .map(|raw| Quest::from_raw(raw, &items_map))
         .collect::<Result<Vec<_>, _>>()
         .unwrap_or_else(|e| panic!("Error while loading quest: {}", e));
+
+    // == Character Object == //
+
+    let quest_map: HashMap<u16, Quest> = tap_manager
+        .lst_quest
+        .iter()
+        .map(|quest| (quest.id, quest.clone()))
+        .collect();
+
+    tap_manager.lst_character.extend(load_character("data/npc_data.json", Character::Npc));
+
+    let lst_questgiverraw: Vec<QuestGiverRaw> = load_data_from_json("data/questgiver_data.json");
+
+    tap_manager.lst_character.extend(
+    lst_questgiverraw
+        .into_iter()
+        .map(|raw| QuestGiver::from_raw(raw, &quest_map))
+        .collect::<Result<Vec<_>, _>>()
+        .unwrap_or_else(|e| panic!("Error while loading quest givers: {}", e))
+        .into_iter()
+        .map(Character::QuestGiver)
+    );
 
     return tap_manager;
 }
@@ -85,3 +108,26 @@ where
     items.into_iter().map(map_fn)
 }
 
+fn load_character<T, F>(path: &str, map_fn: F) -> impl Iterator<Item = Character>
+where
+    T: DeserializeOwned,
+    F: Fn(T) -> Character,
+{
+    let file = File::open(path)
+        .unwrap_or_else(|e| panic!("Error: Cannot find or read {}: {}", path, e));
+    let items: Vec<T> = serde_json::from_reader(file)
+        .unwrap_or_else(|e| panic!("Error while parsing {}: {}", path, e));
+
+    items.into_iter().map(map_fn)
+}
+
+fn load_data_from_json<T>(path: &str) -> Vec<T>
+where
+    T: DeserializeOwned,
+{
+    let file = File::open(path)
+        .unwrap_or_else(|e| panic!("Error: Cannot find or read {}: {}", path, e));
+
+    serde_json::from_reader(file)
+        .unwrap_or_else(|e| panic!("Error while parsing {}: {}", path, e))
+}

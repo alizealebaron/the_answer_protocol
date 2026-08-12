@@ -26,8 +26,8 @@ use crate::models::monster_model::Monster;
 pub struct Room<'a> {
     pub id: u16,
     pub name: &'a str,
-    pub allies: Vec<&'a Character<'a>>,
-    pub ennemies: Vec<&'a Monster<'a>>,
+    pub allies: Vec<&'a Character>,
+    pub ennemies: Vec<&'a Monster>,
     pub items: Vec<&'a Item>,
     pub lst_neighbor_room: [Option<&'a Room<'a>>; 4], // Option permet d'avoir 'None' s'il n'y a pas de pièce voisine
 }

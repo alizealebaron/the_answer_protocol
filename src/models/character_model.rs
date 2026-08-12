@@ -25,8 +25,8 @@ use crate::models::questgiver_model::QuestGiver;
 // Obligatoire en Rust pour simplifier les liaisons de classe sans héritage
 
 #[derive(Debug)]
-pub enum Character<'a> {
-    Npc(Npc<'a>),
-    Monster(Monster<'a>),
-    QuestGiver(QuestGiver<'a>),
+pub enum Character{
+    Npc(Npc),
+    Monster(Monster),
+    QuestGiver(QuestGiver),
 }

@@ -22,8 +22,8 @@ use crate::models::npc_model::Npc;
 /* ----------------------------------------------------------------------- */
 
 #[derive(Debug)]
-pub struct Monster<'a> {
-    pub npc: Npc<'a>,
+pub struct Monster {
+    pub npc: Npc,
     pub pv: u16,
     pub attack: u16,
     pub defense: u16,

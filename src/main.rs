@@ -28,7 +28,7 @@ use serde_json::{Result, Value};
 fn main() {
     // println!("--- Hello World ! ---");
     let mut tap_manager = server::parsing::get_tap_manager();
-    println!("Tap: {:?}", tap_manager); // Debug
+    println!("Tap: {:?}", tap_manager.lst_character); // Debug
 
     // untyped_example();
 }

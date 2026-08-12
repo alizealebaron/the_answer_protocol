@@ -1,26 +1,6 @@
 {
 	"character":
 	{
-		"npc": [
-			{
-				"id": 1,
-				"name": "Grégoin",
-				"dialogue_fr": ["(TODO)", "(TODO)"],
-				"dialogue_en": ["(TODO)", "(TODO)"]
-			},
-			{
-				"id": 2,
-				"name": "Jeanne",
-				"dialogue_fr": ["(TODO)", "(TODO)"],
-				"dialogue_en": ["(TODO)", "(TODO)"]
-			},
-			{
-				"id": 3,
-				"name": "Vieux Sénile",
-				"dialogue_fr": ["(TODO)", "(TODO)"],
-				"dialogue_en": ["(TODO)", "(TODO)"]
-			}
-		],
 		"quest_giver": [
 			{
 				"id": 4,
