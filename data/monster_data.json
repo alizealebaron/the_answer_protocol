@@ -1,0 +1,54 @@
+[
+    {
+		"id": 6,
+		"name": "Gruiking",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"],
+		"pv": 30,
+		"attack": 10,
+		"defense": 0,
+		"isBoss": false,
+		"loot": 11,
+		"quantityMin": 1,
+		"quantityMax": 2
+	},
+	{
+		"id": 7,
+		"name": "Tados",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"],
+		"pv": 30,
+		"attack": 10,
+		"defense": 0,
+		"isBoss": false,
+		"loot": 3,
+		"quantityMin": 1,
+		"quantityMax": 2
+	},
+	{
+		"id": 7,
+		"name": "Steve le poisson",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"],
+		"pv": 35,
+		"attack": 12,
+		"defense": 0,
+		"isBoss": false,
+		"loot": 3,
+		"quantityMin": 1,
+		"quantityMax": 3
+	},
+	{
+		"id": 8,
+		"name": "Charles-Alain-Francis",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"],
+		"pv": 100,
+		"attack": 15,
+		"defense": 5,
+		"isBoss": true,
+		"loot": 9,
+		"quantityMin": 1,
+		"quantityMax": 1
+	}
+]

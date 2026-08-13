@@ -31,6 +31,9 @@ use crate::models::character_model::Character;
 use crate::models::npc_model::Npc;
 use crate::models::questgiver_model::QuestGiver;
 use crate::models::questgiver_model::QuestGiverRaw;
+use crate::models::monster_model::Monster;
+use crate::models::monster_model::MonsterRaw;
+use crate::models::room_model::Room;
 
 /* ----------------------------------------------------------------------- */
 /*                             Main Fonction                               */
@@ -76,6 +79,8 @@ pub fn get_tap_manager<'a>() -> TapManager<'a> {
 
     tap_manager.lst_character.extend(load_character("data/npc_data.json", Character::Npc));
 
+    // == QuestGiver Object == //
+
     let lst_questgiverraw: Vec<QuestGiverRaw> = load_data_from_json("data/questgiver_data.json");
 
     tap_manager.lst_character.extend(
@@ -87,6 +92,25 @@ pub fn get_tap_manager<'a>() -> TapManager<'a> {
         .into_iter()
         .map(Character::QuestGiver)
     );
+
+    // == Monster Object == //
+
+    let lst_monsterraw: Vec<MonsterRaw> = load_data_from_json("data/monster_data.json");
+    tap_manager.lst_character.extend(
+    lst_monsterraw
+        .into_iter()
+        .map(|raw| Monster::from_raw(raw, &items_map))
+        .collect::<Result<Vec<_>, _>>()
+        .unwrap_or_else(|e| panic!("Error while loading quest givers: {}", e))
+        .into_iter()
+        .map(Character::Monster)
+    );
+
+    // == Room Object == //
+
+    let lst_roomraw: Vec<Room> = load_data_from_json("data/room_data.json");
+
+    println!("Tap: {:?}", lst_roomraw); // Debug
 
     return tap_manager;
 }

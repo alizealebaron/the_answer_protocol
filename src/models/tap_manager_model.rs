@@ -30,7 +30,7 @@ pub struct TapManager<'a> {
     pub lst_character: Vec<Character>,
     pub lst_player: Vec<Player<'a>>,
     pub lst_quest: Vec<Quest>,
-    pub lst_room: Vec<Room<'a>>,
+    pub lst_room: Vec<Room>,
 }
 
 /* ----------------------------------------------------------------------- */
@@ -74,7 +74,7 @@ impl<'a> TapManager<'a> {
         self.lst_quest.push(quest);
     }
 
-    pub fn add_room(&mut self, room: Room<'a>) {
+    pub fn add_room(&mut self, room: Room) {
         self.lst_room.push(room);
     }
 }

@@ -1,26 +1,4 @@
 {
-	"character":
-	{
-		"quest_giver": [
-			{
-				"id": 4,
-				"name": "Léon",
-				"dialogue_fr": ["(TODO)", "(TODO)"],
-				"dialogue_en": ["(TODO)", "(TODO)"],
-				"quest": 1,
-				"dialogue_fin_fr": ["(TODO)", "(TODO)"],
-				"dialogue_fin_en": ["(TODO)", "(TODO)"]
-			},
-			{
-				"id": 5,
-				"name": "Bertrand",
-				"dialogue_fr": ["(TODO)", "(TODO)"],
-				"dialogue_en": ["(TODO)", "(TODO)"],
-				"quest": 2,
-				"dialogue_fin_fr": ["(TODO)", "(TODO)"],
-				"dialogue_fin_en": ["(TODO)", "(TODO)"]
-			}
-		],
 		"monster": [
 			{
 				"id": 6,
@@ -30,7 +8,7 @@
 				"pv": 30,
 				"attack": 10,
 				"defense": 0,
-				"is_boss": "False",
+				"is_boss": 0,
 				"loot": 11,
 				"quantity_min": 1,
 				"quantity_max": 2
@@ -43,7 +21,7 @@
 				"pv": 30,
 				"attack": 10,
 				"defense": 0,
-				"is_boss": "False",
+				"is_boss": 0,
 				"loot": 3,
 				"quantity_min": 1,
 				"quantity_max": 2
@@ -56,7 +34,7 @@
 				"pv": 35,
 				"attack": 12,
 				"defense": 0,
-				"is_boss": "False",
+				"is_boss": 0,
 				"loot": 3,
 				"quantity_min": 1,
 				"quantity_max": 3
@@ -69,7 +47,7 @@
 				"pv": 100,
 				"attack": 15,
 				"defense": 5,
-				"is_boss": "False",
+				"is_boss": 0,
 				"loot": 9,
 				"quantity_min": 1,
 				"quantity_max": 1

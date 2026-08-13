@@ -1,0 +1,114 @@
+[
+    {
+		"id": 1,
+		"name": "CASINO",
+		"allies": [],
+		"ennemies": [],
+		"items": [1],
+		"lstNeighborRoom": [3, 4, 0, 0]
+	},
+	{
+		"id": 2,
+		"name": "Place Sénile",
+		"allies": [3],
+		"ennemies": [],
+		"items": [],
+		"lstNeighborRoom": [5, 3, 4, 6]
+	},
+	{
+		"id": 3,
+		"name": "Rue de l'avenue",
+		"allies": [4],
+		"ennemies": [],
+		"items": [],
+		"lstNeighborRoom": [2, 1, 0, 0]
+	},
+	{
+		"id": 4,
+		"name": "Fontaine",
+		"allies": [1],
+		"ennemies": [],
+		"items": [],
+		"lstNeighborRoom": [1, 2, 0, 0]
+	},
+	{
+		"id": 5,
+		"name": "Taverne de la pucelle",
+		"allies": [2],
+		"ennemies": [],
+		"items": [10],
+		"lstNeighborRoom": [2, 0, 0, 0]
+	},
+	{
+		"id": 6,
+		"name": "Forêt, épisode 1",
+		"allies": [],
+		"ennemies": [6, 7],
+		"items": [],
+		"lstNeighborRoom": [2, 7, 0, 0]
+	},
+	{
+		"id": 7,
+		"name": "Forêt fantôme",
+		"allies": [],
+		"ennemies": [6, 7],
+		"items": [],
+		"lstNeighborRoom": [6, 8, 9, 10]
+	},
+	{
+		"id": 8,
+		"name": "Forêt des clones",
+		"allies": [],
+		"ennemies": [6, 7],
+		"items": [],
+		"lstNeighborRoom": [7, 11, 0, 0]
+	},
+	{
+		"id": 9,
+		"name": "Forêt la revanche",
+		"allies": [5],
+		"ennemies": [6, 7],
+		"items": [],
+		"lstNeighborRoom": [7, 0, 0, 0]
+	},
+	{
+		"id": 10,
+		"name": "Lac Koulofon",
+		"allies": [],
+		"ennemies": [7],
+		"items": [],
+		"lstNeighborRoom": [7, 0, 0, 0]
+	},
+	{
+		"id": 11,
+		"name": "Grotte Terrifiante (ND)",
+		"allies": [],
+		"ennemies": [8],
+		"items": [],
+		"lstNeighborRoom": [8, 0, 0, 0]
+	},
+	{
+		"id": 12,
+		"name": "La nouvelle forêt",
+		"allies": [],
+		"ennemies": [6, 7],
+		"items": [],
+		"lstNeighborRoom": [10, 13, 0, 0]
+	},
+	{
+		"id": 13,
+		"name": "Le retour de la forêt",
+		"allies": [],
+		"ennemies": [6, 7],
+		"items": [],
+		"lstNeighborRoom": [12, 14, 0, 0]
+	},
+	{
+		"id": 14,
+		"name": "Forêt the gump",
+		"allies": [],
+		"ennemies": [6, 7],
+		"items": [],
+		"lstNeighborRoom": [13, 4, 0, 0]
+	}
+]
