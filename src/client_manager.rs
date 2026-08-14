@@ -23,21 +23,40 @@ enum Commands {
     // HELP
 }
 
-pub async fn client_manager(mut socket: TcpStream, addr: SocketAddr) {
+pub async fn client_manager(mut socket: TcpStream, addr: SocketAddr)
+{
     let (reader, mut writer) = socket.split();
     let mut lines = BufReader::new(reader).lines();
 
-    while let Ok(Some(ligne)) = lines.next_line().await {
-        let ligne = ligne.trim();
-        let cmd_parse = ligne.split(' ').next().unwrap_or("");
-        if cmd_list.contains(&cmd_parse) {
-            println!("Commande reçue by {}: {}", addr, ligne);
-            let response = format!("you sent {}\n", cmd_parse);
-            let _ = writer.write_all(response.as_bytes()).await;
+    let mut message = format!("blabla fais la commande 'CONNECT'");
+    let _ = writer.write_all(message.as_bytes()).await;
+
+    let mut connected: bool = false;
+
+    while let Ok(Some(line)) = lines.next_line().await
+    {
+        let line: Vec<&str> = line.split(" ").collect();
+        if connected == false
+        {
+            if line[0].trim() == "CONNECT" && line.len() == 3
+            {
+                connected = true;
+                message = format!("Congraulation {}, you are log in", line[1]);
+                let _ = writer.write_all(message.as_bytes()).await;
+            }
+            else if line[0].trim() == "HELP" && line.len() == 1 || line.len() == 0
+            {
+                continue;
+            }
+            else
+            {
+                message = format!("Use the following command'CONNECT [Name] [Language]'");
+                let _ = writer.write_all(message.as_bytes()).await;
+            }
         }
-        else {
-            let response = format!("Unknown command\n");
-            let _ = writer.write_all(response.as_bytes()).await;
+        else
+        {
+            continue;
         }
     }
 
