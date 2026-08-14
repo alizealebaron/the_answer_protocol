@@ -14,21 +14,25 @@
 /*                              Importation                                */
 /* ----------------------------------------------------------------------- */
 
+use serde::Deserialize;
 use crate::models::item_model::Item;
-use crate::models::npc_model::Npc;
 
 /* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug)]
-pub struct Monster<'a> {
-    pub npc: Npc<'a>,
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct Monster {
+    pub id: u16,
+    pub name: String,
+    pub dialogue_fr: Vec<String>,
+    pub dialogue_en: Vec<String>,
     pub pv: u16,
     pub attack: u16,
     pub defense: u16,
     pub is_boss: bool,
-    pub loot: Item,
+    pub loot: u16,
     pub quantity_min: u16,
     pub quantity_max: u16,
 }

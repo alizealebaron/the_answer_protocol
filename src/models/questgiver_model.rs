@@ -14,6 +14,8 @@
 /*                              Importation                                */
 /* ----------------------------------------------------------------------- */
 
+use serde::Deserialize;
+use std::collections::HashMap;
 use crate::models::npc_model::Npc;
 use crate::models::quest_model::Quest;
 
@@ -21,10 +23,14 @@ use crate::models::quest_model::Quest;
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug)]
-pub struct QuestGiver<'a> {
-    pub npc: Npc<'a>,
-    pub quest: Quest<'a>,
-    pub dialogue_fin_fr: Vec<&'a str>,
-    pub dialogue_fin_en: Vec<&'a str>,
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct QuestGiver {
+    pub id: u16,
+    pub name: String,
+    pub dialogue_fr: Vec<String>,
+    pub dialogue_en: Vec<String>,
+    pub quest: u16,
+    pub dialogue_fin_fr: Vec<String>,
+    pub dialogue_fin_en: Vec<String>,
 }

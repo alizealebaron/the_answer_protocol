@@ -14,18 +14,20 @@
 /*                              Importation                                */
 /* ----------------------------------------------------------------------- */
 
+use serde::Deserialize;
 use crate::models::item_model::Item;
 
 /* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug)]
-pub struct Quest<'a> {
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct Quest{
     pub id: u16,
-    pub title: &'a str,
-    pub description_fr: &'a str,
-    pub description_en: &'a str,
-    pub reward: Item,
+    pub title: String,
+    pub description_fr: String,
+    pub description_en: String,
+    pub reward: u16,
     pub quantity: u16,
 }

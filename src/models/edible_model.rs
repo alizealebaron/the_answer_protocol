@@ -14,17 +14,22 @@
 /*                              Importation                                */
 /* ----------------------------------------------------------------------- */
 
-use crate::models::loot_model::Loot;
 use serde::Deserialize;
 
 /* ----------------------------------------------------------------------- */
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Edible {
-    pub loot: Loot,
+    pub id: u16,
+    pub name: String,
+    pub description_fr: String,
+    pub description_en: String,
+    pub cost: u16,
+    pub nb_copies: i16,
+    pub nb_avail: i16,
     pub effect: String,
     pub value: i16
 }

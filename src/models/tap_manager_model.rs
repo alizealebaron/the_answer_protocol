@@ -14,6 +14,7 @@
 /*                              Importation                                */
 /* ----------------------------------------------------------------------- */
 
+use std::collections::HashMap;
 use crate::models::item_model::Item;
 use crate::models::character_model::Character;
 use crate::models::quest_model::Quest;
@@ -27,10 +28,13 @@ use crate::models::player_model::Player;
 #[derive(Debug)]
 pub struct TapManager<'a> {
     pub lst_item: Vec<Item>,
-    pub lst_character: Vec<Character<'a>>,
+    pub lst_character: Vec<Character>,
     pub lst_player: Vec<Player<'a>>,
-    pub lst_quest: Vec<Quest<'a>>,
-    pub lst_room: Vec<Room<'a>>,
+    pub lst_quest: Vec<Quest>,
+    pub lst_room: Vec<Room>,
+    pub map_item: HashMap<u16, Item>,
+    pub map_quest: HashMap<u16, Quest>,
+    pub map_character: HashMap<u16, Character>,
 }
 
 /* ----------------------------------------------------------------------- */
@@ -51,6 +55,9 @@ impl<'a> TapManager<'a> {
             lst_player: Vec::new(),
             lst_quest: Vec::new(),
             lst_room: Vec::new(),
+            map_item: HashMap::new(),
+            map_quest: HashMap::new(),
+            map_character: HashMap::new(),
         }
     }
 
@@ -58,23 +65,7 @@ impl<'a> TapManager<'a> {
     /*                           Méthodes d'ajout                              */
     /* ----------------------------------------------------------------------- */
 
-    pub fn add_item(&mut self, reward: Item) {
-        self.lst_item.push(reward);
-    }
-
-    pub fn add_character(&mut self, charac: Character<'a>) {
-        self.lst_character.push(charac);
-    }
-
     pub fn add_player(&mut self, player: Player<'a>) {
         self.lst_player.push(player);
-    }
-
-    pub fn add_quest(&mut self, quest: Quest<'a>) {
-        self.lst_quest.push(quest);
-    }
-
-    pub fn add_room(&mut self, room: Room<'a>) {
-        self.lst_room.push(room);
     }
 }

@@ -1,0 +1,20 @@
+[
+	{
+		"id": 1,
+		"name": "Grégoin",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"]
+	},
+	{
+		"id": 2,
+		"name": "Jeanne",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"]
+	},
+	{
+		"id": 3,
+		"name": "Vieux Sénile",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"]
+	}
+]
