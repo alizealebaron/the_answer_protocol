@@ -20,7 +20,7 @@ use serde::Deserialize;
 /*                               Structure                                 */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Npc {
     pub id: u16,

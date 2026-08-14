@@ -28,7 +28,13 @@ use serde_json::{Result, Value};
 fn main() {
     // println!("--- Hello World ! ---");
     let mut tap_manager = server::parsing::get_tap_manager();
-    println!("Tap: {:?}", tap_manager); // Debug
+
+    // println!("Item: {:?}\n", tap_manager.lst_item);
+    // println!("Character: {:?}\n", tap_manager.lst_character);
+    // println!("Player: {:?}\n", tap_manager.lst_player);
+    // println!("Quest: {:?}\n", tap_manager.lst_quest);
+    // println!("Room: {:?}\n", tap_manager.lst_room);
+    // println!("Tap: {:?}\n", tap_manager.map_item);
 
     // untyped_example();
 }
