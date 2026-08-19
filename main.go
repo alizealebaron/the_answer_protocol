@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:15:04 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/19 11:35:31 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/19 17:37:42 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -17,7 +17,6 @@
 package main
 
 import (
-    "fmt"
     "the_answer_protocol/src/server"
 )
 
@@ -27,5 +26,4 @@ import (
 
 func main() {
     server.ParseJSONFile()
-    fmt.Println("Hello, World!")
 }

@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* tap_manager.go                                    :+:      :+:    :+:   */
+/* error_utils.go                                    :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/18 19:29:32 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/19 18:00:59 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/19 14:43:30 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/19 15:03:31 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -14,24 +14,22 @@
 /* |                          Package & Import                           | */
 /* +---------------------------------------------------------------------+ */
 
-package models
+package utils
+
+import (
+    "fmt"
+    "os"
+)
 
 /* +---------------------------------------------------------------------+ */
-/* |                               Classe                                | */
+/* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
 
-type TapManager struct {
-    Lst_item []Item
-    Lst_Player []Player
+func ExitError(origin string, err error) {
+	fmt.Println(origin, ":", err)
+	os.Exit(1)
 }
 
-/* +---------------------------------------------------------------------+ */
-/* |                            Constructeur                             | */
-/* +---------------------------------------------------------------------+ */
-
-func NewTapManager(Lst_item []Item) TapManager {
-
-    Lst_Player := []Player{}
-    tap := TapManager{Lst_item, Lst_Player}
-    return tap
+func SendError(origin string, err error) {
+	fmt.Println(origin, ":", err)
 }
