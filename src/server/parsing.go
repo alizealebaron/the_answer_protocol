@@ -1,33 +1,30 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* quest_model.rs                                    :+:      :+:    :+:   */
+/* parsing.go                                        :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: alebaron, rruiz, emarette                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/01 12:34:25 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 15:39:22 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/18 19:28:32 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/18 19:28:57 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
 /* ----------------------------------------------------------------------- */
-/*                              Importation                                */
+/*                            Package & Import                             */
 /* ----------------------------------------------------------------------- */
 
-use serde::Deserialize;
-use crate::models::item_model::Item;
+package server
+
+import (
+    "io/ioutil"
+    "log"
+)
 
 /* ----------------------------------------------------------------------- */
-/*                               Structure                                 */
+/*                                  Main                                   */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug, Deserialize, Clone)]
-#[serde(rename_all = "camelCase")]
-pub struct Quest{
-    pub id: u16,
-    pub title: String,
-    pub description_fr: String,
-    pub description_en: String,
-    pub reward: u16,
-    pub quantity: u16,
+func main() {
+    fmt.Println("Hello, World!")
 }

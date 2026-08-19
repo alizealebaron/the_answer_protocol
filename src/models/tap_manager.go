@@ -1,35 +1,25 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* edible_model.rs                                   :+:      :+:    :+:   */
+/* tap_manager.go                                    :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: alebaron, rruiz, emarette                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/01 09:43:19 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 15:37:36 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/18 19:29:32 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/18 19:29:46 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
 /* ----------------------------------------------------------------------- */
-/*                              Importation                                */
+/*                            Package & Import                             */
 /* ----------------------------------------------------------------------- */
 
-use serde::Deserialize;
+package models
 
 /* ----------------------------------------------------------------------- */
-/*                               Structure                                 */
+/*                                  Main                                   */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug, Deserialize, Clone)]
-#[serde(rename_all = "camelCase")]
-pub struct Edible {
-    pub id: u16,
-    pub name: String,
-    pub description_fr: String,
-    pub description_en: String,
-    pub cost: u16,
-    pub nb_copies: i16,
-    pub nb_avail: i16,
-    pub effect: String,
-    pub value: i16
+func main() {
+    fmt.Println("Hello, World!")
 }

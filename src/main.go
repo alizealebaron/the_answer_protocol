@@ -1,34 +1,27 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* weapon_model.rs                                   :+:      :+:    :+:   */
+/* main.go                                           :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: alebaron, rruiz, emarette                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/01 12:02:18 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/01 15:37:16 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/18 19:15:04 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/18 19:16:38 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
 /* ----------------------------------------------------------------------- */
-/*                              Importation                                */
+/*                            Package & Import                             */
 /* ----------------------------------------------------------------------- */
 
-use serde::Deserialize;
+package main
+
+import "fmt"
 
 /* ----------------------------------------------------------------------- */
-/*                               Structure                                 */
+/*                                  Main                                   */
 /* ----------------------------------------------------------------------- */
 
-#[derive(Debug, Deserialize, Clone)]
-#[serde(rename_all = "camelCase")]
-pub struct Weapon {
-    pub id: u16,
-    pub name: String,
-    pub description_fr: String,
-    pub description_en: String,
-    pub cost: u16,
-    pub nb_copies: i16,
-    pub nb_avail: i16,
-    pub damage: i16,
+func main() {
+    fmt.Println("Hello, World!")
 }
