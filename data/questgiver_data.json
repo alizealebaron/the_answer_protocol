@@ -1,19 +1,19 @@
 [
-    {
-		"id": 4,
-		"name": "Léon",
-		"dialogueFr": ["(TODO)", "(TODO)"],
-		"dialogueEn": ["(TODO)", "(TODO)"],
-		"quest": 1,
-		"dialogueFinFr": ["(TODO)", "(TODO)"],
-		"dialogueFinEn": ["(TODO)", "(TODO)"]
-	},
 	{
 		"id": 5,
 		"name": "Bertrand",
 		"dialogueFr": ["(TODO)", "(TODO)"],
 		"dialogueEn": ["(TODO)", "(TODO)"],
 		"quest": 2,
+		"dialogueFinFr": ["(TODO)", "(TODO)"],
+		"dialogueFinEn": ["(TODO)", "(TODO)"]
+	},
+	{
+		"id": 6,
+		"name": "Gaspard Savoureux",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"],
+		"quest": 1,
 		"dialogueFinFr": ["(TODO)", "(TODO)"],
 		"dialogueFinEn": ["(TODO)", "(TODO)"]
 	}

@@ -1,0 +1,9 @@
+[
+    {
+		"id": 4,
+		"name": "Léon",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"],
+        "inventory": [2, 10]
+	}
+]

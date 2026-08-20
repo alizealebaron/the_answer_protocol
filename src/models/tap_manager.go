@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:29:32 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/20 09:12:12 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/20 11:35:20 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -24,15 +24,38 @@ type TapManager struct {
     Lst_item   []Item
     Lst_Player []Player
     Lst_Quest  []Quest
+    Lst_Npc    []Npc
 }
 
 /* +---------------------------------------------------------------------+ */
 /* |                            Constructeur                             | */
 /* +---------------------------------------------------------------------+ */
 
-func NewTapManager(Lst_item []Item, Lst_Quest []Quest) TapManager {
+func NewTapManager(Lst_item []Item, Lst_Quest []Quest, Lst_Npc []Npc) TapManager {
 
     Lst_Player := []Player{}
-    tap := TapManager{Lst_item, Lst_Player, Lst_Quest}
+    tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc}
     return tap
+}
+
+func (tap TapManager) ToString() string {
+    var tap_str string
+    
+    for _, item := range tap.Lst_item {
+		tap_str += item.ToString()
+	}
+
+	tap_str += "\n\n"
+
+    for _, item := range tap.Lst_Quest {
+		tap_str += item.ToString()
+	}
+
+    tap_str += "\n\n"
+
+    for _, item := range tap.Lst_Npc {
+		tap_str += item.ToString()
+	}
+
+    return tap_str
 }
