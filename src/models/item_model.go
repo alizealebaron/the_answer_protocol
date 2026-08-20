@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 11:04:48 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/19 14:40:18 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/20 09:57:16 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -26,7 +26,10 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 type Item interface {
-	ToString() string
+	ToString()        string
+	GetId()           int
+	GetName()         string
+	IsItemAvailable() bool
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -43,8 +46,15 @@ type Loot struct {
 	NbAvail       int    `json:"nbAvail"`
 }
 
-func (p Loot) ToString() string {
-	b, err := json.Marshal(p)
+func (l Loot) GetId()   int    { return l.Id   }
+func (l Loot) GetName() string { return l.Name }
+
+func (l Loot) IsItemAvailable() bool {
+	return (l.NbAvail > 0)
+}
+
+func (l Loot) ToString() string {
+	b, err := json.Marshal(l)
 	if err != nil {
 		return fmt.Sprintf("erreur: %v", err)
 	}

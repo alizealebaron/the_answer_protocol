@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:29:32 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/19 18:00:59 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/20 09:12:12 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -21,17 +21,18 @@ package models
 /* +---------------------------------------------------------------------+ */
 
 type TapManager struct {
-    Lst_item []Item
+    Lst_item   []Item
     Lst_Player []Player
+    Lst_Quest  []Quest
 }
 
 /* +---------------------------------------------------------------------+ */
 /* |                            Constructeur                             | */
 /* +---------------------------------------------------------------------+ */
 
-func NewTapManager(Lst_item []Item) TapManager {
+func NewTapManager(Lst_item []Item, Lst_Quest []Quest) TapManager {
 
     Lst_Player := []Player{}
-    tap := TapManager{Lst_item, Lst_Player}
+    tap := TapManager{Lst_item, Lst_Player, Lst_Quest}
     return tap
 }
