@@ -95,3 +95,19 @@ func (e Edible) ToString() string {
 	}
 	return string(b)
 }
+
+/* +---------------------------------------------------------------------+ */
+/* |                                Usable                               | */
+/* +---------------------------------------------------------------------+ */
+
+type Usable struct {
+	Loot
+}
+
+func (u Usable) ToString() string {
+	b, err := json.Marshal(u)
+	if err != nil {
+		return fmt.Sprintf("erreur: %v", err)
+	}
+	return string(b)
+}

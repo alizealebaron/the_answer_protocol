@@ -74,7 +74,7 @@ func (q QuestGiver) ToString() string {
 }
 
 /* +---------------------------------------------------------------------+ */
-/* |                             QuestGiver                              | */
+/* |                               Monster                               | */
 /* +---------------------------------------------------------------------+ */
 
 type Monster struct {
@@ -91,6 +91,24 @@ type Monster struct {
 
 func (m Monster) ToString() string {
 	b, err := json.Marshal(m)
+	if err != nil {
+		return fmt.Sprintf("erreur: %v", err)
+	}
+	return string(b)
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                                Trader                               | */
+/* +---------------------------------------------------------------------+ */
+
+type Trader struct {
+	Dialoguer
+	Inventory    []Item  `json:"-"`
+	InventoryId  []int   `json:"inventory"`
+}
+
+func (t Trader) ToString() string {
+	b, err := json.Marshal(t)
 	if err != nil {
 		return fmt.Sprintf("erreur: %v", err)
 	}

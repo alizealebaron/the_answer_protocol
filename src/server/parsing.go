@@ -49,7 +49,7 @@ func ParseJSONFile() {
     // === Initialisation du tapManager ===
     tapManager := models.NewTapManager(lst_item, lst_quest, lst_npc)
 
-	fmt.Printf("%+v\n", tapManager)
+	fmt.Printf("%+v\n", tapManager.Lst_item)
 
 	fmt.Println("[\033[32mSUCCESS\033[0m] (ﾉ◕ヮ◕)ﾉ*:・ﾟ✧ JSON successfully load.")
 }
@@ -66,6 +66,7 @@ func get_all_item() []models.Item {
     var lst_loot   []models.Loot
     var lst_weapon []models.Weapon
     var lst_edible []models.Edible
+    var lst_usable []models.Usable
 
     // === Récupérations des loots === //
 
@@ -106,6 +107,19 @@ func get_all_item() []models.Item {
         lst_item = append(lst_item, l)
     }
 
+    // === Récupérations des usables === //
+
+    data = get_data_from_json("data/usable_data.json")
+
+    err = json.Unmarshal(data, &lst_usable)
+	if err != nil {
+		utils.ExitError("JSONParsingError", err)
+	}
+
+    for _, l := range lst_usable {
+        lst_item = append(lst_item, l)
+    }
+
     // === Renvoie des données récupérées === //
 
     return lst_item
@@ -139,6 +153,7 @@ func get_all_npc(lst_item []models.Item, lst_quest []models.Quest) []models.Npc 
     var lst_dialoguer   []models.Dialoguer
     var lst_questgiver  []models.QuestGiver
     var lst_monster     []models.Monster
+    var lst_trader      []models.Trader
 
     // === Récupérations des loots === //
 
@@ -181,19 +196,19 @@ func get_all_npc(lst_item []models.Item, lst_quest []models.Quest) []models.Npc 
         lst_npc = append(lst_npc, m)
     }
 
-    // // === Récupérations des monsters === //
+    // // === Récupérations des traders === //
 
-    // data = get_data_from_json("data/monster_data.json")
+    data = get_data_from_json("data/trader_data.json")
 
-    // err = json.Unmarshal(data, &lst_monster)
-	// if err != nil {
-	// 	utils.ExitError("JSONParsingError", err)
-	// }
+    err = json.Unmarshal(data, &lst_trader)
+	if err != nil {
+		utils.ExitError("JSONParsingError", err)
+	}
 
-    // resolve_monster_item(lst_monster, lst_item)
-    // for _, m := range lst_monster {
-    //     lst_npc = append(lst_npc, m)
-    // }
+    resolve_trader_item(lst_trader, lst_item)
+    for _, t := range lst_trader {
+        lst_npc = append(lst_npc, t)
+    }
 
     // === Renvoie des données récupérées === //
 
@@ -203,6 +218,27 @@ func get_all_npc(lst_item []models.Item, lst_quest []models.Quest) []models.Npc 
 /* ----------------------------------------------------------------------- */
 /*                      Méthodes de liaison des objets                     */
 /* ----------------------------------------------------------------------- */
+
+func resolve_trader_item(lst_trader []models.Trader, lst_item []models.Item) []models.Trader {
+
+    // On construit une map pour un accès rapide O(1)
+    itemById := make(map[int]models.Item)
+    for _, it := range lst_item {
+        itemById[it.GetId()] = it
+    }
+
+    for i := range lst_trader {
+        for j := range lst_trader[i].InventoryId {
+            if item, ok := itemById[lst_trader[i].InventoryId[j]]; ok {
+                lst_trader[i].Inventory = append(lst_trader[i].Inventory, item)
+            } else {
+                utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_trader[i].InventoryId[j]))
+            }
+        }
+    }
+
+    return lst_trader
+}
 
 func resolve_monster_item(lst_monster []models.Monster, lst_item []models.Item) []models.Monster {
 
