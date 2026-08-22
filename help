@@ -15,10 +15,7 @@ il doit ensuite utiliser la commande 'CONNECT' pour ce connecter
 
 Liste des Commandes:
   Server:
-    CONNECT [Name] [Language] {
-      1ere chose a faire bloquer la possibilite de faire autre chose si joueur pas connecter
-      comment savoir si joueur connecte ??
-    }
+    CONNECT [Name] [Language]
     QUIT
     CHAT [Dest] [Message]
     WHO
@@ -46,3 +43,4 @@ Liste des Commandes:
     GROUP INVITE [Player_Name]
     GROUP JOIN   [Group_Name] // invite is needed ??
     GROUP LEAVE
+
