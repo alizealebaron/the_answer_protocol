@@ -17,8 +17,9 @@
 package main
 
 import (
-    "fmt"
-    "the_answer_protocol/src/server"
+	"fmt"
+	// "the_answer_protocol/src/server"
+	"the_answer_protocol/src/models"
 )
 
 /* ----------------------------------------------------------------------- */
@@ -27,6 +28,12 @@ import (
 
 func main() {
 
-    tapManager := server.ParseJSONFile()
-    fmt.Printf("%+v\n", tapManager)
+    // tapManager := server.ParseJSONFile()
+    // fmt.Printf("%+v\n", tapManager)
+
+    player1 := models.NewPlayer("alebaron", "en")
+    player2 := models.NewPlayer("emarette", "fr")
+
+    fmt.Printf("%+v\n", player1)
+    fmt.Printf("%+v\n", player2)
 }

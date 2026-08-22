@@ -17,6 +17,12 @@
 package models
 
 /* +---------------------------------------------------------------------+ */
+/* |                          Variable globale                           | */
+/* +---------------------------------------------------------------------+ */
+
+var totalPlayer int
+
+/* +---------------------------------------------------------------------+ */
 /* |                                Item                                 | */
 /* +---------------------------------------------------------------------+ */
 
@@ -27,4 +33,12 @@ type Player struct {
     Attack   int
     Language string
     Inventory []Item 
+}
+
+func NewPlayer(name string, language string) Player {
+
+    lstItem := []Item{}
+    player := Player{totalPlayer, name, 100, 5, language, lstItem}
+    totalPlayer += 1
+    return player
 }
