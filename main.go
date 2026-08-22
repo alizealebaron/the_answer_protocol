@@ -18,7 +18,8 @@ package main
 
 import (
     // "fmt"
-    "the_answer_protocol/src/server"
+    // "the_answer_protocol/src/server"
+    "the_answer_protocol/src/utils"
 )
 
 /* ----------------------------------------------------------------------- */
@@ -26,6 +27,9 @@ import (
 /* ----------------------------------------------------------------------- */
 
 func main() {
+
     tapManager := server.ParseJSONFile()
+    utils.CreateLogFolder()
     server.Tcp_server(tapManager)
+
 }
