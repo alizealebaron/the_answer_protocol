@@ -1,0 +1,113 @@
+/* *********************************************************************** */
+/*                                                                         */
+/*                                                     :::      ::::::::   */
+/* item_model.go                                     :+:      :+:    :+:   */
+/*                                                 +:+ +:+         +:+     */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/*                                             +#+#+#+#+#+   +#+           */
+/* Created: 2026/08/19 11:04:48 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/20 09:57:16 by alebaron        ###   ########.fr       */
+/*                                                                         */
+/* *********************************************************************** */
+
+/* +---------------------------------------------------------------------+ */
+/* |                          Package & Import                           | */
+/* +---------------------------------------------------------------------+ */
+
+package models
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+/* +---------------------------------------------------------------------+ */
+/* |                                Item                                 | */
+/* +---------------------------------------------------------------------+ */
+
+type Item interface {
+	ToString()        string
+	GetId()           int
+	GetName()         string
+	IsItemAvailable() bool
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                                Loot                                 | */
+/* +---------------------------------------------------------------------+ */
+
+type Loot struct {
+	Id            int    `json:"id"`
+	Name          string `json:"name"`
+	DescriptionFr string `json:"descriptionFr"`
+	DescriptionEn string `json:"descriptionEn"`
+	Cost          int    `json:"cost"`
+	NbCopies      int    `json:"nbCopies"`
+	NbAvail       int    `json:"nbAvail"`
+}
+
+func (l Loot) GetId()   int    { return l.Id   }
+func (l Loot) GetName() string { return l.Name }
+
+func (l Loot) IsItemAvailable() bool {
+	return (l.NbAvail > 0)
+}
+
+func (l Loot) ToString() string {
+	b, err := json.Marshal(l)
+	if err != nil {
+		return fmt.Sprintf("erreur: %v", err)
+	}
+	return string(b)
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                                Weapon                               | */
+/* +---------------------------------------------------------------------+ */
+
+type Weapon struct {
+	Loot
+	Damage int `json:"damage"`
+}
+
+func (w Weapon) ToString() string {
+	b, err := json.Marshal(w)
+	if err != nil {
+		return fmt.Sprintf("erreur: %v", err)
+	}
+	return string(b)
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                                Edible                               | */
+/* +---------------------------------------------------------------------+ */
+
+type Edible struct {
+	Loot
+	Effect string `json:"effect"`
+	Value  int    `json:"value"`
+}
+
+func (e Edible) ToString() string {
+	b, err := json.Marshal(e)
+	if err != nil {
+		return fmt.Sprintf("erreur: %v", err)
+	}
+	return string(b)
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                                Usable                               | */
+/* +---------------------------------------------------------------------+ */
+
+type Usable struct {
+	Loot
+}
+
+func (u Usable) ToString() string {
+	b, err := json.Marshal(u)
+	if err != nil {
+		return fmt.Sprintf("erreur: %v", err)
+	}
+	return string(b)
+}

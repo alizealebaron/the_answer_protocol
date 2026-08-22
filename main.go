@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* main.go                                           :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:15:04 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/19 13:40:21 by emarette        ###   ########.fr       */
+/* Updated: 2026/08/19 17:37:42 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -26,5 +26,6 @@ import (
 /* ----------------------------------------------------------------------- */
 
 func main() {
-    server.Tcp_server()
+    tapManager := server.ParseJSONFile()
+    server.Tcp_server(tapManager)
 }

@@ -37,8 +37,9 @@
 - [Google Sheet](https://docs.google.com/spreadsheets)
 - [Backlog produit : présentation et étapes de création](https://asana.com/fr/resources/product-backlog)
 
-### Documentation du Rust
+### Documentation du Go
 
-- [Tutoriel Rust](https://blog.guillaume-gomez.fr/Rust/tuto.pdf)
-- [Clear explanation of Rust’s module system](https://www.sheshbabu.com/posts/rust-module-system/)
-- [Crate serde_json](https://docs.rs/serde_json/latest/serde_json/)
+- [Tutoriel Golang : apprendre le langage Go (débutant)](https://blog.stephane-robert.info/docs/developper/programmation/golang/)
+- [La programmation orientée objet dans le langage de programmation Go](https://devopssec.fr/article/programmation-orientee-objet-golang)
+- [Parsing JSON files With Go](https://tutorialedge.net/golang/parsing-json-with-golang/)
+- [How to read a file and convert JSON to Go Struct](https://dev.to/mxglt/wip-how-to-read-a-file-and-convert-json-to-go-struct-6m2)

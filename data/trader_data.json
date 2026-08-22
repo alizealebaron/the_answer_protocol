@@ -1,0 +1,16 @@
+[
+	{
+		"id": 1,
+		"name": "Grégoin",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"],
+        "inventory": [4, 5, 6, 7]
+	},
+    {
+		"id": 4,
+		"name": "Léon",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"],
+        "inventory": [2, 10]
+	}
+]

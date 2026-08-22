@@ -14,14 +14,19 @@ package server
 
 import (
     "bufio"
-    "fmt"
+    // "fmt"
     "log"
     "net"
     "strings"
+    "the_answer_protocol/src/models"
 )
 
-func Tcp_server() {
+var TapManager models.TapManager
 
+func Tcp_server(tapManager models.TapManager) {
+
+    TapManager = tapManager
+    // fmt.Printf("%+v\n", TapManager)
     listener, err := net.Listen("tcp", ":8090")
     if err != nil {
         log.Fatal("Error listening:", err)
@@ -45,7 +50,7 @@ func handleConnection(conn net.Conn) {
 
     defer conn.Close()
 
-    var self_player bool
+    var self_player *models.Player
 
     for {
         reader := bufio.NewReader(conn)
@@ -57,9 +62,9 @@ func handleConnection(conn net.Conn) {
 
         command := strings.Split(line, " ") 
 
-        if self_player == nil {
+        if !self_player {
             if command[0] != "CONNECT" && command[0] != "HELP" {
-                response := "use 'CONNECT [Name] [Language]'"
+                response := "use 'CONNECT [Name] [Language]'\n"
                 _, err = conn.Write([]byte(response)) 
                 if err != nil {
                     log.Printf("Server write error: %v", err)

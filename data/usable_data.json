@@ -1,0 +1,11 @@
+[
+    {
+		"id": 2,
+		"name": "Kana pêche",
+		"descriptionFr": "Ça mord ? Ça mord pas ? Ohh !!! Un Kayou !",
+		"descriptionEn": "Are they biting? Not biting? Ohh!!! A Kayou!",
+		"cost": 200,
+		"nbCopies": -1,
+		"nbAvail": -1
+	}
+]
