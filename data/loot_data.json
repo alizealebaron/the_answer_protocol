@@ -16,5 +16,14 @@
 		"cost": 10,
 		"nbCopies": -1,
 		"nbAvail": -1
-	}
+	},
+	{
+        "id": 14,
+		"name": "Kayou",
+		"descriptionFr": "Kayou !!!",
+		"descriptionEn": "Kayou !!!",
+		"cost": 1,
+		"nbCopies": -1,
+		"nbAvail": -1
+    }
 ]

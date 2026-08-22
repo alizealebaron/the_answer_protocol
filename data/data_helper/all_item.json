@@ -1,0 +1,142 @@
+[
+    {
+		"id": 1,
+		"name": "Gambling Coin",
+		"descriptionFr": "C'est tout shiney !",
+		"descriptionEn": "Shiny !",
+		"cost": 1,
+		"nbCopies": -1,
+		"nbAvail": -1
+	},
+    {
+		"id": 2,
+		"name": "Kana pêche",
+		"descriptionFr": "Ça mord ? Ça mord pas ? Ohh !!! Un Kayou !",
+		"descriptionEn": "Are they biting? Not biting? Ohh!!! A Kayou!",
+		"cost": 200,
+		"nbCopies": -1,
+		"nbAvail": -1
+	},
+	{
+		"id": 3,
+		"name": "Calcium en barre",
+		"descriptionFr": "On dirait que vous êtes tombés sur un os.",
+		"descriptionEn": "Looks like you've hit a bone.",
+		"cost": 10,
+		"nbCopies": -1,
+		"nbAvail": -1
+	},
+    {
+        "id": 4,
+        "name": "Baguette de pain",
+        "descriptionFr": "Aussi curieux que cela puisse paraître, cette baguette permet de lancer des sorts.",
+        "descriptionEn": "As strange as it may seem, this baguette can be used to cast spells.",
+        "cost": 0,
+        "nbCopies": -1,
+        "nbAvail": -1,
+		"damage": 10
+	},
+	{
+        "id": 5,
+        "name": "Épée de bwa",
+        "descriptionFr": "Épée faite en bwa, un arbre très spécifique provenant de la région de Mousse-en-Arbre.",
+        "descriptionEn": "A sword made from bwa, a very specific type of tree native to the Mousse-en-Arbre region.",
+        "cost": 0,
+        "nbCopies": -1,
+        "nbAvail": -1,
+		"damage": 10
+	},
+	{
+        "id": 6,
+        "name": "Hache en mousse",
+        "descriptionFr": "A ne pas donner à un pyrobarbare sous peine de la voir partir en fumée.",
+        "descriptionEn": "Do not give this to a pyrobarbarian, or it will go up in smoke.",
+        "cost": 0,
+        "nbCopies": -1,
+        "nbAvail": -1,
+		"damage": 10
+	},
+	{
+        "id": 7,
+        "name": "Propulseur de fléchette",
+        "descriptionFr": "Pourquoi ne pas mettre un Kayou ?",
+        "descriptionEn": "Why not have a Kayou ?",
+        "cost": 0,
+        "nbCopies": -1,
+        "nbAvail": -1,
+		"damage": 10
+	},
+	{
+        "id": 8,
+        "name": "Gourdin en cobalt",
+        "descriptionFr": "Les fins connaisseurs sauront reconnaître le méga \"BONK\" produit par cette arme.",
+        "descriptionEn": "Experts will recognize the mega “BONK” this weapon produces.",
+        "cost": 30,
+        "nbCopies": -1,
+        "nbAvail": -1,
+		"damage": 15
+	},
+	{
+        "id": 9,
+        "name": "Couteau Grandement Terrifiant",
+        "descriptionFr": "Attention à ne pas trop le brusquer, il a tendance à facilement vouloir se révolter.",
+        "descriptionEn": "Be careful not to push him too hard, he tends to rebel easily.",
+        "cost": 50,
+        "nbCopies": -1,
+        "nbAvail": -1,
+		"damage": 20
+	},
+    {
+        "id": 10,
+        "name": "Jambon Beurre",
+        "descriptionFr": "Un délicieux sandouich. On raconte qu'il a été donné à celui qui avait dit qu'il l'avait fait.",
+        "descriptionEn": "A delicious sandwich. The story goes that it was given to the person who claimed to have made it.",
+        "cost": 20,
+        "nbCopies": -1,
+        "nbAvail": -1,
+        "effect": "HEAL",
+		"value": 10
+	},
+	{
+        "id": 11,
+        "name": "Jambon",
+        "descriptionFr": "Le jambon c'est bon la vie pour les grands et les petits.",
+        "descriptionEn": "Jambon macht Kinder froh, und Erwachsene ebenso.",
+        "cost": 5,
+        "nbCopies": -1,
+        "nbAvail": -1,
+		"effect": "HEAL",
+		"value": 2
+	},
+	{
+        "id": 12,
+        "name": "Krukinaj",
+        "descriptionFr": "Petit poisson deviendra grand.",
+        "descriptionEn": "A little fish will grow up to be big.",
+        "cost": 10,
+        "nbCopies": -1,
+        "nbAvail": -1,
+		"effect": "HEAL",
+		"value": 3
+	},
+	{
+        "id": 13,
+        "name": "Délicieux bâtonnets de poisson",
+        "descriptionFr": "Le trésor du capitaine.",
+        "descriptionEn": "The Captain's Treasure.",
+        "cost": 15,
+        "nbCopies": -1,
+        "nbAvail": -1,
+		"effect": "HEAL",
+		"value": 2
+	},
+    {
+        "id": 14,
+		"name": "Kayou",
+		"descriptionFr": "Kayou !!!",
+		"descriptionEn": "Kayou !!!",
+		"cost": 1,
+		"nbCopies": -1,
+		"nbAvail": -1
+    }
+]

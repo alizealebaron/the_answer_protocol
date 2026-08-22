@@ -28,7 +28,7 @@ import (
 /*                                  Main                                   */
 /* ----------------------------------------------------------------------- */
 
-func ParseJSONFile() {
+func ParseJSONFile() models.TapManager{
 
     // === Initialisation des Items ===
 
@@ -46,12 +46,16 @@ func ParseJSONFile() {
     var lst_npc []models.Npc
     lst_npc = get_all_npc(lst_item, lst_quest)
 
+    // === Initialisation des Rooms ===
+
+    var lst_room []models.Room
+    lst_room = get_all_room(lst_item, lst_npc)
+
     // === Initialisation du tapManager ===
-    tapManager := models.NewTapManager(lst_item, lst_quest, lst_npc)
-
-	fmt.Printf("%+v\n", tapManager.Lst_item)
-
+    tapManager := models.NewTapManager(lst_item, lst_quest, lst_npc, lst_room)
 	fmt.Println("[\033[32mSUCCESS\033[0m] (ﾉ◕ヮ◕)ﾉ*:・ﾟ✧ JSON successfully load.")
+
+    return tapManager
 }
 
 /* ----------------------------------------------------------------------- */
@@ -153,7 +157,7 @@ func get_all_npc(lst_item []models.Item, lst_quest []models.Quest) []models.Npc 
     var lst_dialoguer   []models.Dialoguer
     var lst_questgiver  []models.QuestGiver
     var lst_monster     []models.Monster
-    var lst_trader      []models.Trader
+    var lst_room      []models.Trader
 
     // === Récupérations des loots === //
 
@@ -200,13 +204,13 @@ func get_all_npc(lst_item []models.Item, lst_quest []models.Quest) []models.Npc 
 
     data = get_data_from_json("data/trader_data.json")
 
-    err = json.Unmarshal(data, &lst_trader)
+    err = json.Unmarshal(data, &lst_room)
 	if err != nil {
 		utils.ExitError("JSONParsingError", err)
 	}
 
-    resolve_trader_item(lst_trader, lst_item)
-    for _, t := range lst_trader {
+    resolve_trader_item(lst_room, lst_item)
+    for _, t := range lst_room {
         lst_npc = append(lst_npc, t)
     }
 
@@ -215,11 +219,35 @@ func get_all_npc(lst_item []models.Item, lst_quest []models.Quest) []models.Npc 
     return lst_npc
 }
 
+func get_all_room(lst_item []models.Item, lst_npc []models.Npc) []models.Room {
+
+    // === Déclarations des variables === //
+
+    var lst_room []models.Room
+
+    // === Récupération des quêtes === //
+
+    data := get_data_from_json("data/room_data.json")
+
+    err := json.Unmarshal(data, &lst_room)
+    if err != nil {
+        utils.ExitError("JSONParsingError", err)
+    }
+
+    resolve_room_item(lst_room, lst_item)
+    resolve_room_allies(lst_room, lst_npc)
+    resolve_room_ennemy(lst_room, lst_npc)
+
+    // === Renvoie des données récupérées === //
+
+    return lst_room
+}
+
 /* ----------------------------------------------------------------------- */
 /*                      Méthodes de liaison des objets                     */
 /* ----------------------------------------------------------------------- */
 
-func resolve_trader_item(lst_trader []models.Trader, lst_item []models.Item) []models.Trader {
+func resolve_room_item(lst_room []models.Room, lst_item []models.Item) []models.Room {
 
     // On construit une map pour un accès rapide O(1)
     itemById := make(map[int]models.Item)
@@ -227,17 +255,80 @@ func resolve_trader_item(lst_trader []models.Trader, lst_item []models.Item) []m
         itemById[it.GetId()] = it
     }
 
-    for i := range lst_trader {
-        for j := range lst_trader[i].InventoryId {
-            if item, ok := itemById[lst_trader[i].InventoryId[j]]; ok {
-                lst_trader[i].Inventory = append(lst_trader[i].Inventory, item)
+    for i := range lst_room {
+        for j := range lst_room[i].ItemsId {
+            if item, ok := itemById[lst_room[i].ItemsId[j]]; ok {
+                lst_room[i].Items = append(lst_room[i].Items, item)
             } else {
-                utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_trader[i].InventoryId[j]))
+                utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_room[i].ItemsId[j]))
             }
         }
     }
 
-    return lst_trader
+    return lst_room
+}
+
+func resolve_room_allies(lst_room []models.Room, lst_npc []models.Npc) []models.Room {
+
+    // On construit une map pour un accès rapide O(1)
+    npcById := make(map[int]models.Npc)
+    for _, npc := range lst_npc {
+        npcById[npc.GetId()] = npc
+    }
+
+    for i := range lst_room {
+        for j := range lst_room[i].AlliesId {
+            if npc, ok := npcById[lst_room[i].AlliesId[j]]; ok {
+                lst_room[i].Allies = append(lst_room[i].Allies, npc)
+            } else {
+                utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_room[i].AlliesId[j]))
+            }
+        }
+    }
+
+    return lst_room
+}
+
+func resolve_room_ennemy(lst_room []models.Room, lst_npc []models.Npc) []models.Room {
+
+    // On construit une map pour un accès rapide O(1)
+    npcById := make(map[int]models.Npc)
+    for _, npc := range lst_npc {
+        npcById[npc.GetId()] = npc
+    }
+
+    for i := range lst_room {
+        for j := range lst_room[i].EnnemiesId {
+            if npc, ok := npcById[lst_room[i].EnnemiesId[j]]; ok {
+                lst_room[i].Ennemies = append(lst_room[i].Ennemies, npc)
+            } else {
+                utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_room[i].EnnemiesId[j]))
+            }
+        }
+    }
+
+    return lst_room
+}
+
+func resolve_trader_item(lst_room []models.Trader, lst_item []models.Item) []models.Trader {
+
+    // On construit une map pour un accès rapide O(1)
+    itemById := make(map[int]models.Item)
+    for _, it := range lst_item {
+        itemById[it.GetId()] = it
+    }
+
+    for i := range lst_room {
+        for j := range lst_room[i].InventoryId {
+            if item, ok := itemById[lst_room[i].InventoryId[j]]; ok {
+                lst_room[i].Inventory = append(lst_room[i].Inventory, item)
+            } else {
+                utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_room[i].InventoryId[j]))
+            }
+        }
+    }
+
+    return lst_room
 }
 
 func resolve_monster_item(lst_monster []models.Monster, lst_item []models.Item) []models.Monster {

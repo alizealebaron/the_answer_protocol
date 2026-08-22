@@ -25,16 +25,17 @@ type TapManager struct {
     Lst_Player []Player
     Lst_Quest  []Quest
     Lst_Npc    []Npc
+    Lst_Room   []Room
 }
 
 /* +---------------------------------------------------------------------+ */
 /* |                            Constructeur                             | */
 /* +---------------------------------------------------------------------+ */
 
-func NewTapManager(Lst_item []Item, Lst_Quest []Quest, Lst_Npc []Npc) TapManager {
+func NewTapManager(Lst_item []Item, Lst_Quest []Quest, Lst_Npc []Npc, Lst_Room []Room) TapManager {
 
     Lst_Player := []Player{}
-    tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc}
+    tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc, Lst_Room}
     return tap
 }
 

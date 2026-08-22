@@ -1,11 +1,12 @@
 [
-    {
+	{
 		"id": 1,
 		"name": "CASINO",
 		"allies": [],
 		"ennemies": [],
 		"items": [1],
-		"lstNeighborRoom": [3, 4, 0, 0]
+		"neighborRoom": { "north": 4, "south": 0, "east": 3, "west": 0 },
+		"fishing": []
 	},
 	{
 		"id": 2,
@@ -13,7 +14,8 @@
 		"allies": [3],
 		"ennemies": [],
 		"items": [],
-		"lstNeighborRoom": [5, 3, 4, 6]
+		"neighborRoom": { "north": 6, "south": 3, "east": 5, "west": 4 },
+		"fishing": []
 	},
 	{
 		"id": 3,
@@ -21,7 +23,8 @@
 		"allies": [4],
 		"ennemies": [],
 		"items": [],
-		"lstNeighborRoom": [2, 1, 0, 0]
+		"neighborRoom": { "north": 2, "south": 0, "east": 0, "west": 1 },
+		"fishing": []
 	},
 	{
 		"id": 4,
@@ -29,16 +32,20 @@
 		"allies": [1],
 		"ennemies": [],
 		"items": [],
-		"lstNeighborRoom": [1, 2, 0, 0]
-		
+		"neighborRoom": { "north": 0, "south": 1, "east": 2, "west": 14 },
+		"fishing": [
+			{ "itemId": 12, "lootRate": 90 },
+			{ "itemId":  1, "lootRate": 10 }
+		]
 	},
 	{
 		"id": 5,
 		"name": "Taverne de la pucelle",
-		"allies": [2],
+		"allies": [2, 10],
 		"ennemies": [],
 		"items": [10],
-		"lstNeighborRoom": [2, 0, 0, 0]
+		"neighborRoom": { "north": 0, "south": 0, "east": 0, "west": 2 },
+		"fishing": []
 	},
 	{
 		"id": 6,
@@ -46,7 +53,8 @@
 		"allies": [],
 		"ennemies": [6, 7],
 		"items": [],
-		"lstNeighborRoom": [2, 7, 0, 0]
+		"neighborRoom": { "north": 7, "south": 2, "east": 0, "west": 0 },
+		"fishing": []
 	},
 	{
 		"id": 7,
@@ -54,7 +62,8 @@
 		"allies": [],
 		"ennemies": [6, 7],
 		"items": [],
-		"lstNeighborRoom": [6, 8, 9, 10]
+		"neighborRoom": { "north": 9, "south": 2, "east": 8, "west": 10 },
+		"fishing": []
 	},
 	{
 		"id": 8,
@@ -62,7 +71,8 @@
 		"allies": [],
 		"ennemies": [6, 7],
 		"items": [],
-		"lstNeighborRoom": [7, 11, 0, 0]
+		"neighborRoom": { "north": 0, "south": 0, "east": 11, "west": 7 },
+		"fishing": []
 	},
 	{
 		"id": 9,
@@ -70,7 +80,8 @@
 		"allies": [5],
 		"ennemies": [6, 7],
 		"items": [],
-		"lstNeighborRoom": [7, 0, 0, 0]
+		"neighborRoom": { "north": 0, "south": 7, "east": 0, "west": 0 },
+		"fishing": []
 	},
 	{
 		"id": 10,
@@ -78,7 +89,11 @@
 		"allies": [],
 		"ennemies": [7],
 		"items": [],
-		"lstNeighborRoom": [7, 0, 0, 0]
+		"neighborRoom": { "north": 0, "south": 0, "east": 7, "west": 12 },
+		"fishing": [
+			{ "itemId": 14, "lootRate": 10 },
+			{ "itemId": 12, "lootRate": 90 }
+		]
 	},
 	{
 		"id": 11,
@@ -86,7 +101,8 @@
 		"allies": [],
 		"ennemies": [8],
 		"items": [],
-		"lstNeighborRoom": [8, 0, 0, 0]
+		"neighborRoom": { "north": 0, "south": 0, "east": 0, "west": 0 },
+		"fishing": []
 	},
 	{
 		"id": 12,
@@ -94,7 +110,8 @@
 		"allies": [],
 		"ennemies": [6, 7],
 		"items": [],
-		"lstNeighborRoom": [10, 13, 0, 0]
+		"neighborRoom": { "north":  0, "south": 13, "east": 10, "west": 0 },
+		"fishing": []
 	},
 	{
 		"id": 13,
@@ -102,7 +119,8 @@
 		"allies": [],
 		"ennemies": [6, 7],
 		"items": [],
-		"lstNeighborRoom": [12, 14, 0, 0]
+		"neighborRoom": { "north": 12, "south": 14, "east": 0, "west": 0 },
+		"fishing": []
 	},
 	{
 		"id": 14,
@@ -110,6 +128,7 @@
 		"allies": [],
 		"ennemies": [6, 7],
 		"items": [],
-		"lstNeighborRoom": [13, 4, 0, 0]
+		"neighborRoom": { "north": 13, "south": 0, "east": 4, "west": 0 },
+		"fishing": []
 	}
 ]

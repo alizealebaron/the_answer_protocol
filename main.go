@@ -17,6 +17,7 @@
 package main
 
 import (
+    "fmt"
     "the_answer_protocol/src/server"
 )
 
@@ -25,5 +26,7 @@ import (
 /* ----------------------------------------------------------------------- */
 
 func main() {
-    server.ParseJSONFile()
+
+    tapManager := server.ParseJSONFile()
+    fmt.Printf("%+v\n", tapManager)
 }
