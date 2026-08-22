@@ -13,12 +13,15 @@
 package server
 
 import (
-    "bufio"
-    // "fmt"
-    "log"
-    "net"
-    "strings"
-    "the_answer_protocol/src/models"
+	"bufio"
+	"fmt"
+	// "fmt"
+	"log"
+	"net"
+	"strings"
+	"the_answer_protocol/src/models"
+	"the_answer_protocol/src/utils"
+	"the_answer_protocol/src/server/commands"
 )
 
 var TapManager models.TapManager
@@ -50,8 +53,10 @@ func handleConnection(conn net.Conn) {
 
     defer conn.Close()
 
-    var self_player *models.Player
+    var self_player models.Player
+    var code_error string
 
+    is_connected := false 
     for {
         reader := bufio.NewReader(conn)
         line, err := reader.ReadString('\n')
@@ -60,20 +65,29 @@ func handleConnection(conn net.Conn) {
             return
         }
 
-        command := strings.Split(line, " ") 
-
-        if !self_player {
-            if command[0] != "CONNECT" && command[0] != "HELP" {
-                response := "use 'CONNECT [Name] [Language]'\n"
-                _, err = conn.Write([]byte(response)) 
-                if err != nil {
-                    log.Printf("Server write error: %v", err)
-                }
-            } else if command[0] == "HELP" {
+        command := strings.Split(line, " ")
+        for i, arg := range command {
+            command[i] = strings.Trim(arg, "\n")
+            fmt.Printf("%d\n", i)
+        } 
+        fmt.Printf("%d\n", len(command))
+        if is_connected == false {
+            if command[0] == "HELP" {
                 continue
-            } else if command[0] == "CONNECT" {
-                continue
+            } else if command[0] == "CONNECT" && len(command) == 3 {
+                self_player, code_error = commands.Connect(TapManager, conn, command[1], command[2])
+                if code_error != "" {
+                    fmt.Print("on trouvera un truc a dire\n")
+                    } else {
+                        fmt.Printf("%s connected\n", command[1])
+                        is_connected = true
+                    }
+            } else {
+                utils.ServerWrite(conn, "use 'CONNECT [Name] [Language]' or 'HELP' for more information\n")
             }
+        } else {
+             utils.ServerWrite(conn, "attend 2s\n")
+             fmt.Printf("Bonjour %s\n", self_player.Name)
         }
 
         // ackMsg := strings.ToUpper(strings.TrimSpace(message))
