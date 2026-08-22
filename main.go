@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:15:04 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/19 17:37:42 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/22 13:38:04 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -17,8 +17,9 @@
 package main
 
 import (
-    "fmt"
-    "the_answer_protocol/src/server"
+	// "fmt"
+	"the_answer_protocol/src/gui"
+	// "the_answer_protocol/src/server"
 )
 
 /* ----------------------------------------------------------------------- */
@@ -27,6 +28,7 @@ import (
 
 func main() {
 
-    tapManager := server.ParseJSONFile()
-    fmt.Printf("%+v\n", tapManager)
+	// tapManager := server.ParseJSONFile()
+	// fmt.Printf("%+v\n", tapManager)
+	gui.Run()
 }

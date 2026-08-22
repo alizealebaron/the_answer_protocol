@@ -26,3 +26,4 @@ sujet.md
 # Added by cargo
 
 /target
+.vscode

@@ -1,0 +1,6 @@
+AppID = "com.the_answer_protocol.gui"
+Name = "The Answer Protocol"
+Build = "1"
+
+[Migrations]
+  fyneDo = true
