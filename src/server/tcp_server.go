@@ -15,7 +15,6 @@ package server
 import (
 	"bufio"
 	"fmt"
-	// "fmt"
 	"log"
 	"net"
 	"strings"
@@ -28,8 +27,22 @@ var TapManager models.TapManager
 
 func Tcp_server(tapManager models.TapManager) {
 
+    // === Récupération du tapmanager === //
+
     TapManager = tapManager
     // fmt.Printf("%+v\n", TapManager)
+
+    // === Récupération de l'adresse IP de la machine === //
+
+    conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+
+    // === Ouverture du port d'écoute du serveur === //
+
     listener, err := net.Listen("tcp", ":8090")
     if err != nil {
         log.Fatal("Error listening:", err)
@@ -37,6 +50,7 @@ func Tcp_server(tapManager models.TapManager) {
 
     defer listener.Close()
 
+	fmt.Println("[\033[32mSUCCESS\033[0m] (⊃｡•́‿•̀｡)⊃━☆ﾟ* Server started ! Use nc", localAddr.IP.String(), "8090")
     for {
 
         conn, err := listener.Accept()

@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:28:32 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/20 18:06:07 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/24 17:21:19 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -53,7 +53,7 @@ func ParseJSONFile() models.TapManager{
 
     // === Initialisation du tapManager ===
     tapManager := models.NewTapManager(lst_item, lst_quest, lst_npc, lst_room)
-	fmt.Println("[\033[32mSUCCESS\033[0m] (ﾉ◕ヮ◕)ﾉ*:・ﾟ✧ JSON successfully load.")
+	fmt.Println("[\033[32mSUCCESS\033[0m] (ﾉ◕ヮ◕)ﾉ*・ﾟ✧ JSON successfully load.")
 
     return tapManager
 }

@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* connect.go                                        :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 15:25:33 by emarette        #+#    #+#              */
-/* Updated: 2026/08/22 14:50:01 by emarette        ###   ########.fr       */
+/* Updated: 2026/08/24 17:15:39 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -32,6 +32,7 @@ func Connect(tapManager models.TapManager,conn net.Conn, name string, language s
 	}
 
 	tapManager.Lst_Player = append(tapManager.Lst_Player, player)
+	tapManager.Lst_Room[1].Lst_Player = append(tapManager.Lst_Room[1].Lst_Player, player)
 	utils.ServerWrite(conn, "Ok connected\n")
 	return player, ""
 }

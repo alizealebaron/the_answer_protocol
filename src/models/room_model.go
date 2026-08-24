@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 15:56:01 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/21 15:56:03 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/24 16:58:49 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -52,6 +52,7 @@ type Room struct {
 	Allies        []Npc          `json:"-"`
 	Ennemies      []Npc          `json:"-"`
 	Items         []Item         `json:"-"`
+	Lst_Player    []Player       `json:"-"`
 }
 
 func (r Room) GetId()   int    { return r.Id }

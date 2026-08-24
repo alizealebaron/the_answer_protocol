@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:15:04 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/19 17:37:42 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/24 17:04:13 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -18,8 +18,7 @@ package main
 
 import (
     // "fmt"
-    // "the_answer_protocol/src/server"
-    "the_answer_protocol/src/utils"
+    "the_answer_protocol/src/server"
 )
 
 /* ----------------------------------------------------------------------- */
@@ -27,9 +26,7 @@ import (
 /* ----------------------------------------------------------------------- */
 
 func main() {
-
     tapManager := server.ParseJSONFile()
-    utils.CreateLogFolder()
+    // fmt.Printf("%+v\n", tapManager.Lst_Room)
     server.Tcp_server(tapManager)
-
 }

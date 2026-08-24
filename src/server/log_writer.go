@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/24 15:54:02 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/24 15:55:21 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/24 17:01:20 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -14,7 +14,7 @@
 /* |                          Package & Import                           | */
 /* +---------------------------------------------------------------------+ */
 
-package utils
+package server
 
 import (
 	"the_answer_protocol/src/utils"
