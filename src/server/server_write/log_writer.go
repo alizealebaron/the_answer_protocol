@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/24 15:54:02 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/25 13:20:47 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/25 14:59:55 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -20,6 +20,7 @@ import (
 	"the_answer_protocol/src/utils"
     "os"
     "net"
+    "fmt"
     "time"
     "strings"
 )
@@ -60,8 +61,9 @@ func WriteLog(conn net.Conn, level string, texte string) {
     formattedTime := now.Format("2006-01-02 15:04:05")
 
     texte = strings.TrimRight(texte, "\n")
-    str := formattedTime + " (" + clientIP + "): [" + level + "] " + texte + "\n"
+    str := fmt.Sprintf("%s %-12s: %-9s %s\n", formattedTime, "(" + clientIP + ")", "[" + level + "]", texte)
 
+    fmt.Println(str[:len(str)-1])
     _, err = file.WriteString(str)
     if err != nil {
         panic(err)

@@ -1,0 +1,60 @@
+2026-08-25 16:34:05 (127.0.0.1) : [INFO]    Player ale connected
+2026-08-25 16:34:09 (127.0.0.1) : [COMMAND] ale use LOOK
+2026-08-25 16:34:09 (127.0.0.1) : [SERVER]  To ale: {"id":2,"name":"Place Sénile","allies":[3],"ennemies":[],"items":[],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
+2026-08-25 16:34:20 (127.0.0.1) : [COMMAND] ale use MOVE south
+2026-08-25 16:34:20 (127.0.0.1) : [SERVER]  To ale: OK Rue de l'avenue
+2026-08-25 16:34:24 (127.0.0.1) : [COMMAND] ale use MOVE east
+2026-08-25 16:34:24 (127.0.0.1) : [WARN]    ale received a warn: ERR 301 NO_EXIT
+2026-08-25 16:34:33 (127.0.0.1) : [COMMAND] ale use MOVE WEST
+2026-08-25 16:34:33 (127.0.0.1) : [SERVER]  To ale: OK CASINO
+2026-08-25 16:41:41 (10.11.6.16): [INFO]    Player f connected
+2026-08-25 16:41:46 (10.11.6.16): [COMMAND] f use LOOK
+2026-08-25 16:41:46 (10.11.6.16): [SERVER]  To f: {"id":2,"name":"Place Sénile","allies":[3],"ennemies":[],"items":[],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
+2026-08-25 16:42:13 (10.11.6.16): [COMMAND] f use MOVE NORTH 
+2026-08-25 16:42:13 (10.11.6.16): [WARN]    f received a warn: ERR 302 NO_DIRECTION_SEND
+2026-08-25 16:42:29 (10.11.6.16): [COMMAND] f use MOVE NORTH
+2026-08-25 16:42:29 (10.11.6.16): [SERVER]  To f: OK Forêt, épisode 1
+2026-08-25 16:42:35 (10.11.6.16): [COMMAND] f use MOVE NORTH 
+2026-08-25 16:42:35 (10.11.6.16): [WARN]    f received a warn: ERR 302 NO_DIRECTION_SEND
+2026-08-25 16:42:39 (10.11.6.16): [COMMAND] f use MOVE NORTH
+2026-08-25 16:42:39 (10.11.6.16): [SERVER]  To f: OK Forêt fantôme
+2026-08-25 16:42:51 (10.11.6.16): [COMMAND] f use MOVE NORTH
+2026-08-25 16:42:51 (10.11.6.16): [SERVER]  To f: OK Forêt la revanche
+2026-08-25 16:42:52 (10.11.6.16): [COMMAND] f use MOVE NORTH
+2026-08-25 16:42:52 (10.11.6.16): [WARN]    f received a warn: ERR 301 NO_EXIT
+2026-08-25 16:42:55 (10.11.6.16): [COMMAND] f use MOVE NORTH
+2026-08-25 16:42:55 (10.11.6.16): [WARN]    f received a warn: ERR 301 NO_EXIT
+2026-08-25 16:42:56 (10.11.6.16): [COMMAND] f use MOVE NORTH
+2026-08-25 16:42:56 (10.11.6.16): [WARN]    f received a warn: ERR 301 NO_EXIT
+2026-08-25 16:42:57 (10.11.6.16): [COMMAND] f use MOVE NORTH
+2026-08-25 16:42:57 (10.11.6.16): [WARN]    f received a warn: ERR 301 NO_EXIT
+2026-08-25 16:43:05 (10.11.6.16): [COMMAND] f use MOVE SOUTH
+2026-08-25 16:43:05 (10.11.6.16): [SERVER]  To f: OK Forêt fantôme
+2026-08-25 16:43:09 (10.11.6.16): [COMMAND] f use MOVE NORTH
+2026-08-25 16:43:09 (10.11.6.16): [SERVER]  To f: OK Forêt la revanche
+2026-08-25 16:43:13 (10.11.6.16): [COMMAND] f use MOVE EAST
+2026-08-25 16:43:13 (10.11.6.16): [WARN]    f received a warn: ERR 301 NO_EXIT
+2026-08-25 16:43:18 (10.11.6.16): [COMMAND] f use MOVE WEST
+2026-08-25 16:43:18 (10.11.6.16): [WARN]    f received a warn: ERR 301 NO_EXIT
+2026-08-25 16:43:22 (10.11.6.16): [COMMAND] f use LOOK
+2026-08-25 16:43:22 (10.11.6.16): [SERVER]  To f: {"id":9,"name":"Forêt la revanche","allies":[5],"ennemies":[6,7],"items":[],"neighborRoom":{"north":0,"south":7,"east":0,"west":0},"fishing":[]}
+2026-08-25 16:43:44 (10.11.6.16): [COMMAND] f use MOVE SOUTH
+2026-08-25 16:43:44 (10.11.6.16): [SERVER]  To f: OK Forêt fantôme
+2026-08-25 16:43:46 (10.11.6.16): [COMMAND] f use MOVE WEST
+2026-08-25 16:43:46 (10.11.6.16): [SERVER]  To f: OK Lac Koulofon
+2026-08-25 16:43:49 (10.11.6.16): [COMMAND] f use MOVE WEST
+2026-08-25 16:43:49 (10.11.6.16): [SERVER]  To f: OK La nouvelle forêt
+2026-08-25 16:43:53 (10.11.6.16): [COMMAND] f use MOVE WEST
+2026-08-25 16:43:53 (10.11.6.16): [WARN]    f received a warn: ERR 301 NO_EXIT
+2026-08-25 16:43:56 (10.11.6.16): [COMMAND] f use LOOK
+2026-08-25 16:43:56 (10.11.6.16): [SERVER]  To f: {"id":12,"name":"La nouvelle forêt","allies":[],"ennemies":[6,7],"items":[],"neighborRoom":{"north":0,"south":13,"east":10,"west":0},"fishing":[]}
+2026-08-25 16:44:00 (10.11.6.16): [COMMAND] f use MOVE SOUTH
+2026-08-25 16:44:00 (10.11.6.16): [SERVER]  To f: OK Le retour de la forêt
+2026-08-25 16:44:04 (10.11.6.16): [COMMAND] f use MOVE SOUTH
+2026-08-25 16:44:04 (10.11.6.16): [SERVER]  To f: OK Forêt the gump
+2026-08-25 16:44:07 (10.11.6.16): [COMMAND] f use MOVE SOUTH
+2026-08-25 16:44:07 (10.11.6.16): [WARN]    f received a warn: ERR 301 NO_EXIT
+2026-08-25 16:44:09 (10.11.6.16): [COMMAND] f use LOOK
+2026-08-25 16:44:09 (10.11.6.16): [SERVER]  To f: {"id":14,"name":"Forêt the gump","allies":[],"ennemies":[6,7],"items":[],"neighborRoom":{"north":13,"south":0,"east":4,"west":0},"fishing":[]}
+2026-08-25 16:44:15 (10.11.6.16): [COMMAND] f use MOVE EAST
+2026-08-25 16:44:15 (10.11.6.16): [SERVER]  To f: OK Fontaine
