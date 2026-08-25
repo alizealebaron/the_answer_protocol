@@ -10,20 +10,41 @@
 /*                                                                         */
 /* *********************************************************************** */
 
+/* +---------------------------------------------------------------------+ */
+/* |                          Package & Import                           | */
+/* +---------------------------------------------------------------------+ */
+
 package server
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"net"
+    "bufio"
+    "errors"
 	"strings"
 	"the_answer_protocol/src/models"
-	"the_answer_protocol/src/utils"
 	"the_answer_protocol/src/server/commands"
+	"the_answer_protocol/src/server/server_write"
 )
 
+/* ----------------------------------------------------------------------- */
+/*                           Variables Globales                            */
+/* ----------------------------------------------------------------------- */
+
 var TapManager models.TapManager
+
+// Signature commune à toutes les commandes
+type CommandFunc func(args []string, tapManager models.TapManager, player models.Player, conn net.Conn) error
+
+// Registre des commandes
+var map_commands = map[string]CommandFunc{
+	"LOOK":   commands.Look,
+}
+
+/* ----------------------------------------------------------------------- */
+/*                                Fonctions                                */
+/* ----------------------------------------------------------------------- */
 
 func Tcp_server(tapManager models.TapManager) {
 
@@ -67,11 +88,16 @@ func handleConnection(conn net.Conn) {
 
     defer conn.Close()
 
+    // === Déclaraction des variables === //
+
     var self_player models.Player
     var code_error string
 
+    // === Gestion des demandes de l'utilisateur === //
     is_connected := false 
     for {
+
+        // Récupération des commandes envoyées //
         reader := bufio.NewReader(conn)
         line, err := reader.ReadString('\n')
         if err != nil {
@@ -79,29 +105,39 @@ func handleConnection(conn net.Conn) {
             return
         }
 
+        // Séparation des différents arguments //
         command := strings.Split(line, " ")
         for i, arg := range command {
             command[i] = strings.Trim(arg, "\n")
-            fmt.Printf("%d\n", i)
-        } 
-        fmt.Printf("%d\n", len(command))
+        }
+
+        // Gestion des commandes selon si l'utilisateur est connecté ou non //
         if is_connected == false {
+            // 3 possbilités HELP, CONNECT ou autre
             if command[0] == "HELP" {
                 continue
             } else if command[0] == "CONNECT" && len(command) == 3 {
                 self_player, code_error = commands.Connect(TapManager, conn, command[1], command[2])
                 if code_error != "" {
-                    fmt.Print("on trouvera un truc a dire\n")
+                    fmt.Print("Connection attempt failed\n")
                     } else {
+                        server_write.WriteLog(conn, "INFO", "Player " + self_player.Name + " connected")
                         fmt.Printf("%s connected\n", command[1])
                         is_connected = true
                     }
             } else {
-                utils.ServerWrite(conn, "use 'CONNECT [Name] [Language]' or 'HELP' for more information\n")
+                server_write.ServerWrite(conn, "use 'CONNECT [Name] [Language]' or 'HELP' for more information\n")
             }
         } else {
-             utils.ServerWrite(conn, "attend 2s\n")
-             fmt.Printf("Bonjour %s\n", self_player.Name)
+
+            // Ecriture de la commande dans les logs
+            server_write.WriteLog(conn, "COMMAND", self_player.Name + " use " + line[:len(line)-1])
+
+            // Envoie de la ligne parse dans les différentes commandes
+            if err := dispatch(command, TapManager, self_player, conn); err != nil {
+                server_write.WriteLog(conn, "WARN", self_player.Name + " received a warn: " + err.Error())
+                server_write.ServerWrite(conn, err.Error() + "\n")
+            }
         }
 
         // ackMsg := strings.ToUpper(strings.TrimSpace(message))
@@ -111,4 +147,24 @@ func handleConnection(conn net.Conn) {
         //     log.Printf("Server write error: %v", err)
         // }
     }
+}
+
+func dispatch(fields []string, tap models.TapManager, player models.Player, conn net.Conn) error {
+
+    // Vérification de la longueur de la commande
+	if len(fields) == 0 {
+		return errors.New("ERR 903 COMMAND_EMPTY")
+	}
+
+    // Récupération des variables
+	cmdName := fields[0]
+	args := fields[1:]
+
+    // Lancement de la commande
+	fn, ok := map_commands[cmdName]
+	if !ok {
+		return fmt.Errorf("ERR 902 COMMAND_UNKNOWN %q", cmdName)
+	}
+
+	return fn(args, tap, player, conn)
 }

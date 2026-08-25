@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/24 15:54:02 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/24 17:01:20 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/25 13:20:47 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -14,12 +14,14 @@
 /* |                          Package & Import                           | */
 /* +---------------------------------------------------------------------+ */
 
-package server
+package server_write
 
 import (
 	"the_answer_protocol/src/utils"
     "os"
+    "net"
     "time"
+    "strings"
 )
 
 /* +---------------------------------------------------------------------+ */
@@ -33,16 +35,20 @@ func CreateLogFolder() {
         utils.ExitError("CREATEDIR", err)
     }
 
-    file, err := os.OpenFile("log/server_log.txt", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0755)
+    file, err := os.OpenFile("log/server_log.txt", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0755)
     if err != nil {
         utils.ExitError("OPENFILE", err)
     }
 
+    _, err = file.WriteString("")
     defer file.Close()
-
 }
 
-func WriteLog(ip string, level string, texte string) {
+func WriteLog(conn net.Conn, level string, texte string) {
+
+    // Récupération de l'adresse IP //
+    remoteAddr := conn.RemoteAddr().(*net.TCPAddr)
+    clientIP := remoteAddr.IP.String()
 
     file, err := os.OpenFile("log/server_log.txt", os.O_WRONLY|os.O_APPEND, 0755)
     if err != nil {
@@ -53,7 +59,8 @@ func WriteLog(ip string, level string, texte string) {
     now := time.Now()
     formattedTime := now.Format("2006-01-02 15:04:05")
 
-    str := formattedTime + " (" + ip + "): [" + level + "] " + texte + "\n"
+    texte = strings.TrimRight(texte, "\n")
+    str := formattedTime + " (" + clientIP + "): [" + level + "] " + texte + "\n"
 
     _, err = file.WriteString(str)
     if err != nil {
