@@ -27,3 +27,5 @@ sujet.md
 
 /target
 .vscode
+
+/log/*
