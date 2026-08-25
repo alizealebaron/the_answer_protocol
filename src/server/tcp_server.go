@@ -23,9 +23,9 @@ import (
 	"the_answer_protocol/src/server/commands"
 )
 
-var TapManager models.TapManager
+var TapManager *models.TapManager
 
-func Tcp_server(tapManager models.TapManager) {
+func Tcp_server(tapManager *models.TapManager) {
 
     // === Récupération du tapmanager === //
 
@@ -82,9 +82,7 @@ func handleConnection(conn net.Conn) {
         command := strings.Split(line, " ")
         for i, arg := range command {
             command[i] = strings.Trim(arg, "\n")
-            fmt.Printf("%d\n", i)
         } 
-        fmt.Printf("%d\n", len(command))
         if is_connected == false {
             if command[0] == "HELP" {
                 continue
@@ -100,6 +98,10 @@ func handleConnection(conn net.Conn) {
                 utils.ServerWrite(conn, "use 'CONNECT [Name] [Language]' or 'HELP' for more information\n")
             }
         } else {
+            if command[0] == "QUIT" {
+                commands.Quit(TapManager, conn, self_player)
+                return
+            }
              utils.ServerWrite(conn, "attend 2s\n")
              fmt.Printf("Bonjour %s\n", self_player.Name)
         }
