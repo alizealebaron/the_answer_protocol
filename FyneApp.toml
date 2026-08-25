@@ -1,0 +1,6 @@
+AppID = "the_answer_protocol"
+Name = "The Answer Protocol"
+Build = "1"
+
+[Migrations]
+  fyneDo = true
