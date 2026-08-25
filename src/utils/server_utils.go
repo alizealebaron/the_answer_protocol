@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* player_model.go                                   :+:      :+:    :+:   */
+/* server_utils.go                                   :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/19 16:20:31 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/19 17:26:16 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/22 14:03:24 by emarette        #+#    #+#              */
+/* Updated: 2026/08/24 15:54:38 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -14,31 +14,20 @@
 /* |                          Package & Import                           | */
 /* +---------------------------------------------------------------------+ */
 
-package models
+package utils
+
+import (
+	"net"
+	"log"
+)
 
 /* +---------------------------------------------------------------------+ */
-/* |                          Variable globale                           | */
+/* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
 
-var totalPlayer int
-
-/* +---------------------------------------------------------------------+ */
-/* |                                Item                                 | */
-/* +---------------------------------------------------------------------+ */
-
-type Player struct {
-	Id       int
-    Name     string
-    Pv       int
-    Attack   int
-    Language string
-    Inventory []Item 
-}
-
-func NewPlayer(name string, language string) Player {
-
-    lstItem := []Item{}
-    player := Player{totalPlayer, name, 100, 5, language, lstItem}
-    totalPlayer += 1
-    return player
+func ServerWrite(conn net.Conn, message string) {
+    _, err := conn.Write([]byte(message)) 
+    if err != nil {
+        log.Printf("Server write error: %v", err)
+    }
 }
