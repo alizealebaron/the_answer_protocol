@@ -1,5 +1,5 @@
-2026-08-22 18:02:03 (10.2.3.0): [WARN] ouiouibaguette
-2026-08-22 18:02:16 (10.2.3.0): [WARN] ouiouibaguette
-2026-08-22 18:02:17 (10.2.3.0): [WARN] ouiouibaguette
-2026-08-22 18:02:17 (10.2.3.0): [WARN] ouiouibaguette
-2026-08-22 18:02:18 (10.2.3.0): [WARN] ouiouibaguette
+2026-08-25 13:21:01 (127.0.0.1): [INFO] Player ale connected
+2026-08-25 13:21:05 (127.0.0.1): [COMMAND] ale use LOOK
+2026-08-25 13:21:05 (127.0.0.1): [SERVER] To ale: {"id":2,"name":"Place Sénile","allies":[3],"ennemies":[],"items":[],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
+2026-08-25 13:21:12 (127.0.0.1): [COMMAND] ale use LOOK
+2026-08-25 13:21:12 (127.0.0.1): [SERVER] To ale: {"id":2,"name":"Place Sénile","allies":[3],"ennemies":[],"items":[],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
