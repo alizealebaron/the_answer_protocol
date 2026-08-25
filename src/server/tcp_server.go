@@ -42,6 +42,7 @@ var map_commands = map[string]CommandFunc{
 	"LOOK":   commands.Look,
     "CHAT":   commands.Chat,
 	"MOVE":   commands.Move,
+	"WHO":   commands.Who,
 }
 
 /* ----------------------------------------------------------------------- */
