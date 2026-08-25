@@ -13,6 +13,8 @@
 package gui
 
 import (
+	"fmt"
+	"os/exec"
 
 	// "the_answer_protocol/src/utils"
 
@@ -65,7 +67,45 @@ func HomeView(size fyne.Size) fyne.CanvasObject {
 	ipField.SetPlaceHolder("Enter the ip of the game")
 
 	// Button to join the server
-	joinButton = widget.NewButton("Join server", func() {})
+	joinButton = widget.NewButton("Join server", func() {
+		ip := ipField.Text
+
+		// A goroutine: It's like a thread, but lighter.
+		go func() {
+			// Create the command to connect to the server using 'nc'
+			// If an error occurs, it is print properly.
+			if ip != "" {
+				cmd := exec.Command("nc", ip, "8090")
+				stdin, err := cmd.StdinPipe()
+				if err != nil {
+					fmt.Println("Error:", err)
+					return
+				}
+				if err := cmd.Start(); err != nil {
+					fmt.Println("Error:", err)
+					return
+				}
+
+				var language string
+				if langSelect.Selected == "Français" {
+					language = "FR"
+				} else {
+					language = "EN"
+				}
+
+				name := nameField.Text
+				if name == "" {
+					fmt.Println("Error:")
+				} else {
+					fmt.Fprintf(stdin, "CONNECT %s %s\n", name, language)
+				}
+
+				cmd.Wait()
+			}
+		}()
+	})
+
+	t := error_widget("e", size)
 
 	// Set variables at the value of the window
 	width, height := size.Width, size.Height
@@ -76,5 +116,6 @@ func HomeView(size fyne.Size) fyne.CanvasObject {
 	)
 
 	// return the container at the good place
-	return container.NewBorder(nil, big, nil, nil)
+	return container.NewStack(container.NewBorder(nil, big, nil, nil), t)
+	// return container.NewBorder(nil, big, nil, nil)
 }
