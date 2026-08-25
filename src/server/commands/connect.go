@@ -6,7 +6,7 @@
 /* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 15:25:33 by emarette        #+#    #+#              */
-/* Updated: 2026/08/25 13:33:30 by emarette        ###   ########.fr       */
+/* Updated: 2026/08/25 22:24:42 by emarette        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -19,7 +19,7 @@ import (
 )
 
 func Connect(tapManager *models.TapManager, conn net.Conn, name string, language string) (models.Player, string) {
-	player := models.NewPlayer(name, language)
+	player := models.NewPlayer(name, language, conn)
 	for _, player := range tapManager.Lst_Player {
 		if name == player.Name {
 			server_write.ServerWrite(conn, "ERR 201 NAME_IN_USE\n")

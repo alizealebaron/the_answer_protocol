@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* player_model.go                                   :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 16:20:31 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/19 17:26:16 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/25 22:54:33 by emarette        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -15,6 +15,10 @@
 /* +---------------------------------------------------------------------+ */
 
 package models
+
+import (
+    "net"
+)
 
 /* +---------------------------------------------------------------------+ */
 /* |                          Variable globale                           | */
@@ -33,12 +37,14 @@ type Player struct {
     Attack   int
     Language string
     Inventory []Item 
+    Conn net.Conn
+    Group string
 }
 
-func NewPlayer(name string, language string) Player {
+func NewPlayer(name string, language string, conn net.Conn) Player {
 
     lstItem := []Item{}
-    player := Player{totalPlayer, name, 100, 5, language, lstItem}
+    player := Player{totalPlayer, name, 100, 5, language, lstItem, conn, ""}
     totalPlayer += 1
     return player
 }

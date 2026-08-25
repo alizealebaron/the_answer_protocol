@@ -1,0 +1,7 @@
+2026-08-25 23:09:44 (10.11.5.7): [INFO] Player f connected
+2026-08-25 23:10:17 (10.11.5.7): [COMMAND] f use CHAT GLOBAL "bouffeur de merde"
+2026-08-25 23:10:17 (10.11.5.7): [[CHAT]] [Chat Global] f: "bouffeur
+2026-08-25 23:10:54 (10.11.5.7): [INFO] Player d connected
+2026-08-25 23:11:04 (10.11.5.7): [COMMAND] d use CHAT GLOBAL bonjour
+2026-08-25 23:11:04 (10.11.5.7): [[CHAT]] [Chat Global] d: bonjour
+2026-08-25 23:11:04 (10.11.5.7): [[CHAT]] [Chat Global] d: bonjour

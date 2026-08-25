@@ -35,11 +35,12 @@ import (
 var TapManager *models.TapManager
 
 // Signature commune à toutes les commandes
-type CommandFunc func(args []string, tapManager *models.TapManager, player models.Player, conn net.Conn) error
+type CommandFunc func(args []string, tapManager *models.TapManager, player models.Player) error
 
 // Registre des commandes
 var map_commands = map[string]CommandFunc{
 	"LOOK":   commands.Look,
+    "CHAT":   commands.Chat,
 }
 
 /* ----------------------------------------------------------------------- */
@@ -130,7 +131,7 @@ func handleConnection(conn net.Conn) {
             }
         } else {
             if command[0] == "QUIT" {
-                commands.Quit(TapManager, conn, self_player)
+                commands.Quit(TapManager, self_player)
                 return
             }
             // Ecriture de la commande dans les logs
@@ -169,5 +170,5 @@ func dispatch(fields []string, tap *models.TapManager, player models.Player, con
 		return fmt.Errorf("ERR 902 COMMAND_UNKNOWN %q", cmdName)
 	}
 
-	return fn(args, tap, player, conn)
+	return fn(args, tap, player)
 }
