@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* quit.go                                           :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/25 12:44:36 by emarette        #+#    #+#              */
-/* Updated: 2026/08/25 22:25:38 by emarette        ###   ########.fr       */
+/* Updated: 2026/08/25 14:38:41 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -20,4 +20,5 @@ import (
 func Quit(tapManager *models.TapManager, player models.Player) {
 	tapManager.RemovePlayer(player.Id)
 	server_write.ServerWrite(player.Conn, "Ok bye\n")
+	server_write.WriteLog(player.Conn, "INFO", "Player " + player.Name + " disconnected")
 }

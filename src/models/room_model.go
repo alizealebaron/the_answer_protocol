@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 15:56:01 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/24 16:58:49 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/25 16:16:53 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -55,11 +55,34 @@ type Room struct {
 	Lst_Player    []Player       `json:"-"`
 }
 
+/* +---------------------------------------------------------------------+ */
+/* |                                Get                                  | */
+/* +---------------------------------------------------------------------+ */
+
 func (r Room) GetId()   int    { return r.Id }
+
+/* +---------------------------------------------------------------------+ */
+/* |                             Fonctions                               | */
+/* +---------------------------------------------------------------------+ */
+
 func (r Room) ToString() string {
 	b, err := json.Marshal(r)
 	if err != nil {
 		return fmt.Sprintf("erreur: %v", err)
 	}
 	return string(b)
+}
+
+func (r *Room) AddPlayerToRoom(p Player) {
+	r.Lst_Player = append(r.Lst_Player, p)
+}
+
+func (r *Room) RemovePlayerToRoom(player Player) {
+
+    for i, p := range r.Lst_Player {
+        if p.Id == player.Id {
+            r.Lst_Player = append(r.Lst_Player[:i], r.Lst_Player[i+1:]...)
+            return
+        }
+    } 
 }

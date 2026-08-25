@@ -1,7 +1,10 @@
-2026-08-25 23:09:44 (10.11.5.7): [INFO] Player f connected
-2026-08-25 23:10:17 (10.11.5.7): [COMMAND] f use CHAT GLOBAL "bouffeur de merde"
-2026-08-25 23:10:17 (10.11.5.7): [[CHAT]] [Chat Global] f: "bouffeur
-2026-08-25 23:10:54 (10.11.5.7): [INFO] Player d connected
-2026-08-25 23:11:04 (10.11.5.7): [COMMAND] d use CHAT GLOBAL bonjour
-2026-08-25 23:11:04 (10.11.5.7): [[CHAT]] [Chat Global] d: bonjour
-2026-08-25 23:11:04 (10.11.5.7): [[CHAT]] [Chat Global] d: bonjour
+2026-08-26 01:23:56 (10.11.5.7) : [INFO]    Player FRED connected
+2026-08-26 01:24:05 (10.11.5.7) : [INFO]    Player PASCAL connected
+2026-08-26 01:24:26 (10.11.5.7) : [COMMAND] FRED use CHAT ROOM jifjeifjec ifjeeijsojsf ijfeiofjeiof
+2026-08-26 01:24:26 (10.11.5.7) : [CHAT]    [Chat ROOM] FRED: jifjeifjec ifjeeijsojsf ijfeiofjeiof
+2026-08-26 01:24:26 (10.11.5.7) : [CHAT]    [Chat ROOM] FRED: jifjeifjec ifjeeijsojsf ijfeiofjeiof
+2026-08-26 01:24:43 (10.11.5.7) : [COMMAND] FRED use MOVE EAST
+2026-08-26 01:24:43 (10.11.5.7) : [SERVER]  To FRED: OK Taverne de la pucelle
+2026-08-26 01:25:01 (10.11.5.7) : [COMMAND] PASCAL use CHAT GLOBAL J'aime les pieds
+2026-08-26 01:25:01 (10.11.5.7) : [CHAT]    [Chat Global] PASCAL: J'aime les pieds
+2026-08-26 01:25:01 (10.11.5.7) : [CHAT]    [Chat Global] PASCAL: J'aime les pieds

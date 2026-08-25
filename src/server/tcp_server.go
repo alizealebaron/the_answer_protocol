@@ -41,6 +41,7 @@ type CommandFunc func(args []string, tapManager *models.TapManager, player model
 var map_commands = map[string]CommandFunc{
 	"LOOK":   commands.Look,
     "CHAT":   commands.Chat,
+	"MOVE":   commands.Move,
 }
 
 /* ----------------------------------------------------------------------- */
@@ -123,7 +124,6 @@ func handleConnection(conn net.Conn) {
                     fmt.Print("Connection attempt failed\n")
                     } else {
                         server_write.WriteLog(conn, "INFO", "Player " + self_player.Name + " connected")
-                        fmt.Printf("%s connected\n", command[1])
                         is_connected = true
                     }
             } else {
@@ -135,7 +135,7 @@ func handleConnection(conn net.Conn) {
                 return
             }
             // Ecriture de la commande dans les logs
-            server_write.WriteLog(conn, "COMMAND", self_player.Name + " use " + line[:len(line)-1])
+            server_write.WriteLog(conn, "COMMAND", self_player.Name + " use " + line)
 
             // Envoie de la ligne parse dans les différentes commandes
             if err := dispatch(command, TapManager, self_player, conn); err != nil {

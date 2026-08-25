@@ -18,6 +18,7 @@ package commands
 
 import (
 	"fmt"
+	"strings"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
 )
@@ -28,7 +29,7 @@ import (
 
 func Chat(args []string, tapManager *models.TapManager, player models.Player) error {
 	scope := args[0]
-	message := args[1]
+	message := strings.Join(args[1:], " ")
 	if scope == "GLOBAL" {
 		for _ , p := range tapManager.Lst_Player {
 			output := fmt.Sprintf("[Chat Global] %s: %s\n", player.Name, message)

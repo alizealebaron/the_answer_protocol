@@ -62,7 +62,7 @@
 		"allies": [],
 		"ennemies": [6, 7],
 		"items": [],
-		"neighborRoom": { "north": 9, "south": 2, "east": 8, "west": 10 },
+		"neighborRoom": { "north": 9, "south": 6, "east": 8, "west": 10 },
 		"fishing": []
 	},
 	{

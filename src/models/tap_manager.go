@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:29:32 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/20 11:35:20 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/25 16:30:27 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -15,6 +15,8 @@
 /* +---------------------------------------------------------------------+ */
 
 package models
+
+import "errors"
 
 /* +---------------------------------------------------------------------+ */
 /* |                               Classe                                | */
@@ -38,6 +40,10 @@ func NewTapManager(Lst_item []Item, Lst_Quest []Quest, Lst_Npc []Npc, Lst_Room [
     tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc, Lst_Room}
     return tap
 }
+
+/* +---------------------------------------------------------------------+ */
+/* |                             Fonctions                               | */
+/* +---------------------------------------------------------------------+ */
 
 func (tap TapManager) ToString() string {
     var tap_str string
@@ -68,4 +74,28 @@ func (tap TapManager) RemovePlayer(player_id int) {
             return
         }
     } 
+}
+
+func (tap *TapManager) FindPlayerRoom(player_id int) (*Room, error) {
+
+	for i := range tap.Lst_Room {
+		for _, p := range tap.Lst_Room[i].Lst_Player {
+			if p.Id == player_id {
+				return &tap.Lst_Room[i], nil
+			}
+		}
+	}
+
+	return nil, errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+}
+
+func (tm *TapManager) GetRoomById(id int) (*Room, error) {
+
+	for i := range tm.Lst_Room {
+		if tm.Lst_Room[i].Id == id {
+			return &tm.Lst_Room[i], nil // pointeur vers le vrai élément du slice
+		}
+	}
+
+	return nil, errors.New("not found")
 }
