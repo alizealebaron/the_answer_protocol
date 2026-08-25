@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* connect.go                                        :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 15:25:33 by emarette        #+#    #+#              */
-/* Updated: 2026/08/25 13:13:04 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/25 13:33:30 by emarette        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -18,9 +18,9 @@ import (
 	"the_answer_protocol/src/server/server_write"
 )
 
-func Connect(tapManager models.TapManager, conn net.Conn, name string, language string) (models.Player, string) {
+func Connect(tapManager *models.TapManager, conn net.Conn, name string, language string) (models.Player, string) {
 	player := models.NewPlayer(name, language)
-	for _, player := range tapManager.Lst_Player{
+	for _, player := range tapManager.Lst_Player {
 		if name == player.Name {
 			server_write.ServerWrite(conn, "ERR 201 NAME_IN_USE\n")
 			return player, "ERR 201 NAME_IN_USE"

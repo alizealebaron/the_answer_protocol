@@ -32,10 +32,10 @@ import (
 /*                           Variables Globales                            */
 /* ----------------------------------------------------------------------- */
 
-var TapManager models.TapManager
+var TapManager *models.TapManager
 
 // Signature commune à toutes les commandes
-type CommandFunc func(args []string, tapManager models.TapManager, player models.Player, conn net.Conn) error
+type CommandFunc func(args []string, tapManager *models.TapManager, player models.Player, conn net.Conn) error
 
 // Registre des commandes
 var map_commands = map[string]CommandFunc{
@@ -46,7 +46,7 @@ var map_commands = map[string]CommandFunc{
 /*                                Fonctions                                */
 /* ----------------------------------------------------------------------- */
 
-func Tcp_server(tapManager models.TapManager) {
+func Tcp_server(tapManager *models.TapManager) {
 
     // === Récupération du tapmanager === //
 
@@ -129,7 +129,10 @@ func handleConnection(conn net.Conn) {
                 server_write.ServerWrite(conn, "use 'CONNECT [Name] [Language]' or 'HELP' for more information\n")
             }
         } else {
-
+            if command[0] == "QUIT" {
+                commands.Quit(TapManager, conn, self_player)
+                return
+            }
             // Ecriture de la commande dans les logs
             server_write.WriteLog(conn, "COMMAND", self_player.Name + " use " + line[:len(line)-1])
 
@@ -149,7 +152,7 @@ func handleConnection(conn net.Conn) {
     }
 }
 
-func dispatch(fields []string, tap models.TapManager, player models.Player, conn net.Conn) error {
+func dispatch(fields []string, tap *models.TapManager, player models.Player, conn net.Conn) error {
 
     // Vérification de la longueur de la commande
 	if len(fields) == 0 {

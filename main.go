@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* main.go                                           :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:15:04 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/25 10:16:47 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/25 13:32:59 by emarette        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -30,5 +30,5 @@ func main() {
     tapManager := server.ParseJSONFile()
     // fmt.Printf("%+v\n", tapManager.Lst_Room)
     server_write.CreateLogFolder()
-    server.Tcp_server(tapManager)
+    server.Tcp_server(&tapManager)
 }

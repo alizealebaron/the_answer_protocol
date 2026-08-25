@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/24 17:28:51 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/25 13:27:10 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/25 13:45:12 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -28,7 +28,7 @@ import (
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
 
-func Look(args []string, tapManager models.TapManager, player models.Player, conn net.Conn) error {
+func Look(args []string, tapManager *models.TapManager, player models.Player, conn net.Conn) error {
 
 	for _, room := range tapManager.Lst_Room {
         for _, player_room := range room.Lst_Player {
