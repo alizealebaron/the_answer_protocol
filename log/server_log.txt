@@ -1,13 +1,10 @@
-2026-08-26 11:00:00 (127.0.0.1) : [INFO]    Player ale connected
-2026-08-26 11:00:02 (127.0.0.1) : [COMMAND] ale use WHO
-2026-08-26 11:00:02 (127.0.0.1) : [INFO]    Player aleSend 'WHO'
-2026-08-26 11:00:13 (127.0.0.1) : [COMMAND] ale use LOOK
-2026-08-26 11:00:13 (127.0.0.1) : [SERVER]  To ale: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
-2026-08-26 11:00:18 (127.0.0.1) : [COMMAND] ale use MOVE south
-2026-08-26 11:00:18 (127.0.0.1) : [SERVER]  To ale: OK Rue de l'avenue
-2026-08-26 11:00:23 (127.0.0.1) : [COMMAND] ale use MOVE west
-2026-08-26 11:00:23 (127.0.0.1) : [SERVER]  To ale: OK CASINO
-2026-08-26 11:00:28 (127.0.0.1) : [COMMAND] ale use TAKE 1
-2026-08-26 11:00:28 (127.0.0.1) : [SERVER]  To ale: OK taken=Gambling Coin
-2026-08-26 11:00:32 (127.0.0.1) : [COMMAND] ale use DROP 1
-2026-08-26 11:00:32 (127.0.0.1) : [SERVER]  To ale: OK dropped=Gambling Coin
+2026-08-26 17:04:40 (127.0.0.1) : [INFO]    Player alebaron connected
+2026-08-26 17:04:43 (127.0.0.1) : [COMMAND] alebaron use LOOK
+2026-08-26 17:04:43 (127.0.0.1) : [SERVER]  To alebaron: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
+2026-08-26 17:05:06 (127.0.0.1) : [INFO]    Player alebaron2 connected
+2026-08-26 17:05:09 (127.0.0.1) : [COMMAND] alebaron2 use LOOK
+2026-08-26 17:05:09 (127.0.0.1) : [SERVER]  To alebaron2: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
+2026-08-26 17:05:13 (127.0.0.1) : [COMMAND] alebaron2 use MOVE north
+2026-08-26 17:05:13 (127.0.0.1) : [SERVER]  To alebaron2: OK Forêt, épisode 1
+2026-08-26 17:05:24 (127.0.0.1) : [COMMAND] alebaron2 use MOVE south
+2026-08-26 17:05:24 (127.0.0.1) : [SERVER]  To alebaron2: OK Place Sénile

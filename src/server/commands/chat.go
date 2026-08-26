@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/25 22:16:01 by emarette        #+#    #+#              */
-/* Updated: 2026/08/26 10:52:12 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/26 16:34:03 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -32,7 +32,7 @@ func Chat(args []string, tapManager *models.TapManager, player *models.Player) e
 	message := strings.Join(args[1:], " ")
 	if scope == "GLOBAL" {
 		for _ , p := range tapManager.Lst_Player {
-			output := fmt.Sprintf("[Chat Global] %s: %s\n", player.Name, message)
+			output := fmt.Sprintf("EVT GLOBAL CHAT %s %s\n", player.Name, message)
 			server_write.ServerWrite(p.Conn, output)
 			server_write.WriteLog(player.Conn, "CHAT", output)
 		} 
@@ -41,7 +41,7 @@ func Chat(args []string, tapManager *models.TapManager, player *models.Player) e
 			for _ , p := range room.Lst_Player {
 				if p.Id == player.Id {
 					for _ , p := range room.Lst_Player {
-						output := fmt.Sprintf("[Chat ROOM] %s: %s\n", player.Name, message)
+						output := fmt.Sprintf("EVT ROOM CHAT %s %s\n", player.Name, message)
 						server_write.ServerWrite(p.Conn, output)
 						server_write.WriteLog(player.Conn, "CHAT", output)
 					}
@@ -51,7 +51,7 @@ func Chat(args []string, tapManager *models.TapManager, player *models.Player) e
 	} else if scope == "GROUP" {
 		for _ , p := range tapManager.Lst_Player {
 			if player.Group == p.Group {
-				output := fmt.Sprintf("[Chat Group] %s: %s\n", player.Name, message)
+				output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
 				server_write.ServerWrite(p.Conn, output)
 				server_write.WriteLog(player.Conn, "CHAT", output)
 			}
