@@ -35,14 +35,16 @@ import (
 var TapManager *models.TapManager
 
 // Signature commune à toutes les commandes
-type CommandFunc func(args []string, tapManager *models.TapManager, player models.Player) error
+type CommandFunc func(args []string, tapManager *models.TapManager, player *models.Player, conn net.Conn) error
 
 // Registre des commandes
 var map_commands = map[string]CommandFunc{
 	"LOOK":   commands.Look,
     "CHAT":   commands.Chat,
 	"MOVE":   commands.Move,
-	"WHO":   commands.Who,
+    "TAKE":   commands.Take,
+	"DROP":   commands.Drop,
+    "WHO":   commands.Who,
 }
 
 /* ----------------------------------------------------------------------- */
@@ -96,10 +98,13 @@ func handleConnection(conn net.Conn) {
     var self_player models.Player
     var code_error string
 
+    // === Envoie du premier message === //
+
+    server_write.ServerWrite(conn, "OK hello proto=1\n")
+
     // === Gestion des demandes de l'utilisateur === //
     is_connected := false 
     for {
-
         // Récupération des commandes envoyées //
         reader := bufio.NewReader(conn)
         line, err := reader.ReadString('\n')
@@ -139,10 +144,11 @@ func handleConnection(conn net.Conn) {
             server_write.WriteLog(conn, "COMMAND", self_player.Name + " use " + line)
 
             // Envoie de la ligne parse dans les différentes commandes
-            if err := dispatch(command, TapManager, self_player, conn); err != nil {
+            if err := dispatch(command, TapManager, &self_player, conn); err != nil {
                 server_write.WriteLog(conn, "WARN", self_player.Name + " received a warn: " + err.Error())
                 server_write.ServerWrite(conn, err.Error() + "\n")
             }
+            fmt.Println(self_player.Inventory)
         }
 
         // ackMsg := strings.ToUpper(strings.TrimSpace(message))
@@ -154,7 +160,7 @@ func handleConnection(conn net.Conn) {
     }
 }
 
-func dispatch(fields []string, tap *models.TapManager, player models.Player, conn net.Conn) error {
+func dispatch(fields []string, tap *models.TapManager, player *models.Player, conn net.Conn) error {
 
     // Vérification de la longueur de la commande
 	if len(fields) == 0 {

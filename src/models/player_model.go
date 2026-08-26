@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* player_model.go                                   :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 16:20:31 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/25 22:54:33 by emarette        ###   ########.fr       */
+/* Updated: 2026/08/26 10:48:03 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -18,6 +18,7 @@ package models
 
 import (
     "net"
+    "errors"
 )
 
 /* +---------------------------------------------------------------------+ */
@@ -41,10 +42,33 @@ type Player struct {
     Group string
 }
 
+/* +---------------------------------------------------------------------+ */
+/* |                            Constructeur                             | */
+/* +---------------------------------------------------------------------+ */
+
 func NewPlayer(name string, language string, conn net.Conn) Player {
 
     lstItem := []Item{}
     player := Player{totalPlayer, name, 100, 5, language, lstItem, conn, ""}
     totalPlayer += 1
     return player
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                      Gestion de l'inventaire                        | */
+/* +---------------------------------------------------------------------+ */
+
+func (p *Player) AddItemToPlayer(it Item) {
+	p.Inventory = append(p.Inventory, it)
+}
+
+func (p *Player) RemoveItemToPlayer(itID int) (*Item, error) {
+
+    for i, it := range p.Inventory {
+        if it.GetId() == itID {
+            p.Inventory = append(p.Inventory[:i], p.Inventory[i+1:]...)
+            return &it, nil
+        }
+    }
+	return nil, errors.New("ERR 303 ITEM_NOT_FOUND")
 }

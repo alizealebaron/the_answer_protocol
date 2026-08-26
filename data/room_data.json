@@ -13,7 +13,7 @@
 		"name": "Place Sénile",
 		"allies": [3],
 		"ennemies": [],
-		"items": [],
+		"items": [14],
 		"neighborRoom": { "north": 6, "south": 3, "east": 5, "west": 4 },
 		"fishing": []
 	},
@@ -99,7 +99,7 @@
 		"id": 11,
 		"name": "Grotte Terrifiante (ND)",
 		"allies": [],
-		"ennemies": [8],
+		"ennemies": [9],
 		"items": [],
 		"neighborRoom": { "north": 0, "south": 0, "east": 0, "west": 0 },
 		"fishing": []
