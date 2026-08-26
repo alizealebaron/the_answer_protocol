@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:17 by rruiz           #+#    #+#              */
-/* Updated: 2026/08/22 18:09:10 by rruiz           ###   ########.fr       */
+/* Updated: 2026/08/26 17:43:20 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -46,6 +46,14 @@ func HomeView(size fyne.Size) fyne.CanvasObject {
 	var ipField *widget.Entry
 	var joinButton *widget.Button
 
+	// Set variables at the value of the window
+	width, height := size.Width, size.Height
+
+	errContent, errText := error_widget("")
+	errContent.Resize(fyne.NewSize(width/5, height/10))
+	errContent.Move(fyne.NewPos(1, -100))
+	errContent.Hide()
+
 	// Language Selection Drop-Down Menu
 	// It changes the values of the placeholders in the other widgets based on the value of the selection
 	langSelect = widget.NewSelect([]string{"Français", "English"},
@@ -56,7 +64,7 @@ func HomeView(size fyne.Size) fyne.CanvasObject {
 			ipField.SetPlaceHolder(t["enterIP"])
 			joinButton.SetText(t["joinServer"])
 		})
-	langSelect.PlaceHolder = "Select langage"
+	langSelect.PlaceHolder = "Select language"
 
 	// Text field for the player's name
 	nameField = widget.NewEntry()
@@ -69,51 +77,58 @@ func HomeView(size fyne.Size) fyne.CanvasObject {
 	// Button to join the server
 	joinButton = widget.NewButton("Join server", func() {
 		ip := ipField.Text
+		name := nameField.Text
+
+		if ip == "" || name == "" {
+			displayError(errText, errContent, "Error")
+			return
+		}
 
 		// A goroutine: It's like a thread, but lighter.
 		go func() {
 			// Create the command to connect to the server using 'nc'
 			// If an error occurs, it is print properly.
-			if ip != "" {
-				cmd := exec.Command("nc", ip, "8090")
-				stdin, err := cmd.StdinPipe()
-				if err != nil {
-					fmt.Println("Error:", err)
-					return
-				}
-				if err := cmd.Start(); err != nil {
-					fmt.Println("Error:", err)
-					return
-				}
+			cmd := exec.Command("nc", ip, "8090")
+			stdin, err := cmd.StdinPipe()
+			if err != nil {
+				displayError(errText, errContent, "Error")
+				return
+			}
 
-				var language string
-				if langSelect.Selected == "Français" {
-					language = "FR"
-				} else {
-					language = "EN"
-				}
+			if err := cmd.Start(); err != nil {
+				displayError(errText, errContent, "Error")
+				return
+			}
 
-				name := nameField.Text
-				if name == "" {
-					fmt.Println("Error:")
-				} else {
-					fmt.Fprintf(stdin, "CONNECT %s %s\n", name, language)
-				}
+			var language string
+			if langSelect.Selected == "Français" {
+				language = "FR"
+			} else {
+				language = "EN"
+			}
 
-				cmd.Wait()
+			name := nameField.Text
+			if name == "" {
+				displayError(errText, errContent, "Error")
+			} else {
+				fmt.Fprintf(stdin, "CONNECT %s %s\n", name, language)
+				return
+			}
+
+			if err := cmd.Wait(); err != nil {
+				displayError(errText, errContent, "Error")
+				return
 			}
 		}()
 	})
-
-	t := error_widget("e", size)
-
-	// Set variables at the value of the window
-	width, height := size.Width, size.Height
 
 	// Create a container that holds all the widgets created earlier, resize it, and place it at the bottom center of the window
 	big := container.NewCenter(
 		container.NewGridWrap(fyne.NewSize(width/3, height/10), langSelect, nameField, ipField, joinButton),
 	)
+
+	// t := container.NewGridWrap(fyne.NewSize(width/5, height/10), errContent)
+	t := container.NewWithoutLayout(errContent)
 
 	// return the container at the good place
 	return container.NewStack(container.NewBorder(nil, big, nil, nil), t)
