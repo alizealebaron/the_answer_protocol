@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/26 10:34:08 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/26 10:35:53 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/26 10:59:24 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -18,7 +18,6 @@ package commands
 
 import (
     // "fmt"
-	"net"
 	"errors"
 	"strconv"
 	"the_answer_protocol/src/models"
@@ -29,7 +28,7 @@ import (
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
 
-func Drop(args []string, tapManager *models.TapManager, player *models.Player, conn net.Conn) error {
+func Drop(args []string, tapManager *models.TapManager, player *models.Player) error {
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) != 1 {
@@ -55,8 +54,8 @@ func Drop(args []string, tapManager *models.TapManager, player *models.Player, c
 	
 	// === Envoie des messages au client et dans les logs === //
 	str_ret := "OK dropped=" + (*item).GetName() + "\n"
-	server_write.ServerWrite(conn, str_ret)
-	server_write.WriteLog(conn, "SERVER", "To " + player.Name + ": " + str_ret)
+	server_write.ServerWrite(player.Conn, str_ret)
+	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + str_ret)
 
 	return nil
 }

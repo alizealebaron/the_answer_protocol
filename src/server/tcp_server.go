@@ -35,7 +35,7 @@ import (
 var TapManager *models.TapManager
 
 // Signature commune à toutes les commandes
-type CommandFunc func(args []string, tapManager *models.TapManager, player *models.Player, conn net.Conn) error
+type CommandFunc func(args []string, tapManager *models.TapManager, player *models.Player) error
 
 // Registre des commandes
 var map_commands = map[string]CommandFunc{

@@ -1,29 +1,13 @@
-2026-08-26 10:36:46 (127.0.0.1) : [INFO]    Player ale connected
-2026-08-26 10:36:52 (10.11.6.16): [INFO]    Player f connected
-2026-08-26 10:36:55 (127.0.0.1) : [COMMAND] ale use LOOK
-2026-08-26 10:36:55 (127.0.0.1) : [SERVER]  To ale: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
-2026-08-26 10:36:57 (10.11.6.16): [COMMAND] f use LOOK
-2026-08-26 10:36:57 (10.11.6.16): [SERVER]  To f: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
-2026-08-26 10:37:00 (127.0.0.1) : [COMMAND] ale use TAKE 14
-2026-08-26 10:37:00 (127.0.0.1) : [SERVER]  To ale: OK taken=Kayou
-2026-08-26 10:37:03 (10.11.6.16): [COMMAND] f use LOOK
-2026-08-26 10:37:03 (10.11.6.16): [SERVER]  To f: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
-2026-08-26 10:37:09 (127.0.0.1) : [COMMAND] ale use DROP 14
-2026-08-26 10:37:09 (127.0.0.1) : [SERVER]  To ale: OK dropped=Kayou
-2026-08-26 10:37:10 (10.11.6.16): [COMMAND] f use LOOK
-2026-08-26 10:37:10 (10.11.6.16): [SERVER]  To f: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
-2026-08-26 10:37:16 (10.11.6.16): [COMMAND] f use TAKE 14
-2026-08-26 10:37:16 (10.11.6.16): [SERVER]  To f: OK taken=Kayou
-2026-08-26 10:37:18 (10.11.6.16): [COMMAND] f use LOOK
-2026-08-26 10:37:18 (10.11.6.16): [SERVER]  To f: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
-2026-08-26 10:37:22 (10.11.6.16): [COMMAND] f use DROP 14
-2026-08-26 10:37:22 (10.11.6.16): [SERVER]  To f: OK dropped=Kayou
-2026-08-26 10:37:24 (10.11.6.16): [COMMAND] f use LOOK
-2026-08-26 10:37:24 (10.11.6.16): [SERVER]  To f: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
-2026-08-26 10:37:29 (10.11.6.16): [COMMAND] f use TAKE 14
-2026-08-26 10:37:29 (10.11.6.16): [SERVER]  To f: OK taken=Kayou
-2026-08-26 10:37:29 (127.0.0.1) : [COMMAND] ale use LOOK
-2026-08-26 10:37:29 (127.0.0.1) : [SERVER]  To ale: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
-2026-08-26 10:37:30 (10.11.6.16): [INFO]    Player f disconnected
-2026-08-26 10:37:39 (127.0.0.1) : [COMMAND] ale use LOOK
-2026-08-26 10:37:39 (127.0.0.1) : [SERVER]  To ale: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
+2026-08-26 11:00:00 (127.0.0.1) : [INFO]    Player ale connected
+2026-08-26 11:00:02 (127.0.0.1) : [COMMAND] ale use WHO
+2026-08-26 11:00:02 (127.0.0.1) : [INFO]    Player aleSend 'WHO'
+2026-08-26 11:00:13 (127.0.0.1) : [COMMAND] ale use LOOK
+2026-08-26 11:00:13 (127.0.0.1) : [SERVER]  To ale: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
+2026-08-26 11:00:18 (127.0.0.1) : [COMMAND] ale use MOVE south
+2026-08-26 11:00:18 (127.0.0.1) : [SERVER]  To ale: OK Rue de l'avenue
+2026-08-26 11:00:23 (127.0.0.1) : [COMMAND] ale use MOVE west
+2026-08-26 11:00:23 (127.0.0.1) : [SERVER]  To ale: OK CASINO
+2026-08-26 11:00:28 (127.0.0.1) : [COMMAND] ale use TAKE 1
+2026-08-26 11:00:28 (127.0.0.1) : [SERVER]  To ale: OK taken=Gambling Coin
+2026-08-26 11:00:32 (127.0.0.1) : [COMMAND] ale use DROP 1
+2026-08-26 11:00:32 (127.0.0.1) : [SERVER]  To ale: OK dropped=Gambling Coin

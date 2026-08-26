@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* chat.go                                           :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/25 22:16:01 by emarette        #+#    #+#              */
-/* Updated: 2026/08/25 23:09:08 by emarette        ###   ########.fr       */
+/* Updated: 2026/08/26 10:52:12 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -27,7 +27,7 @@ import (
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
 
-func Chat(args []string, tapManager *models.TapManager, player models.Player) error {
+func Chat(args []string, tapManager *models.TapManager, player *models.Player) error {
 	scope := args[0]
 	message := strings.Join(args[1:], " ")
 	if scope == "GLOBAL" {
