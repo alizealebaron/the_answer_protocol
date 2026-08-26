@@ -32,14 +32,16 @@ var totalPlayer int
 /* +---------------------------------------------------------------------+ */
 
 type Player struct {
-	Id       int
-    Name     string
-    Pv       int
-    Attack   int
-    Language string
+	Id        int
+    Name      string
+    Pv        int
+    MaxPv     int
+    Status    string
+    Attack    int
+    Language  string
     Inventory []Item 
-    Conn net.Conn
-    Group string
+    Conn      net.Conn
+    Group     string
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -49,7 +51,7 @@ type Player struct {
 func NewPlayer(name string, language string, conn net.Conn) Player {
 
     lstItem := []Item{}
-    player := Player{totalPlayer, name, 100, 5, language, lstItem, conn, ""}
+    player := Player{totalPlayer, name, 100, 100, "healthy", 5, language, lstItem, conn, ""}
     totalPlayer += 1
     return player
 }
