@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/25 14:26:01 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/25 16:32:16 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/26 10:12:54 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -29,7 +29,7 @@ import (
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
 
-func Move(args []string, tapManager *models.TapManager, player models.Player, conn net.Conn) error {
+func Move(args []string, tapManager *models.TapManager, player *models.Player, conn net.Conn) error {
 
 	if len(args) != 1 {
 		return errors.New("ERR 302 NO_DIRECTION_SEND")
@@ -66,8 +66,8 @@ func Move(args []string, tapManager *models.TapManager, player models.Player, co
 			return errors.New("ERR ROOM_NOT_FOUND")
 		}
 	
-		room.RemovePlayerToRoom(player)
-		nei_room.AddPlayerToRoom(player)
+		room.RemovePlayerToRoom(*player)
+		nei_room.AddPlayerToRoom(*player)
 		server_write.ServerWrite(conn, "OK " + nei_room.Name + "\n")
 		server_write.WriteLog(conn, "SERVER", "To " + player.Name + ": OK " + nei_room.Name)
 	}
