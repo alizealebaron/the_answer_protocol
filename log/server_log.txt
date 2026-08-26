@@ -1,3 +1,19 @@
-2026-08-26 17:25:19 (127.0.0.1) : [INFO]    Player ale connected
-2026-08-26 17:25:22 (127.0.0.1) : [COMMAND] ale use STATUS
-2026-08-26 17:25:22 (127.0.0.1) : [SERVER]  To ale: OK {"hp": 100, "max_hp": 100, "status": healthy}
+2026-08-26 17:54:22 (127.0.0.1) : [INFO]    Player achille connected
+2026-08-26 17:54:37 (127.0.0.1) : [COMMAND] achille use LOOK
+2026-08-26 17:54:37 (127.0.0.1) : [SERVER]  To achille: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile"}],"ennemies":[],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[]}
+2026-08-26 17:54:47 (127.0.0.1) : [COMMAND] achille use TAKE 14
+2026-08-26 17:54:47 (127.0.0.1) : [SERVER]  To achille: OK taken=Kayou
+2026-08-26 17:55:07 (127.0.0.1) : [COMMAND] achille use MOVE south
+2026-08-26 17:55:07 (127.0.0.1) : [SERVER]  To achille: OK Rue de l'avenue
+2026-08-26 17:55:12 (127.0.0.1) : [COMMAND] achille use LOOK
+2026-08-26 17:55:12 (127.0.0.1) : [SERVER]  To achille: {"id":3,"name":"Rue de l'avenue","allies":[{"id":4,"name":"Léon"}],"ennemies":[],"items":[],"neighborRoom":{"north":2,"south":0,"east":0,"west":1},"fishing":[]}
+2026-08-26 17:55:22 (127.0.0.1) : [COMMAND] achille use WALK west
+2026-08-26 17:55:22 (127.0.0.1) : [WARN]    achille received a warn: ERR 902 COMMAND_UNKNOWN "WALK"
+2026-08-26 17:55:28 (127.0.0.1) : [COMMAND] achille use MOVE west
+2026-08-26 17:55:28 (127.0.0.1) : [SERVER]  To achille: OK CASINO
+2026-08-26 17:55:39 (127.0.0.1) : [COMMAND] achille use TAKE 1
+2026-08-26 17:55:39 (127.0.0.1) : [SERVER]  To achille: OK taken=Gambling Coin
+2026-08-26 17:55:56 (127.0.0.1) : [COMMAND] achille use CHAT GLOBAL Hello
+2026-08-26 17:55:56 (127.0.0.1) : [CHAT]    EVT GLOBAL CHAT achille Hello
+2026-08-26 17:56:03 (127.0.0.1) : [COMMAND] achille use STATUS
+2026-08-26 17:56:03 (127.0.0.1) : [SERVER]  To achille: OK {"hp": 100, "max_hp": 100, "status": "healthy"}
