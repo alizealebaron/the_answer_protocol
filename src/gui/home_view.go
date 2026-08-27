@@ -123,6 +123,10 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			//Type the command “CONNECT <name> <language>” in the terminal.
 			fmt.Println("CONNECT", name, language)
 
+			fyne.Do(func() {
+				window.SetContent(GameView(window))
+			})
+
 			// Blocks the goroutine until netcat finishes. If it returns an error, it means that nc didn't finish properly.
 			if err := cmd.Wait(); err != nil {
 				displayError(errText, errContent, "Connection to the server failed.")
