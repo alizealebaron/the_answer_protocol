@@ -133,18 +133,35 @@ func get_all_quest() []models.Quest {
 
     // === Déclarations des variables === //
 
-    var lst_quest []models.Quest
+    var lst_quest        []models.Quest
+    var lst_questItem    []models.QuestItem
+    var lst_questMonster []models.QuestMonster
 
-    // === Récupération des quêtes === //
+    // === Récupérations des quest d'item === //
 
-    data := get_data_from_json("data/quest_data.json")
+    data := get_data_from_json("data/questItem_data.json")
 
-    err := json.Unmarshal(data, &lst_quest)
-    if err != nil {
-        utils.ExitError("JSONParsingError", err)
+    err := json.Unmarshal(data, &lst_questItem)
+	if err != nil {
+		utils.ExitError("JSONParsingError", err)
+	}
+
+    for _, l := range lst_questItem {
+        lst_quest = append(lst_quest, &l)
     }
 
-    // === Renvoie des données récupérées === //
+    // === Récupérations des quest de monstres === //
+
+    data = get_data_from_json("data/questMonster_data.json")
+
+    err = json.Unmarshal(data, &lst_questMonster)
+	if err != nil {
+		utils.ExitError("JSONParsingError", err)
+	}
+
+    for _, l := range lst_questMonster {
+        lst_quest = append(lst_quest, &l)
+    }
 
     return lst_quest
 }
@@ -157,7 +174,7 @@ func get_all_npc(lst_item []models.Item, lst_quest []models.Quest) []models.Npc 
     var lst_dialoguer   []models.Dialoguer
     var lst_questgiver  []models.QuestGiver
     var lst_monster     []models.Monster
-    var lst_room      []models.Trader
+    var lst_room        []models.Trader
 
     // === Récupérations des loots === //
 
@@ -359,10 +376,10 @@ func resolve_quest_rewards(lst_quest []models.Quest, lst_item []models.Item) []m
     }
 
     for i := range lst_quest {
-        if item, ok := itemById[lst_quest[i].RewardId]; ok {
-            lst_quest[i].Reward = item
+        if item, ok := itemById[lst_quest[i].GetRewardId()]; ok {
+            lst_quest[i].SetReward(item)
         } else {
-            utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_quest[i].RewardId))
+            utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_quest[i].GetRewardId()))
         }
     }
 
@@ -374,7 +391,7 @@ func resolve_questgiver_quests(lst_questgiver []models.QuestGiver, lst_quest []m
     // On construit une map pour un accès rapide O(1)
     questById := make(map[int]models.Quest)
     for _, q := range lst_quest {
-        questById[q.Id] = q
+        questById[q.GetId()] = q
     }
 
     for i := range lst_questgiver {
