@@ -8,7 +8,7 @@
 	{
 		"id": 3,
 		"name": "Vieux Sénile",
-		"dialogueFr": ["(TODO)", "(TODO)"],
-		"dialogueEn": ["(TODO)", "(TODO)"]
+		"dialogueFr": ["Premier dialogue FR", "Deuxième dialogue FR"],
+		"dialogueEn": ["Fisrt dialog EN", "Second dialog EN"]
 	}
 ]

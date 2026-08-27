@@ -67,6 +67,15 @@ type Room struct {
 
 func (r Room) GetId()   int    { return r.Id }
 
+func (r Room) GetNpc(id int) (*Npc, error) {
+	for _ , a := range r.Allies {
+		if a.GetId() == id {
+			return &a, nil
+		}
+	}
+	return nil, errors.New("ERR 404 NPC_NOT_FOUND")
+}
+
 /* +---------------------------------------------------------------------+ */
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
@@ -97,7 +106,7 @@ func (r *Room) RemoveItemToRoom(itID int) (*Item, error) {
             return &p, nil
         }
     }
-	return nil, errors.New("ERR 303 ITEM_NOT_FOUND")
+	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
 }
 
 /* +---------------------------------------------------------------------+ */
