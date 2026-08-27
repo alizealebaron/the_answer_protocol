@@ -39,14 +39,15 @@ type CommandFunc func(args []string, tapManager *models.TapManager, player *mode
 
 // Registre des commandes
 var map_commands = map[string]CommandFunc{
-	"LOOK":   commands.Look,
-	"CHAT":   commands.Chat,
-	"MOVE":   commands.Move,
-	"TAKE":   commands.Take,
-	"DROP":   commands.Drop,
-	"TALK":   commands.Talk,
-	"STATUS": commands.Status,
-	"WHO":    commands.Who,
+	"WHO":       commands.Who,
+	"LOOK":      commands.Look,
+	"CHAT":      commands.Chat,
+	"MOVE":      commands.Move,
+	"TAKE":      commands.Take,
+	"DROP":      commands.Drop,
+	"TALK":      commands.Talk,
+	"STATUS":    commands.Status,
+	"INVENTORY": commands.Inventory,
 }
 
 /* ----------------------------------------------------------------------- */
@@ -150,7 +151,6 @@ func handleConnection(conn net.Conn) {
 				server_write.WriteLog(conn, "WARN", self_player.Name+" received a warn: "+err.Error())
 				server_write.ServerWrite(conn, err.Error()+"\n")
 			}
-			fmt.Println(self_player.Inventory)
 		}
 
 		// ackMsg := strings.ToUpper(strings.TrimSpace(message))

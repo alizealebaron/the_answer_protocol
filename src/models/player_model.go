@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 16:20:31 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/26 10:48:03 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/27 10:36:58 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -19,7 +19,8 @@ package models
 import (
 	"errors"
 	"net"
-	// "fmt"
+	"fmt"
+	"encoding/json"
 )
 
 /* +---------------------------------------------------------------------+ */
@@ -103,4 +104,28 @@ func (p *Player) GetNextDialogueLine(npc Npc) (line string) {
 
 	p.DialogueProgress[id] = idx + 1
 	return lines[idx]
+}
+
+func (p *Player) InventoryToString() string {
+
+    toIdName := func(id int, name string) IdName {
+		return IdName{Id: id, Name: name}
+	}
+
+	items := make([]IdName, 0, len(p.Inventory))
+	for _, it := range p.Inventory {
+		items = append(items, toIdName(it.GetId(), it.GetName()))
+	}
+
+    out := struct {
+		Items        []IdName       `json:"items"`
+	}{
+		Items:        items,
+	}
+
+    b, err := json.Marshal(out)
+    if err != nil {
+        return fmt.Sprintf("erreur: %v", err)
+    }
+    return string(b)
 }

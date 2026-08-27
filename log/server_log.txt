@@ -1,18 +1,5 @@
-2026-08-27 10:22:58 (127.0.0.1) : [INFO]    Player ale connected
-2026-08-27 10:23:02 (127.0.0.1) : [COMMAND] ale use TALK 3
-2026-08-27 10:23:02 (127.0.0.1) : [SERVER]  To ale: OK Fisrt dialog EN
-2026-08-27 10:23:05 (127.0.0.1) : [COMMAND] ale use TALK 3
-2026-08-27 10:23:05 (127.0.0.1) : [SERVER]  To ale: OK Second dialog EN
-2026-08-27 10:23:07 (127.0.0.1) : [COMMAND] ale use TALK 3
-2026-08-27 10:23:07 (127.0.0.1) : [SERVER]  To ale: OK Fisrt dialog EN
-2026-08-27 10:23:19 (10.11.6.16): [INFO]    Player f connected
-2026-08-27 10:23:24 (10.11.6.16): [COMMAND] f use TALK 3
-2026-08-27 10:23:24 (10.11.6.16): [SERVER]  To f: OK Fisrt dialog EN
-2026-08-27 10:23:32 (127.0.0.1) : [COMMAND] ale use TALK 3
-2026-08-27 10:23:32 (127.0.0.1) : [SERVER]  To ale: OK Second dialog EN
-2026-08-27 10:23:44 (127.0.0.1) : [COMMAND] ale use MOVE south
-2026-08-27 10:23:44 (127.0.0.1) : [SERVER]  To ale: OK Rue de l'avenue
-2026-08-27 10:23:49 (127.0.0.1) : [COMMAND] ale use LOOK
-2026-08-27 10:23:49 (127.0.0.1) : [SERVER]  To ale: {"id":3,"name":"Rue de l'avenue","allies":[{"id":4,"name":"Léon"}],"ennemies":[],"items":[],"neighborRoom":{"north":2,"south":0,"east":0,"west":1},"fishing":[]}
-2026-08-27 10:23:54 (127.0.0.1) : [COMMAND] ale use TALK 4
-2026-08-27 10:23:54 (127.0.0.1) : [SERVER]  To ale: OK (TODO)
+2026-08-27 10:41:57 (127.0.0.1) : [INFO]    Player ale connected
+2026-08-27 10:42:00 (127.0.0.1) : [COMMAND] ale use TAKE 14
+2026-08-27 10:42:00 (127.0.0.1) : [SERVER]  To ale: OK taken=Kayou
+2026-08-27 10:42:04 (127.0.0.1) : [COMMAND] ale use INVENTORY
+2026-08-27 10:42:04 (127.0.0.1) : [SERVER]  To ale: OK {"items":[{"id":14,"name":"Kayou"}]}
