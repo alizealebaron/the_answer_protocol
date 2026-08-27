@@ -62,7 +62,7 @@ func Run(fullscreen bool) {
 	}
 
 	// Displays the window's default content on the home screen
-	window.SetContent(HomeView(size))
+	window.SetContent(HomeView(window, size))
 
 	window.ShowAndRun()
 }
