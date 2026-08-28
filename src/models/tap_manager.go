@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:29:32 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/25 16:30:27 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/28 16:07:32 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -42,8 +42,35 @@ func NewTapManager(Lst_item []Item, Lst_Quest []Quest, Lst_Npc []Npc, Lst_Room [
 }
 
 /* +---------------------------------------------------------------------+ */
+/* |                             Accesseurs                              | */
+/* +---------------------------------------------------------------------+ */
+
+func (tm *TapManager) GetRoomById(id int) (*Room, error) {
+
+	for i := range tm.Lst_Room {
+		if tm.Lst_Room[i].Id == id {
+			return &tm.Lst_Room[i], nil
+		}
+	}
+
+	return nil, errors.New("not found")
+}
+
+func (tm *TapManager) GetItemById(id int) (Item, error) {
+
+	for i := range tm.Lst_item {
+		if tm.Lst_item[i].GetId() == id {
+			return tm.Lst_item[i], nil
+		}
+	}
+
+	return nil, errors.New("not found")
+}
+
+/* +---------------------------------------------------------------------+ */
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
+
 
 func (tap TapManager) ToString() string {
     var tap_str string
@@ -87,15 +114,4 @@ func (tap *TapManager) FindPlayerRoom(player_id int) (*Room, error) {
 	}
 
 	return nil, errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
-}
-
-func (tm *TapManager) GetRoomById(id int) (*Room, error) {
-
-	for i := range tm.Lst_Room {
-		if tm.Lst_Room[i].Id == id {
-			return &tm.Lst_Room[i], nil // pointeur vers le vrai élément du slice
-		}
-	}
-
-	return nil, errors.New("not found")
 }

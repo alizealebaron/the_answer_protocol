@@ -1,3 +1,17 @@
-2026-08-27 16:42:20 (127.0.0.1) : [INFO]    Player ale connected
-2026-08-27 16:42:23 (127.0.0.1) : [COMMAND] ale use TAKE 14
-2026-08-27 16:42:23 (127.0.0.1) : [SERVER]  To ale: OK taken=Kayou
+2026-08-28 16:13:24 (127.0.0.1) : [INFO]    Player ale connected
+2026-08-28 16:13:27 (127.0.0.1) : [COMMAND] ale use TAKE 2
+2026-08-28 16:13:27 (127.0.0.1) : [SERVER]  To ale: OK taken=Kana pêche
+2026-08-28 16:13:31 (127.0.0.1) : [COMMAND] ale use MOVE west
+2026-08-28 16:13:31 (127.0.0.1) : [SERVER]  To ale: OK Fontaine
+2026-08-28 16:13:34 (127.0.0.1) : [COMMAND] ale use USE 2
+2026-08-28 16:13:34 (127.0.0.1) : [SERVER]  To ale: OK fishing=Krukinaj
+2026-08-28 16:13:37 (127.0.0.1) : [COMMAND] ale use USE 2
+2026-08-28 16:13:37 (127.0.0.1) : [SERVER]  To ale: OK fishing=Krukinaj
+2026-08-28 16:13:41 (127.0.0.1) : [COMMAND] ale use USE 2
+2026-08-28 16:13:41 (127.0.0.1) : [SERVER]  To ale: OK fishing=Krukinaj
+2026-08-28 16:13:43 (127.0.0.1) : [COMMAND] ale use USE 2*
+2026-08-28 16:13:43 (127.0.0.1) : [WARN]    ale received a warn: ERR 404 ITEM_NOT_FOUND
+2026-08-28 16:13:47 (127.0.0.1) : [COMMAND] ale use USE 2
+2026-08-28 16:13:47 (127.0.0.1) : [SERVER]  To ale: OK fishing=Krukinaj
+2026-08-28 16:13:50 (127.0.0.1) : [COMMAND] ale use USE 2
+2026-08-28 16:13:50 (127.0.0.1) : [SERVER]  To ale: OK fishing=Gambling Coin

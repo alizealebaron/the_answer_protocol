@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 16:20:31 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/27 12:29:11 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/28 16:05:59 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -63,6 +63,18 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 /* +---------------------------------------------------------------------+ */
 /* |                      Gestion de l'inventaire                        | */
 /* +---------------------------------------------------------------------+ */
+
+func (p *Player) GetItem(itID int) (*Item, error) {
+
+    // Parcours des objets de l'inventaire
+	for it, _ := range p.Inventory {
+        // Gestion des items si on le trouve
+		if it.GetId() == itID {
+			return &it, nil
+		}
+	}
+	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
+}
 
 func (p *Player) AddItemToPlayer(it Item) {
 	p.Inventory[it] += 1
