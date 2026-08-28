@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* log_writer.go                                     :+:      :+:    :+:   */
+/* who.go                                            :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/24 15:54:02 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/24 17:01:20 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/26 01:29:35 by emarette        #+#    #+#              */
+/* Updated: 2026/08/26 10:58:32 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -14,49 +14,22 @@
 /* |                          Package & Import                           | */
 /* +---------------------------------------------------------------------+ */
 
-package server
+package commands
 
 import (
-	"the_answer_protocol/src/utils"
-    "os"
-    "time"
+	"fmt"
+	"the_answer_protocol/src/models"
+	"the_answer_protocol/src/server/server_write"
 )
 
 /* +---------------------------------------------------------------------+ */
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
 
-func CreateLogFolder() {
-
-    err := os.MkdirAll("log/", 0755)
-    if err != nil {
-        utils.ExitError("CREATEDIR", err)
-    }
-
-    file, err := os.OpenFile("log/server_log.txt", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0755)
-    if err != nil {
-        utils.ExitError("OPENFILE", err)
-    }
-
-    defer file.Close()
-
-}
-
-func WriteLog(ip string, level string, texte string) {
-
-    file, err := os.OpenFile("log/server_log.txt", os.O_WRONLY|os.O_APPEND, 0755)
-    if err != nil {
-        utils.ExitError("OPENFILE", err)
-    }
-    defer file.Close()
-
-    now := time.Now()
-    formattedTime := now.Format("2006-01-02 15:04:05")
-
-    str := formattedTime + " (" + ip + "): [" + level + "] " + texte + "\n"
-
-    _, err = file.WriteString(str)
-    if err != nil {
-        panic(err)
-    }
+func Who(args []string, tapManager *models.TapManager, player *models.Player) error {
+	nb_player := len(tapManager.Lst_Player)
+	output := fmt.Sprintf("Ok players=%d\n", nb_player)
+	server_write.ServerWrite(player.Conn, output)
+	server_write.WriteLog(player.Conn, "INFO", "Player " + player.Name + "Send 'WHO'")
+	return nil
 }

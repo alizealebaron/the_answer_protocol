@@ -29,6 +29,8 @@ type Npc interface {
 	ToString()        string
 	GetId()           int
 	GetName()         string
+	GetDialogueFr()   []string
+	GetDialogueEn()   []string
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -42,8 +44,10 @@ type Dialoguer struct {
 	DialogueEn []string `json:"dialogueEn"`
 }
 
-func (d Dialoguer) GetId()   int    { return d.Id   }
-func (d Dialoguer) GetName() string { return d.Name }
+func (d Dialoguer) GetId()         int      { return d.Id         }
+func (d Dialoguer) GetName()       string   { return d.Name       }
+func (d Dialoguer) GetDialogueFr() []string { return d.DialogueFr }
+func (d Dialoguer) GetDialogueEn() []string { return d.DialogueEn }
 
 func (d Dialoguer) ToString() string {
 	b, err := json.Marshal(d)

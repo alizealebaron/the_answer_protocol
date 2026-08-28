@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* look.go                                           :+:      :+:    :+:   */
+/* status.go                                         :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/24 17:28:51 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/26 10:59:01 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/26 17:19:50 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/26 17:27:28 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -17,8 +17,7 @@
 package commands
 
 import (
-    // "fmt"
-	"errors"
+	"strconv"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
 )
@@ -27,15 +26,11 @@ import (
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
 
-func Look(args []string, tapManager *models.TapManager, player *models.Player) error {
+func Status(args []string, tapManager *models.TapManager, player *models.Player) error {
 
-	room, err := tapManager.FindPlayerRoom(player.Id)
+	output := "OK {\"hp\": " + strconv.Itoa(player.Pv) + ", \"max_hp\": " + strconv.Itoa(player.MaxPv) + ", \"status\": \"" + player.Status + "\"}\n"
+	server_write.ServerWrite(player.Conn, output)
+	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + output)
 
-	if err != nil {
-		return errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
-	}
-
-	server_write.ServerWrite(player.Conn, "OK " + room.ToString() + "\n")
-	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + room.ToString())
 	return nil
 }

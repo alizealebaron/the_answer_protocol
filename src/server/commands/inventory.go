@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* server_utils.go                                   :+:      :+:    :+:   */
+/* inventory.go                                      :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/22 14:03:24 by emarette        #+#    #+#              */
-/* Updated: 2026/08/24 15:54:38 by alebaron        ###   ########.fr       */
+/* Created: 2026/08/27 10:29:28 by alebaron        #+#    #+#              */
+/* Updated: 2026/08/27 10:38:08 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -14,20 +14,26 @@
 /* |                          Package & Import                           | */
 /* +---------------------------------------------------------------------+ */
 
-package utils
+package commands
 
 import (
-	"net"
-	"log"
+	"the_answer_protocol/src/models"
+	"the_answer_protocol/src/server/server_write"
 )
 
 /* +---------------------------------------------------------------------+ */
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
 
-func ServerWrite(conn net.Conn, message string) {
-    _, err := conn.Write([]byte(message)) 
-    if err != nil {
-        log.Printf("Server write error: %v", err)
-    }
+func Inventory(args []string, tapManager *models.TapManager, player *models.Player) error {
+
+	// === Envoie de l'inventaire === //
+
+	inventaire := player.InventoryToString()
+
+	str_ret := "OK " + inventaire + "\n"
+	server_write.ServerWrite(player.Conn, str_ret)
+	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + str_ret)
+
+	return nil
 }

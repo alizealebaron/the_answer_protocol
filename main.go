@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* main.go                                           :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:15:04 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/24 17:04:13 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/25 13:32:59 by emarette        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -19,6 +19,7 @@ package main
 import (
     // "fmt"
     "the_answer_protocol/src/server"
+    "the_answer_protocol/src/server/server_write"
 )
 
 /* ----------------------------------------------------------------------- */
@@ -28,5 +29,6 @@ import (
 func main() {
     tapManager := server.ParseJSONFile()
     // fmt.Printf("%+v\n", tapManager.Lst_Room)
-    server.Tcp_server(tapManager)
+    server_write.CreateLogFolder()
+    server.Tcp_server(&tapManager)
 }
