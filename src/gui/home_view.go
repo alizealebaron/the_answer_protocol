@@ -124,7 +124,7 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			fmt.Println("CONNECT", name, language)
 
 			fyne.Do(func() {
-				window.SetContent(GameView(window))
+				window.SetContent(GameView(window, size))
 			})
 
 			// Blocks the goroutine until netcat finishes. If it returns an error, it means that nc didn't finish properly.
