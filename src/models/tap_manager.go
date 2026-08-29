@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:29:32 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/28 16:07:32 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/29 14:01:08 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -28,6 +28,7 @@ type TapManager struct {
     Lst_Quest  []Quest
     Lst_Npc    []Npc
     Lst_Room   []Room
+	Lst_Group  []*Group
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -37,7 +38,8 @@ type TapManager struct {
 func NewTapManager(Lst_item []Item, Lst_Quest []Quest, Lst_Npc []Npc, Lst_Room []Room) TapManager {
 
     Lst_Player := []Player{}
-    tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc, Lst_Room}
+    Lst_Group  := []*Group{}
+    tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc, Lst_Room, Lst_Group}
     return tap
 }
 
@@ -53,7 +55,7 @@ func (tm *TapManager) GetRoomById(id int) (*Room, error) {
 		}
 	}
 
-	return nil, errors.New("not found")
+	return nil, errors.New("ERR 404 ROOM_NOT_FOUND")
 }
 
 func (tm *TapManager) GetItemById(id int) (Item, error) {
@@ -64,7 +66,29 @@ func (tm *TapManager) GetItemById(id int) (Item, error) {
 		}
 	}
 
-	return nil, errors.New("not found")
+	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
+}
+
+func (tm *TapManager) GetPlayerByName(name string) (*Player, error) {
+
+	for i := range tm.Lst_Player {
+		if tm.Lst_Player[i].Name == name {
+			return &tm.Lst_Player[i], nil
+		}
+	}
+
+	return nil, errors.New("ERR 404 PLAYER_NOT_FOUND")
+}
+
+func (tm *TapManager) GetGroupById(id int) (*Group, error) {
+
+	for i := range tm.Lst_Group {
+		if tm.Lst_Group[i].Id == id {
+			return tm.Lst_Group[i], nil
+		}
+	}
+
+	return nil, errors.New("ERR 404 GROUP_NOT_FOUND")
 }
 
 /* +---------------------------------------------------------------------+ */

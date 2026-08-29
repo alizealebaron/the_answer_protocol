@@ -1,17 +1,13 @@
-2026-08-28 16:13:24 (127.0.0.1) : [INFO]    Player ale connected
-2026-08-28 16:13:27 (127.0.0.1) : [COMMAND] ale use TAKE 2
-2026-08-28 16:13:27 (127.0.0.1) : [SERVER]  To ale: OK taken=Kana pêche
-2026-08-28 16:13:31 (127.0.0.1) : [COMMAND] ale use MOVE west
-2026-08-28 16:13:31 (127.0.0.1) : [SERVER]  To ale: OK Fontaine
-2026-08-28 16:13:34 (127.0.0.1) : [COMMAND] ale use USE 2
-2026-08-28 16:13:34 (127.0.0.1) : [SERVER]  To ale: OK fishing=Krukinaj
-2026-08-28 16:13:37 (127.0.0.1) : [COMMAND] ale use USE 2
-2026-08-28 16:13:37 (127.0.0.1) : [SERVER]  To ale: OK fishing=Krukinaj
-2026-08-28 16:13:41 (127.0.0.1) : [COMMAND] ale use USE 2
-2026-08-28 16:13:41 (127.0.0.1) : [SERVER]  To ale: OK fishing=Krukinaj
-2026-08-28 16:13:43 (127.0.0.1) : [COMMAND] ale use USE 2*
-2026-08-28 16:13:43 (127.0.0.1) : [WARN]    ale received a warn: ERR 404 ITEM_NOT_FOUND
-2026-08-28 16:13:47 (127.0.0.1) : [COMMAND] ale use USE 2
-2026-08-28 16:13:47 (127.0.0.1) : [SERVER]  To ale: OK fishing=Krukinaj
-2026-08-28 16:13:50 (127.0.0.1) : [COMMAND] ale use USE 2
-2026-08-28 16:13:50 (127.0.0.1) : [SERVER]  To ale: OK fishing=Gambling Coin
+2026-08-29 14:01:34 (10.11.6.17): [INFO]    Player ale connected
+2026-08-29 14:01:40 (127.0.0.1) : [INFO]    Player A connected
+2026-08-29 14:01:45 (10.11.6.17): [COMMAND] ale use GROUP CREATE
+2026-08-29 14:01:45 (10.11.6.17): [SERVER]  To ale: OK group=0
+2026-08-29 14:01:45 (10.11.6.17): [GROUP]   New Group has been created id=0
+2026-08-29 14:02:00 (10.11.6.17): [COMMAND] ale use GROUPE INVITE A
+2026-08-29 14:02:00 (10.11.6.17): [WARN]    ale received a warn: ERR 902 COMMAND_UNKNOWN "GROUPE"
+2026-08-29 14:02:05 (10.11.6.17): [COMMAND] ale use GROUP INVITE A
+2026-08-29 14:02:05 (10.11.6.17): [SERVER]  To ale: OK
+2026-08-29 14:02:05 (10.11.6.17): [GROUP]   A new invitation has been sent to A to join the group id=0
+2026-08-29 14:02:11 (127.0.0.1) : [COMMAND] A use GROUP JOIN 0
+2026-08-29 14:02:11 (127.0.0.1) : [SERVER]  To A: OK group=0
+2026-08-29 14:02:11 (127.0.0.1) : [GROUP]   A has join group id=0
