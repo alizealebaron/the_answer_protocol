@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* player_model.go                                   :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: rruiz, alebaron, emarette                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 16:20:31 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/27 10:36:58 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/30 13:49:50 by emarette        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -43,7 +43,7 @@ type Player struct {
 	Language         string
 	Inventory        []Item
 	Conn             net.Conn
-	Group            string
+	Group            *string
 	DialogueProgress map[int]int
 }
 
@@ -55,7 +55,7 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 
 	lstItem := []Item{}
 	dialogueProgress := make(map[int]int)
-	player := Player{totalPlayer, name, 100, 100, "healthy", 5, language, lstItem, conn, "", dialogueProgress}
+	player := Player{totalPlayer, name, 100, 100, "healthy", 5, language, lstItem, conn, nil, dialogueProgress}
 	totalPlayer += 1
 	return player
 }

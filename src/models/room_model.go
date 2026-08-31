@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* room_model.go                                     :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: rruiz, alebaron, emarette                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 15:56:01 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/26 10:18:09 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/30 13:35:37 by emarette        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -59,6 +59,7 @@ type Room struct {
 	Ennemies      []Npc          `json:"-"`
 	Items         []Item         `json:"-"`
 	Lst_Player    []Player       `json:"-"`
+	Arena		  []Npc
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -107,6 +108,21 @@ func (r *Room) RemoveItemToRoom(itID int) (*Item, error) {
         }
     }
 	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
+}
+
+func (r *Room) AddMonsterToRoom(monster Npc) {
+	r.Arena = append(r.Arena, monster)
+}
+
+func (r *Room) RemoveMonsterToRoom(monster Npc) (*Npc, error) {
+
+    for i, m := range r.Arena {
+        if m.GetId() == monster.GetId() {
+            r.Arena = append(r.Arena[:i], r.Arena[i+1:]...)
+            return &m, nil
+        }
+    }
+	return nil, errors.New("ERR 404 MONSTER_NOT_FOUND")
 }
 
 /* +---------------------------------------------------------------------+ */

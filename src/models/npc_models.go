@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* npc_models.go                                     :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: rruiz, alebaron, emarette                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/20 11:03:02 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/20 18:04:54 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/30 13:37:23 by emarette        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -91,6 +91,7 @@ type Monster struct {
 	Loot         Item `json:"-"`
 	QuantityMin  int  `json:"quantityMin"`
 	QuantityMax  int  `json:"quantityMax"`
+	SpawnRate    int  `json:"spawnRate"`
 }
 
 func (m Monster) ToString() string {
