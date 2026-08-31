@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/18 19:29:32 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/25 16:30:27 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/29 14:01:08 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -23,27 +23,79 @@ import "errors"
 /* +---------------------------------------------------------------------+ */
 
 type TapManager struct {
-    Lst_item   []Item
-    Lst_Player []Player
-    Lst_Quest  []Quest
-    Lst_Npc    []Npc
-    Lst_Room   []Room
+    Lst_item    []Item
+    Lst_Player  []Player
+    Lst_Quest   []Quest
+    Lst_Npc     []Npc
+    Lst_Monster []Monster
+    Lst_Room    []Room
+	Lst_Group   []*Group
 }
 
 /* +---------------------------------------------------------------------+ */
 /* |                            Constructeur                             | */
 /* +---------------------------------------------------------------------+ */
 
-func NewTapManager(Lst_item []Item, Lst_Quest []Quest, Lst_Npc []Npc, Lst_Room []Room) TapManager {
+func NewTapManager(Lst_item []Item, Lst_Quest []Quest, Lst_Npc []Npc, Lst_Monster []Monster, Lst_Room []Room) TapManager {
 
     Lst_Player := []Player{}
-    tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc, Lst_Room}
+    Lst_Group  := []*Group{}
+    tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc, Lst_Monster, Lst_Room, Lst_Group}
     return tap
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                             Accesseurs                              | */
+/* +---------------------------------------------------------------------+ */
+
+func (tm *TapManager) GetRoomById(id int) (*Room, error) {
+
+	for i := range tm.Lst_Room {
+		if tm.Lst_Room[i].Id == id {
+			return &tm.Lst_Room[i], nil
+		}
+	}
+
+	return nil, errors.New("ERR 404 ROOM_NOT_FOUND")
+}
+
+func (tm *TapManager) GetItemById(id int) (Item, error) {
+
+	for i := range tm.Lst_item {
+		if tm.Lst_item[i].GetId() == id {
+			return tm.Lst_item[i], nil
+		}
+	}
+
+	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
+}
+
+func (tm *TapManager) GetPlayerByName(name string) (*Player, error) {
+
+	for i := range tm.Lst_Player {
+		if tm.Lst_Player[i].Name == name {
+			return &tm.Lst_Player[i], nil
+		}
+	}
+
+	return nil, errors.New("ERR 404 PLAYER_NOT_FOUND")
+}
+
+func (tm *TapManager) GetGroupById(id int) (*Group, error) {
+
+	for i := range tm.Lst_Group {
+		if tm.Lst_Group[i].Id == id {
+			return tm.Lst_Group[i], nil
+		}
+	}
+
+	return nil, errors.New("ERR 404 GROUP_NOT_FOUND")
 }
 
 /* +---------------------------------------------------------------------+ */
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
+
 
 func (tap TapManager) ToString() string {
     var tap_str string
@@ -87,15 +139,4 @@ func (tap *TapManager) FindPlayerRoom(player_id int) (*Room, error) {
 	}
 
 	return nil, errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
-}
-
-func (tm *TapManager) GetRoomById(id int) (*Room, error) {
-
-	for i := range tm.Lst_Room {
-		if tm.Lst_Room[i].Id == id {
-			return &tm.Lst_Room[i], nil // pointeur vers le vrai élément du slice
-		}
-	}
-
-	return nil, errors.New("not found")
 }

@@ -10,6 +10,10 @@
 /*                                                                         */
 /* *********************************************************************** */
 
+/* +---------------------------------------------------------------------+ */
+/* |                          Package & Import                           | */
+/* +---------------------------------------------------------------------+ */
+
 package commands
 
 import (
@@ -17,6 +21,10 @@ import (
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
 )
+
+/* +---------------------------------------------------------------------+ */
+/* |                             Fonctions                               | */
+/* +---------------------------------------------------------------------+ */
 
 func Connect(tapManager *models.TapManager, conn net.Conn, name string, language string) (models.Player, string) {
 	player := models.NewPlayer(name, language, conn)
