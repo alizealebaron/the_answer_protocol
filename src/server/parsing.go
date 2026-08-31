@@ -35,6 +35,11 @@ func ParseJSONFile() models.TapManager{
     var lst_item []models.Item
     lst_item = get_all_item()
 
+    // === Initialisation des Monstres ===
+
+    var lst_monster []models.Monster
+    lst_monster = get_monster(lst_item)
+
     // === Initialisation des Quests ===
 
     var lst_quest []models.Quest
@@ -49,10 +54,10 @@ func ParseJSONFile() models.TapManager{
     // === Initialisation des Rooms ===
 
     var lst_room []models.Room
-    lst_room = get_all_room(lst_item, lst_npc)
+    lst_room = get_all_room(lst_item, lst_npc, lst_monster)
 
     // === Initialisation du tapManager ===
-    tapManager := models.NewTapManager(lst_item, lst_quest, lst_npc, lst_room)
+    tapManager := models.NewTapManager(lst_item, lst_quest, lst_npc, lst_monster, lst_room)
 	fmt.Println("[\033[32mSUCCESS\033[0m] (ﾉ◕ヮ◕)ﾉ*・ﾟ✧ JSON successfully load.")
 
     return tapManager
@@ -129,6 +134,23 @@ func get_all_item() []models.Item {
     return lst_item
 }
 
+func get_monster(lst_item []models.Item) []models.Monster {
+
+    var lst_monster        []models.Monster
+
+    // === Récupérations des monsters === //
+
+    data := get_data_from_json("data/monster_data.json")
+
+    err := json.Unmarshal(data, &lst_monster)
+	if err != nil {
+		utils.ExitError("JSONParsingError", err)
+	}
+
+    resolve_monster_item(lst_monster, lst_item)
+    return lst_monster
+}
+
 func get_all_quest() []models.Quest {
 
     // === Déclarations des variables === //
@@ -173,7 +195,6 @@ func get_all_npc(lst_item []models.Item, lst_quest []models.Quest) []models.Npc 
     var lst_npc         []models.Npc
     var lst_dialoguer   []models.Dialoguer
     var lst_questgiver  []models.QuestGiver
-    var lst_monster     []models.Monster
     var lst_room        []models.Trader
 
     // === Récupérations des loots === //
@@ -203,20 +224,6 @@ func get_all_npc(lst_item []models.Item, lst_quest []models.Quest) []models.Npc 
         lst_npc = append(lst_npc, q)
     }
 
-    // === Récupérations des monsters === //
-
-    data = get_data_from_json("data/monster_data.json")
-
-    err = json.Unmarshal(data, &lst_monster)
-	if err != nil {
-		utils.ExitError("JSONParsingError", err)
-	}
-
-    resolve_monster_item(lst_monster, lst_item)
-    for _, m := range lst_monster {
-        lst_npc = append(lst_npc, m)
-    }
-
     // // === Récupérations des traders === //
 
     data = get_data_from_json("data/trader_data.json")
@@ -236,7 +243,7 @@ func get_all_npc(lst_item []models.Item, lst_quest []models.Quest) []models.Npc 
     return lst_npc
 }
 
-func get_all_room(lst_item []models.Item, lst_npc []models.Npc) []models.Room {
+func get_all_room(lst_item []models.Item, lst_npc []models.Npc, lst_monster []models.Monster) []models.Room {
 
     // === Déclarations des variables === //
 
@@ -253,7 +260,7 @@ func get_all_room(lst_item []models.Item, lst_npc []models.Npc) []models.Room {
 
     resolve_room_item(lst_room, lst_item)
     resolve_room_allies(lst_room, lst_npc)
-    resolve_room_ennemy(lst_room, lst_npc)
+    resolve_room_ennemy(lst_room, lst_monster)
 
     // === Renvoie des données récupérées === //
 
@@ -277,7 +284,7 @@ func resolve_room_item(lst_room []models.Room, lst_item []models.Item) []models.
             if item, ok := itemById[lst_room[i].ItemsId[j]]; ok {
                 lst_room[i].Items = append(lst_room[i].Items, item)
             } else {
-                utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_room[i].ItemsId[j]))
+                utils.ExitError("UnknownItemRoomId", fmt.Errorf("reward id %d not found", lst_room[i].ItemsId[j]))
             }
         }
     }
@@ -298,7 +305,7 @@ func resolve_room_allies(lst_room []models.Room, lst_npc []models.Npc) []models.
             if npc, ok := npcById[lst_room[i].AlliesId[j]]; ok {
                 lst_room[i].Allies = append(lst_room[i].Allies, npc)
             } else {
-                utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_room[i].AlliesId[j]))
+                utils.ExitError("UnknownAlliesId", fmt.Errorf("reward id %d not found", lst_room[i].AlliesId[j]))
             }
         }
     }
@@ -306,20 +313,20 @@ func resolve_room_allies(lst_room []models.Room, lst_npc []models.Npc) []models.
     return lst_room
 }
 
-func resolve_room_ennemy(lst_room []models.Room, lst_npc []models.Npc) []models.Room {
+func resolve_room_ennemy(lst_room []models.Room, lst_monster []models.Monster) []models.Room {
 
     // On construit une map pour un accès rapide O(1)
-    npcById := make(map[int]models.Npc)
-    for _, npc := range lst_npc {
-        npcById[npc.GetId()] = npc
+    monsterById := make(map[int]models.Monster)
+    for _, m := range lst_monster {
+        monsterById[m.GetId()] = m
     }
 
     for i := range lst_room {
         for j := range lst_room[i].EnnemiesId {
-            if npc, ok := npcById[lst_room[i].EnnemiesId[j]]; ok {
+            if npc, ok := monsterById[lst_room[i].EnnemiesId[j]]; ok {
                 lst_room[i].Ennemies = append(lst_room[i].Ennemies, npc)
             } else {
-                utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_room[i].EnnemiesId[j]))
+                utils.ExitError("UnknownMonsterId", fmt.Errorf("reward id %d not found", lst_room[i].EnnemiesId[j]))
             }
         }
     }
@@ -340,7 +347,7 @@ func resolve_trader_item(lst_room []models.Trader, lst_item []models.Item) []mod
             if item, ok := itemById[lst_room[i].InventoryId[j]]; ok {
                 lst_room[i].Inventory = append(lst_room[i].Inventory, item)
             } else {
-                utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_room[i].InventoryId[j]))
+                utils.ExitError("UnknownTraderId", fmt.Errorf("reward id %d not found", lst_room[i].InventoryId[j]))
             }
         }
     }
@@ -360,7 +367,7 @@ func resolve_monster_item(lst_monster []models.Monster, lst_item []models.Item) 
         if item, ok := itemById[lst_monster[i].LootId]; ok {
             lst_monster[i].Loot = item
         } else {
-            utils.ExitError("UnknownRewardId", fmt.Errorf("reward id %d not found", lst_monster[i].LootId))
+            utils.ExitError("UnknownItemId", fmt.Errorf("reward id %d not found", lst_monster[i].LootId))
         }
     }
 

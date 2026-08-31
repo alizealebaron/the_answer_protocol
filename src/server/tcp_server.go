@@ -154,7 +154,7 @@ func handleConnection(conn net.Conn) {
 				server_write.ServerWrite(conn, err.Error()+"\n")
 			}
 
-			fmt.Printf("%+v\n", TapManager.Lst_Group)
+			fmt.Printf("%+v\n", TapManager.Lst_Group[0])
 		}
 
 		// ackMsg := strings.ToUpper(strings.TrimSpace(message))

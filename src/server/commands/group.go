@@ -17,8 +17,8 @@
 package commands
 
 import (
-    "fmt"
 	"errors"
+	"fmt"
 	"strconv"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
@@ -36,14 +36,16 @@ func Group(args []string, tapManager *models.TapManager, player *models.Player) 
 	}
 
 	switch args[0] {
-		case "CREATE":
-			return create(player, tapManager)
-		case "INVITE":
-			return invite(args, player, tapManager)
-		case "JOIN":
-			return join(args, player, tapManager)
-		default:
-			return errors.New("ERR 302 WRONG_ARGUMENTS")
+	case "CREATE":
+		return create(player, tapManager)
+	case "INVITE":
+		return invite(args, player, tapManager)
+	case "JOIN":
+		return join(args, player, tapManager)
+	case "LEAVE":
+		return leave(player)
+	default:
+		return errors.New("ERR 302 WRONG_ARGUMENTS")
 	}
 }
 
@@ -62,13 +64,12 @@ func create(player *models.Player, tap *models.TapManager) error {
 	group := models.NewGroup(*player)
 	(*player).Group = &group
 	tap.Lst_Group = append(tap.Lst_Group, &group)
-	
 
 	// On envoie les messages
 	str_ret := fmt.Sprintf("OK group=%d\n", group.Id)
 	group_output := fmt.Sprintf("New Group has been created id=%d\n", group.Id)
 	server_write.ServerWrite(player.Conn, str_ret)
-	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + str_ret)
+	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
 	server_write.WriteLog(player.Conn, "GROUP", group_output)
 
 	return nil
@@ -91,7 +92,7 @@ func invite(args []string, player *models.Player, tap *models.TapManager) error 
 	if err != nil {
 		return errors.New("ERR 404 PLAYER_NOT_FOUND")
 	}
-	
+
 	// === Inviter le joueur === //
 	err = player.Group.AddPlayerToInvited(*player_inv)
 	if err != nil {
@@ -103,7 +104,7 @@ func invite(args []string, player *models.Player, tap *models.TapManager) error 
 	str_ret := "OK\n"
 	group_output := fmt.Sprintf("A new invitation has been sent to %s to join the group id=%d\n", player_inv.Name, player.Group.Id)
 	server_write.ServerWrite(player.Conn, str_ret)
-	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + str_ret)
+	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
 	server_write.WriteLog(player.Conn, "GROUP", group_output)
 
 	return nil
@@ -124,7 +125,7 @@ func join(args []string, player *models.Player, tap *models.TapManager) error {
 	// Vérification que le groupe existe bien
 	id, _ := strconv.Atoi(args[1])
 	group, err := tap.GetGroupById(id)
-	if (err != nil) {
+	if err != nil {
 		return errors.New("ERR 404 GROUP_NOT_FOUND")
 	}
 
@@ -133,15 +134,42 @@ func join(args []string, player *models.Player, tap *models.TapManager) error {
 		return errors.New("ERR 402 PLAYER_NOT_INVITED")
 	}
 
+	// Vérification que le groupe n'est pas déjà full (4 joueurs)
+	if len(group.Lst_Player) == 4 {
+		return errors.New("ERR 402 GROUP_ALREADY_FULL")
+	}
+
 	// Ajout du joueur dans le groupe
 	group.AddPlayerToGroup(*player)
+	player.Group = group
 
 	// On envoie les messages
 	str_ret := fmt.Sprintf("OK group=%d\n", group.Id)
 	group_output := fmt.Sprintf("%s has join group id=%d\n", player.Name, group.Id)
 	server_write.ServerWrite(player.Conn, str_ret)
-	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + str_ret)
+	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
 	server_write.WriteLog(player.Conn, "GROUP", group_output)
+
+	return nil
+}
+
+func leave(player *models.Player) error {
+
+	// Vérification que le joueur a un groupe
+	if player.Group == nil {
+		return errors.New("ERR 401 NOT_IN_GROUP")
+	}
+
+	player.Group.RemovePlayerFromGroup(*player)
+
+	// On envoie les messages
+	str_ret := "OK\n"
+	group_output := fmt.Sprintf("%s has leave group id=%d\n", player.Name, player.Group.Id)
+	server_write.ServerWrite(player.Conn, str_ret)
+	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
+	server_write.WriteLog(player.Conn, "GROUP", group_output)
+
+	player.Group = nil
 
 	return nil
 }
