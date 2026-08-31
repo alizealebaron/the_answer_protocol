@@ -47,6 +47,7 @@ var map_commands = map[string]CommandFunc{
 	"TAKE":      commands.Take,
 	"DROP":      commands.Drop,
 	"TALK":      commands.Talk,
+	"TRADE":     commands.Trade,
 	"GROUP":     commands.Group,
 	"STATUS":    commands.Status,
 	"INVENTORY": commands.Inventory,
@@ -154,7 +155,7 @@ func handleConnection(conn net.Conn) {
 				server_write.ServerWrite(conn, err.Error()+"\n")
 			}
 
-			fmt.Printf("%+v\n", TapManager.Lst_Group[0])
+			// fmt.Printf("%+v\n", TapManager.Lst_Group[0])
 		}
 
 		// ackMsg := strings.ToUpper(strings.TrimSpace(message))

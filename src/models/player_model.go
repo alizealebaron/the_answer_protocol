@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 16:20:31 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/29 10:17:43 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/31 13:17:24 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -41,6 +41,7 @@ type Player struct {
 	Status           string
 	Attack           int
 	Language         string
+	Money            int
 	Inventory        map[Item]int
 	Conn             net.Conn
 	Group            *Group
@@ -55,7 +56,7 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 
 	lstItem := make(map[Item]int)
 	dialogueProgress := make(map[int]int)
-	player := Player{totalPlayer, name, 100, 100, "healthy", 5, language, lstItem, conn, nil, dialogueProgress}
+	player := Player{totalPlayer, name, 100, 100, "healthy", 5, language, 0, lstItem, conn, nil, dialogueProgress}
 	totalPlayer += 1
 	return player
 }
