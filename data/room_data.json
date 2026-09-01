@@ -4,7 +4,7 @@
 		"name": "CASINO",
 		"allies": [],
 		"ennemies": [],
-		"items": [1],
+		"items": [1, 1],
 		"neighborRoom": { "north": 4, "south": 0, "east": 3, "west": 0 },
 		"fishing": []
 	},
