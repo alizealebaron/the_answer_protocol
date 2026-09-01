@@ -17,10 +17,10 @@
 package models
 
 import (
-	"errors"
-	"net"
-	"fmt"
 	"encoding/json"
+	"errors"
+	"fmt"
+	"net"
 )
 
 /* +---------------------------------------------------------------------+ */
@@ -56,7 +56,7 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 
 	lstItem := make(map[Item]int)
 	dialogueProgress := make(map[int]int)
-	player := Player{totalPlayer, name, 100, 100, "healthy", 5, language, 0, lstItem, conn, nil, dialogueProgress}
+	player := Player{totalPlayer, name, 100, 100, "healthy", 5, language, 1000, lstItem, conn, nil, dialogueProgress}
 	totalPlayer += 1
 	return player
 }
@@ -67,9 +67,9 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 
 func (p *Player) GetItem(itID int) (*Item, error) {
 
-    // Parcours des objets de l'inventaire
+	// Parcours des objets de l'inventaire
 	for it, _ := range p.Inventory {
-        // Gestion des items si on le trouve
+		// Gestion des items si on le trouve
 		if it.GetId() == itID {
 			return &it, nil
 		}
@@ -81,12 +81,16 @@ func (p *Player) AddItemToPlayer(it Item) {
 	p.Inventory[it] += 1
 }
 
+func (p *Player) AddItemToPlayerWQuantity(it Item, q int) {
+	p.Inventory[it] += q
+}
+
 func (p *Player) RemoveItemToPlayer(itID int) (*Item, error) {
 
-    // Parcours des objets de l'inventaire
+	// Parcours des objets de l'inventaire
 	for it, qty := range p.Inventory {
-    
-        // Gestion des items si on le trouve
+
+		// Gestion des items si on le trouve
 		if it.GetId() == itID {
 			if qty <= 1 {
 				delete(p.Inventory, it)
@@ -118,8 +122,10 @@ func (p *Player) InventoryToString() string {
 
 	out := struct {
 		Items []ItemEntry `json:"items"`
+		Money int         `json:"money"`
 	}{
 		Items: items,
+		Money: p.Money,
 	}
 
 	b, err := json.Marshal(out)

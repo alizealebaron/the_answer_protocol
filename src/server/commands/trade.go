@@ -17,9 +17,9 @@
 package commands
 
 import (
-	// "fmt"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"strconv"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
@@ -90,11 +90,11 @@ func Trade(args []string, tapManager *models.TapManager, player *models.Player) 
 func Buy(args []string, tapManager *models.TapManager, player *models.Player) error {
 
 	// === Vérification de la longueur des arguments === //
-	if len(args) != 1 {
+	if len(args) < 1 {
 		return errors.New("ERR 302 NO_PNJ_SEND")
 	}
 
-	// // === Récupération de la room actuelle du Joueur === //
+	// === Récupération de la room actuelle du Joueur === //
 	room, err := tapManager.FindPlayerRoom(player.Id)
 	if err != nil {
 		return errors.New("ERR 404 PLAYER_NOT_FOUND")
@@ -109,6 +109,35 @@ func Buy(args []string, tapManager *models.TapManager, player *models.Player) er
 	}
 
 	// === Vérification de la présence de l'item === //
+	id, err = strconv.Atoi(args[1])
+
+	item, err := getItemIventaire(inv, id)
+	if err != nil {
+		return err
+	}
+
+	// === Vérification que le joueur a l'argent pour === //
+
+	quantite, err := strconv.Atoi(args[2])
+	if quantite <= 0 {
+		return errors.New("ERR 411 INVALID_QUANTITY")
+	}
+
+	prix := quantite * item.GetCost()
+	if prix > player.Money {
+		return errors.New("ERR 411 NOT_ENOUGH_MONEY")
+	}
+
+	// === Ajout de l'item à l'inventaire du joueur === //
+	player.AddItemToPlayerWQuantity(item, quantite)
+	player.Money -= quantite * item.GetCost()
+
+	// === Envoie des messages === //
+
+	str_ret := fmt.Sprintf("OK {\"id\":%d,\"name\":%s,\"quantity\":%d}\n", item.GetId(), item.GetName(), quantite)
+	server_write.ServerWrite(player.Conn, str_ret)
+	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
+
 	return nil
 }
 
@@ -129,5 +158,16 @@ func getTraderInventory(room models.Room, npcId int) ([]models.Item, error) {
 		}
 	}
 	return nil, errors.New("ERR 404 NPC_NOT_FOUND")
+
+}
+
+func getItemIventaire(inv []models.Item, item_id int) (models.Item, error) {
+
+	for _, it := range inv {
+		if it.GetId() == item_id {
+			return it, nil
+		}
+	}
+	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
 
 }

@@ -39,16 +39,17 @@ type CommandFunc func(args []string, tapManager *models.TapManager, player *mode
 
 // Registre des commandes
 var map_commands = map[string]CommandFunc{
-	"WHO":       commands.Who,
+	"BUY":       commands.Buy,
 	"USE":       commands.Use,
-	"LOOK":      commands.Look,
+	"WHO":       commands.Who,
 	"CHAT":      commands.Chat,
+	"DROP":      commands.Drop,
+	"LOOK":      commands.Look,
 	"MOVE":      commands.Move,
 	"TAKE":      commands.Take,
-	"DROP":      commands.Drop,
 	"TALK":      commands.Talk,
-	"TRADE":     commands.Trade,
 	"GROUP":     commands.Group,
+	"TRADE":     commands.Trade,
 	"STATUS":    commands.Status,
 	"INVENTORY": commands.Inventory,
 }
