@@ -104,6 +104,25 @@ func (p *Player) RemoveItemToPlayer(itID int) (*Item, error) {
 	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
 }
 
+func (p *Player) RemoveItemToPlayerWQuantity(itID int, q int) (*Item, error) {
+
+	// Parcours des objets de l'inventaire
+	for it, qty := range p.Inventory {
+
+		// Gestion des items si on le trouve
+		if it.GetId() == itID {
+			if qty <= q {
+				delete(p.Inventory, it)
+			} else {
+				p.Inventory[it] = qty - q
+			}
+			itemCopy := it
+			return &itemCopy, nil
+		}
+	}
+	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
+}
+
 func (p *Player) InventoryToString() string {
 	type ItemEntry struct {
 		Id       int    `json:"id"`

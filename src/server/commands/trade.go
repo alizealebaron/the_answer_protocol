@@ -142,6 +142,36 @@ func Buy(args []string, tapManager *models.TapManager, player *models.Player) er
 }
 
 /* +---------------------------------------------------------------------+ */
+/* |                                Sell                                 | */
+/* +---------------------------------------------------------------------+ */
+
+func Sell(args []string, tapManager *models.TapManager, player *models.Player) error {
+
+	// === Vérification de la longueur des arguments === //
+	if len(args) < 1 {
+		return errors.New("ERR 302 NO_PNJ_SEND")
+	}
+
+	// === Récupération de la room actuelle du Joueur === //
+	room, err := tapManager.FindPlayerRoom(player.Id)
+	if err != nil {
+		return errors.New("ERR 404 PLAYER_NOT_FOUND")
+	}
+
+	// === Récupération de l'inventaire du Trader === //
+	id, err := strconv.Atoi(args[0])
+
+	inv, err := getTraderInventory(*room, id)
+	if err != nil {
+		return err
+	}
+
+	
+
+	return nil
+}
+
+/* +---------------------------------------------------------------------+ */
 /* |                      Fonctions Supplémentaires                      | */
 /* +---------------------------------------------------------------------+ */
 

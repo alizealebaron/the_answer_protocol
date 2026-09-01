@@ -46,6 +46,7 @@ var map_commands = map[string]CommandFunc{
 	"DROP":      commands.Drop,
 	"LOOK":      commands.Look,
 	"MOVE":      commands.Move,
+	"SELL":      commands.Sell,
 	"TAKE":      commands.Take,
 	"TALK":      commands.Talk,
 	"GROUP":     commands.Group,
