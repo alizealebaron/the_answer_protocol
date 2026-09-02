@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/26 01:29:35 by emarette        #+#    #+#              */
-/* Updated: 2026/08/26 10:58:32 by alebaron        ###   ########.fr       */
+/* Updated: 2026/09/02 15:37:59 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -30,6 +30,7 @@ func Who(args []string, tapManager *models.TapManager, player *models.Player) er
 	nb_player := len(tapManager.Lst_Player)
 	output := fmt.Sprintf("Ok players=%d\n", nb_player)
 	server_write.ServerWrite(player.Conn, output)
-	server_write.WriteLog(player.Conn, "INFO", "Player " + player.Name + "Send 'WHO'")
+	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + output)
+
 	return nil
 }
