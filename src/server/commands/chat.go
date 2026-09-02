@@ -49,12 +49,10 @@ func Chat(args []string, tapManager *models.TapManager, player *models.Player) e
 			}
 		}
 	} else if scope == "GROUP" {
-		for _ , p := range tapManager.Lst_Player {
-			if player.Group == p.Group {
-				output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
-				server_write.ServerWrite(p.Conn, output)
-				server_write.WriteLog(player.Conn, "CHAT", output)
-			}
+		for _ , p := range player.Group.Lst_Player {
+			output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
+			server_write.ServerWrite(p.Conn, output)
+			server_write.WriteLog(player.Conn, "CHAT", output)
 		}
 	}
 	return nil

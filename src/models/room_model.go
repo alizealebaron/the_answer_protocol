@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 15:56:01 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/26 10:18:09 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/31 12:45:44 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -48,6 +48,7 @@ type IdName struct {
 /* +---------------------------------------------------------------------+ */
 
 type Room struct {
+
 	Id            int            `json:"id"`
 	Name          string         `json:"name"`
 	AlliesId      []int          `json:"allies"`
@@ -55,10 +56,12 @@ type Room struct {
 	ItemsId       []int          `json:"items"`
 	NeighborRoom  NeighborRoom   `json:"neighborRoom"`
 	Fishing       []FishingEntry `json:"fishing"`
+
 	Allies        []Npc          `json:"-"`
-	Ennemies      []Npc          `json:"-"`
+	Ennemies      []Monster      `json:"-"`
 	Items         []Item         `json:"-"`
 	Lst_Player    []Player       `json:"-"`
+
 }
 
 /* +---------------------------------------------------------------------+ */

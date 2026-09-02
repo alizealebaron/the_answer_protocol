@@ -41,6 +41,6 @@ func Connect(tapManager *models.TapManager, conn net.Conn, name string, language
 
 	tapManager.Lst_Player = append(tapManager.Lst_Player, player)
 	tapManager.Lst_Room[1].Lst_Player = append(tapManager.Lst_Room[1].Lst_Player, player)
-	server_write.ServerWrite(conn, "Ok connected\n")
+	server_write.ServerWrite(conn, "OK connected\n")
 	return player, ""
 }

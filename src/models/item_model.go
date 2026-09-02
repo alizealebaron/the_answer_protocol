@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 11:04:48 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/20 09:57:16 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/31 13:49:01 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -30,6 +30,7 @@ type Item interface {
 	GetId()           int
 	GetName()         string
 	IsItemAvailable() bool
+	GetCost()         int
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -48,6 +49,7 @@ type Loot struct {
 
 func (l Loot) GetId()   int    { return l.Id   }
 func (l Loot) GetName() string { return l.Name }
+func (l Loot) GetCost() int    { return l.Cost }
 
 func (l Loot) IsItemAvailable() bool {
 	return (l.NbAvail > 0)
