@@ -43,6 +43,9 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 	for _, e := range room.Ennemies {
 		if args[0] == e.GetName() {
 			luck := rand.IntN(10)
+			if err != nil {
+				return err
+			}
 			if luck >= 5 {
 				room.AddMonsterToRoom(e)
 				server_write.ServerWrite(player.Conn, "OK "+e.GetName()+" summon in the arena"+"\n")

@@ -25,7 +25,26 @@ import (
 /* |                               Quest                                 | */
 /* +---------------------------------------------------------------------+ */
 
-type Quest struct {
+type Quest interface {
+	GetId()            int
+	GetTitle()         string
+	GetDescriptionFr() string
+	GetDescriptionEn() string
+	GetReward()        Item
+	GetRewardId()      int
+
+	SetReward(item Item)
+
+	ToString()         string
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                             QuestModel                              | */
+/* +---------------------------------------------------------------------+ */
+
+// === Constructeur === //
+
+type QuestModel struct {
 	Id            int    `json:"id"`
 	Title         string `json:"title"`
 	DescriptionFr string `json:"descriptionFr"`
@@ -35,9 +54,71 @@ type Quest struct {
 	Quantity      int    `json:"quantity"`
 }
 
-func (q Quest) GetId()   int    { return q.Id   }
+// === Accesseurs === //
 
-func (q Quest) ToString() string {
+func (q QuestModel) GetId()            int    { return q.Id            }
+func (q QuestModel) GetTitle()         string { return q.Title         }
+func (q QuestModel) GetDescriptionFr() string { return q.DescriptionFr }
+func (q QuestModel) GetDescriptionEn() string { return q.DescriptionEn }
+func (q QuestModel) GetReward()        Item   { return q.Reward        }
+func (q QuestModel) GetRewardId()      int    { return q.RewardId      }
+
+// === Modificateurs === //
+
+func (q *QuestModel) SetReward(item Item) {q.Reward = item}
+
+// === ToString === //
+
+func (q QuestModel) ToString() string {
+	b, err := json.Marshal(q)
+	if err != nil {
+		return fmt.Sprintf("erreur: %v", err)
+	}
+	return string(b)
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                             QuestItem                               | */
+/* +---------------------------------------------------------------------+ */
+
+// === Constructeur === //
+
+type QuestItem struct {
+	QuestModel
+	ItemNeededId int   `json:"ItemNeededId"`
+	ItemNeededQu int   `json:"ItemNeededQu"`
+}
+
+func (q *QuestItem) SetReward(item Item) {q.Reward = item}
+
+// === ToString === //
+
+func (q QuestItem) ToString() string {
+	b, err := json.Marshal(q)
+	if err != nil {
+		return fmt.Sprintf("erreur: %v", err)
+	}
+	return string(b)
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                             QuestItem                               | */
+/* +---------------------------------------------------------------------+ */
+
+// === Constructeur === //
+
+type QuestMonster struct {
+	QuestModel
+	MonsterNeededId int      `json:"MonsterNeededId"`
+	MonsterNeededQu int      `json:"MonsterNeededQu"`
+	MonsterSlay     int
+}
+
+func (q *QuestMonster) SetReward(item Item) {q.Reward = item}
+
+// === ToString === //
+
+func (q QuestMonster) ToString() string {
 	b, err := json.Marshal(q)
 	if err != nil {
 		return fmt.Sprintf("erreur: %v", err)

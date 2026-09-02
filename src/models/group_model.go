@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* group_model.go                                    :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: rruiz, alebaron, emarette                 +#+  +:+       +#+        */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/29 09:04:12 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/30 13:41:45 by emarette        ###   ########.fr       */
+/* Updated: 2026/08/29 13:58:08 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -34,7 +34,8 @@ var totalGroup int
 type Group struct {
 	Id            int
 	Lst_Player    []Player
-	Lst_Invited   []Player}
+	Lst_Invited   []Player
+}
 
 /* +---------------------------------------------------------------------+ */
 /* |                            Constructeur                             | */

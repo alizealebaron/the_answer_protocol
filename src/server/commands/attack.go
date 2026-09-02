@@ -28,5 +28,5 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 func attack(args []string, tapManager *models.TapManager, player *models.Player) error {
-	
+	return nil
 }

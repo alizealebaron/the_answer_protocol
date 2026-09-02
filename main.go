@@ -28,7 +28,7 @@ import (
 
 func main() {
     tapManager := server.ParseJSONFile()
-    // fmt.Printf("%+v\n", tapManager.Lst_Room)
+    // fmt.Printf("%+v\n", tapManager.Lst_Quest[1])
     server_write.CreateLogFolder()
     server.Tcp_server(&tapManager)
 }

@@ -2,8 +2,8 @@
 	{
 		"id": 2,
 		"name": "Jeanne",
-		"dialogueFr": ["(TODO)", "(TODO)"],
-		"dialogueEn": ["(TODO)", "(TODO)"]
+		"dialogueFr": ["Bienvenue à la taverne de la Pucelle !", "Je m'appelle Jeanne.", "N'hésitez pas à revenir si vous avez besoin de soins."],
+		"dialogueEn": ["Welcome to the Taverne de la Pucelle!", "My name is Jeanne.", "Please do come back if you need any treatment."]
 	},
 	{
 		"id": 3,
