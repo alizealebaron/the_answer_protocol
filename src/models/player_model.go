@@ -111,8 +111,10 @@ func (p *Player) RemoveItemToPlayerWQuantity(itID int, q int) (*Item, error) {
 
 		// Gestion des items si on le trouve
 		if it.GetId() == itID {
-			if qty <= q {
+			if qty == q {
 				delete(p.Inventory, it)
+			} else if qty < q {
+				return nil, errors.New("ERR 420 NOT_ENOUGH_ITEM")
 			} else {
 				p.Inventory[it] = qty - q
 			}

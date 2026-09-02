@@ -1,0 +1,13 @@
+2026-09-02 10:36:03 (127.0.0.1) : [INFO]    Player ALE connected
+2026-09-02 10:36:07 (127.0.0.1) : [COMMAND] ALE use MOVE SOUTH
+2026-09-02 10:36:07 (127.0.0.1) : [SERVER]  To ALE: OK Rue de l'avenue
+2026-09-02 10:36:15 (127.0.0.1) : [COMMAND] ALE use BUY 4 2 1
+2026-09-02 10:36:15 (127.0.0.1) : [SERVER]  To ALE: OK buy={"id":2,"name":Kana pêche,"quantity":1}, price=200
+2026-09-02 10:36:23 (127.0.0.1) : [COMMAND] ALE use SELL 4 2 1
+2026-09-02 10:36:23 (127.0.0.1) : [SERVER]  To ALE: OK sell={"id":2,"name":Kana pêche,"quantity":1}, money=120
+2026-09-02 10:36:52 (127.0.0.1) : [COMMAND] ALE use BUY 4 2 5
+2026-09-02 10:36:52 (127.0.0.1) : [WARN]    ALE received a warn: ERR 411 NOT_ENOUGH_MONEY
+2026-09-02 10:36:56 (127.0.0.1) : [COMMAND] ALE use BUY 4 2 3
+2026-09-02 10:36:56 (127.0.0.1) : [SERVER]  To ALE: OK buy={"id":2,"name":Kana pêche,"quantity":3}, price=600
+2026-09-02 10:37:01 (127.0.0.1) : [COMMAND] ALE use SELL 4 2 3
+2026-09-02 10:37:01 (127.0.0.1) : [SERVER]  To ALE: OK sell={"id":2,"name":Kana pêche,"quantity":3}, money=360

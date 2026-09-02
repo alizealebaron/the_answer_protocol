@@ -130,11 +130,11 @@ func Buy(args []string, tapManager *models.TapManager, player *models.Player) er
 
 	// === Ajout de l'item à l'inventaire du joueur === //
 	player.AddItemToPlayerWQuantity(item, quantite)
-	player.Money -= quantite * item.GetCost()
+	player.Money -= prix
 
 	// === Envoie des messages === //
 
-	str_ret := fmt.Sprintf("OK {\"id\":%d,\"name\":%s,\"quantity\":%d}\n", item.GetId(), item.GetName(), quantite)
+	str_ret := fmt.Sprintf("OK buy={\"id\":%d,\"name\":%s,\"quantity\":%d}, price=%d\n", item.GetId(), item.GetName(), quantite, prix)
 	server_write.ServerWrite(player.Conn, str_ret)
 	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
 
@@ -152,21 +152,50 @@ func Sell(args []string, tapManager *models.TapManager, player *models.Player) e
 		return errors.New("ERR 302 NO_PNJ_SEND")
 	}
 
-	// // === Récupération de la room actuelle du Joueur === //
-	// room, err := tapManager.FindPlayerRoom(player.Id)
-	// if err != nil {
-	// 	return errors.New("ERR 404 PLAYER_NOT_FOUND")
-	// }
+	// === Récupération de la room actuelle du Joueur === //
+	room, err := tapManager.FindPlayerRoom(player.Id)
+	if err != nil {
+		return errors.New("ERR 404 PLAYER_NOT_FOUND")
+	}
 
-	// // === Récupération de l'inventaire du Trader === //
-	// id, err := strconv.Atoi(args[0])
+	// === Récupération de l'inventaire du Trader === //
+	id, err := strconv.Atoi(args[0])
 
-	// inv, err := getTraderInventory(*room, id)
-	// if err != nil {
-	// 	return err
-	// }
+	_ , err = getTraderInventory(*room, id)
+	if err != nil {
+		return err
+	}
 
+	// === On retire la quantité de l'inventaire du Joueur === //
+	id_item, err := strconv.Atoi(args[1])
+	quantite, err := strconv.Atoi(args[2])
 
+	item, err := tapManager.GetItemById(id_item)
+	if err != nil {
+		return err
+	}
+
+	if (quantite <= 0) {
+		return errors.New("ERR 411 INVALID_QUANTITY")
+	}
+
+	_, err = player.RemoveItemToPlayerWQuantity(id_item, quantite)
+	if err != nil {
+		return err
+	}
+
+	vente := (int(float64(item.GetCost()) * 0.6) * quantite)
+	if vente <= 0 {
+		vente = 1
+	}
+
+	player.Money += vente
+
+	// === Envoie des messages === //
+
+	str_ret := fmt.Sprintf("OK sell={\"id\":%d,\"name\":%s,\"quantity\":%d}, money=%d\n", item.GetId(), item.GetName(), quantite, vente)
+	server_write.ServerWrite(player.Conn, str_ret)
+	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
 
 	return nil
 }
