@@ -6,11 +6,11 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/25 14:26:36 by rruiz           #+#    #+#              */
-/* Updated: 2026/08/26 17:56:12 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/01 12:53:52 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
-package gui
+package home
 
 import (
 	"image/color"
