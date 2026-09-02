@@ -59,9 +59,7 @@ func createButton(category string, subCommandsBox *fyne.Container, stdin io.Writ
 
 		for _, command := range commandByCategory[category] {
 			commandButton := widget.NewButton(command, func() {
-				fmt.Fprintf(stdin, "LOOK")
-				fmt.Println("LOOK")
-				fmt.Println(command)
+				executeCommand(stdin, command)
 			})
 			commandButton.Importance = widget.LowImportance
 			subCommandsBox.Add(commandButton)
@@ -70,4 +68,8 @@ func createButton(category string, subCommandsBox *fyne.Container, stdin io.Writ
 	})
 
 	return button
+}
+
+func executeCommand(stdin io.WriteCloser, command string) {
+	fmt.Fprintf(stdin, "%s\n", command)
 }
