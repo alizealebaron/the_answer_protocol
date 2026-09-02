@@ -6,13 +6,15 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/06/22 13:23:57 by rruiz           #+#    #+#              */
-/* Updated: 2026/08/22 14:24:32 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/01 13:07:20 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
 package gui
 
 import (
+	// "the_answer_protocol/src/gui/game"
+	"the_answer_protocol/src/gui/home"
 	"the_answer_protocol/src/utils"
 
 	"fyne.io/fyne/v2"
@@ -62,8 +64,8 @@ func Run(fullscreen bool) {
 	}
 
 	// Displays the window's default content on the home screen
-	// window.SetContent(HomeView(window, size))
-	window.SetContent(GameView(window, size))
+	window.SetContent(home.HomeView(window, size))
+	// window.SetContent(game.GameView(window, size))
 
 	window.ShowAndRun()
 }

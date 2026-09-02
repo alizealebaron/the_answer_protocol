@@ -6,16 +6,17 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:17 by rruiz           #+#    #+#              */
-/* Updated: 2026/08/26 18:12:01 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/01 14:59:06 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
-package gui
+package home
 
 import (
 	"fmt"
 	"os/exec"
 	"strings"
+	"the_answer_protocol/src/gui/game"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -124,7 +125,7 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			fmt.Println("CONNECT", name, language)
 
 			fyne.Do(func() {
-				window.SetContent(GameView(window, size))
+				window.SetContent(game.GameView(window, stdin))
 			})
 
 			// Blocks the goroutine until netcat finishes. If it returns an error, it means that nc didn't finish properly.
