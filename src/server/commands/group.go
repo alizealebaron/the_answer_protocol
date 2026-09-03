@@ -103,7 +103,9 @@ func invite(args []string, player *models.Player, tap *models.TapManager) error 
 
 	str_ret := "OK\n"
 	group_output := fmt.Sprintf("A new invitation has been sent to %s to join the group id=%d\n", player_inv.Name, player.Group.Id)
+	output := fmt.Sprintf("EVT GROUP INVITE id=%d\n", player.Group.Id)
 	server_write.ServerWrite(player.Conn, str_ret)
+	server_write.ServerWrite(player_inv.Conn, output)
 	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
 	server_write.WriteLog(player.Conn, "GROUP", group_output)
 
@@ -150,6 +152,11 @@ func join(args []string, player *models.Player, tap *models.TapManager) error {
 	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
 	server_write.WriteLog(player.Conn, "GROUP", group_output)
 
+	// Envoie de l'évent à tous les joueurs
+	for _, player1 := range group.Lst_Player {
+		server_write.ServerWrite(player1.Conn, "EVT GROUP JOIN " + player.Name + "\n")
+	}
+
 	return nil
 }
 
@@ -168,6 +175,11 @@ func leave(player *models.Player) error {
 	server_write.ServerWrite(player.Conn, str_ret)
 	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
 	server_write.WriteLog(player.Conn, "GROUP", group_output)
+
+	// Envoie de l'évent à tous les joueurs
+	for _, player1 := range player.Group.Lst_Player {
+		server_write.ServerWrite(player1.Conn, "EVT GROUP LEAVE " + player.Name + "\n")
+	}
 
 	player.Group = nil
 

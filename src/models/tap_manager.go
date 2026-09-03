@@ -16,7 +16,10 @@
 
 package models
 
-import "errors"
+import (
+	"errors"
+	// "hash/maphash"
+)
 
 /* +---------------------------------------------------------------------+ */
 /* |                               Classe                                | */
@@ -139,4 +142,17 @@ func (tap *TapManager) FindPlayerRoom(player_id int) (*Room, error) {
 	}
 
 	return nil, errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+}
+
+func (tap *TapManager) FindMonsterRoom(monster_id int) (*Room, error) {
+
+	for i := range tap.Lst_Room {
+		for _, m := range tap.Lst_Room[i].Arena {
+			if m.Id == monster_id {
+				return &tap.Lst_Room[i], nil
+			}
+		}
+	}
+
+	return nil, errors.New("ERR 404 NPC_NOT_FOUND")
 }

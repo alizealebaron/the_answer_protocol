@@ -48,6 +48,7 @@ type IdName struct {
 /* +---------------------------------------------------------------------+ */
 
 type Room struct {
+
 	Id            int            `json:"id"`
 	Name          string         `json:"name"`
 	AlliesId      []int          `json:"allies"`
@@ -55,11 +56,12 @@ type Room struct {
 	ItemsId       []int          `json:"items"`
 	NeighborRoom  NeighborRoom   `json:"neighborRoom"`
 	Fishing       []FishingEntry `json:"fishing"`
+
 	Allies        []Npc          `json:"-"`
-	Ennemies      []Npc          `json:"-"`
+	Ennemies      []Monster      `json:"-"`
 	Items         []Item         `json:"-"`
 	Lst_Player    []Player       `json:"-"`
-	Arena		  []Npc
+	Arena		  []Monster
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -110,11 +112,11 @@ func (r *Room) RemoveItemToRoom(itID int) (*Item, error) {
 	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
 }
 
-func (r *Room) AddMonsterToRoom(monster Npc) {
+func (r *Room) AddMonsterToRoom(monster Monster) {
 	r.Arena = append(r.Arena, monster)
 }
 
-func (r *Room) RemoveMonsterToRoom(monster Npc) (*Npc, error) {
+func (r *Room) RemoveMonsterToRoom(monster Monster) (*Monster, error) {
 
     for i, m := range r.Arena {
         if m.GetId() == monster.GetId() {

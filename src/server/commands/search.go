@@ -41,14 +41,14 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 	}
 
 	for _, e := range room.Ennemies {
-		if args[0] == e.GetName() {
+		if args[0] == e.Name {
 			luck := rand.IntN(10)
 			if err != nil {
 				return err
 			}
-			if luck >= 5 {
+			if luck >= e.SpawnRate {
 				room.AddMonsterToRoom(e)
-				server_write.ServerWrite(player.Conn, "OK "+e.GetName()+" summon in the arena"+"\n")
+				server_write.ServerWrite(player.Conn, "OK "+e.Name+" summon in the arena"+"\n")
 				return nil
 			}
 			server_write.ServerWrite(player.Conn, "KO failed to summon in the arena"+"\n")
