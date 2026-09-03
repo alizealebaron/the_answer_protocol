@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:21 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/01 16:34:25 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/03 17:22:33 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -62,7 +62,7 @@ func newRatioSplit(ratio float32, horizontal bool, gap float32, a, b fyne.Canvas
 	return container.New(&ratioLayout{ratio: ratio, horizontal: horizontal, gap: gap}, a, b)
 }
 
-func GameView(window fyne.Window, stdin io.WriteCloser) fyne.CanvasObject {
+func GameView(window fyne.Window, stdin io.WriteCloser, listener *Listener) fyne.CanvasObject {
 	const gap = float32(8)
 
 	commandBox := commandWidget(stdin)
@@ -72,7 +72,7 @@ func GameView(window fyne.Window, stdin io.WriteCloser) fyne.CanvasObject {
 	mapBox := mapWidget()
 
 	whathappened := goingOnWidget()
-	playersLabel := playerCountLabel()
+	playersLabel := playerCountLabel(listener)
 	topleft := newRatioSplit(0.83, false, gap, whathappened, playersLabel)
 
 	groupBox := groupWidget()
@@ -118,8 +118,11 @@ func goingOnWidget() *fyne.Container {
 	return container.NewStack(frame, border)
 }
 
-func playerCountLabel() *fyne.Container {
+func playerCountLabel(listener *Listener) *fyne.Container {
 	label := widget.NewLabel(fmt.Sprintf("Nombre de joueur dans la room: %d\nNombre de joueur global: %d", 1, 42))
+	listener.Subscribe(func(line string) {
+		label.SetText(line)
+	})
 	label.Wrapping = fyne.TextWrapWord
 	label.Alignment = fyne.TextAlignCenter
 
