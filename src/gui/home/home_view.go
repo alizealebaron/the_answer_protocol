@@ -6,15 +6,18 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:17 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/01 14:59:06 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/03 17:40:35 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
 package home
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"os/exec"
+	"regexp"
 	"strings"
 	"the_answer_protocol/src/gui/game"
 
@@ -92,6 +95,12 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			return
 		}
 
+		matched, _ := regexp.MatchString("^[a-zA-Z0-9_]{1,15}$", name)
+		if !matched {
+			displayError(errText, errContent, "Invalid name format.")
+			return
+		}
+
 		// A goroutine: It's like a thread, but lighter.
 		go func() {
 			// Create the command to connect to the server using 'nc'.
@@ -103,6 +112,14 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 				displayError(errText, errContent, "System error: failed to create input pipe.")
 				return
 			}
+
+			stdout, err := cmd.StdoutPipe()
+			if err != nil {
+				displayError(errText, errContent, "System error: failed to create input pipe.")
+				return
+			}
+
+			listener := &game.Listener{}
 
 			// If Start() return a error.
 			if err := cmd.Start(); err != nil {
@@ -124,8 +141,10 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			//Type the command “CONNECT <name> <language>” in the terminal.
 			fmt.Println("CONNECT", name, language)
 
-			fyne.Do(func() {
-				window.SetContent(game.GameView(window, stdin))
+			go stdoutListening(stdout, listener)
+
+			go fyne.Do(func() {
+				window.SetContent(game.GameView(window, stdin, listener))
 			})
 
 			// Blocks the goroutine until netcat finishes. If it returns an error, it means that nc didn't finish properly.
@@ -163,4 +182,19 @@ func quitButton(window fyne.Window, width float32, height float32) *widget.Butto
 	quitButton.Move(fyne.NewPos(width-1-width/19, 0))
 
 	return quitButton
+}
+
+func stdoutListening(stdout io.ReadCloser, listener *game.Listener) {
+	scanner := bufio.NewScanner(stdout)
+	for scanner.Scan() {
+		line := scanner.Text()
+		fyne.Do(func() {
+			listener.Distribute(line)
+		})
+	}
+	if err := scanner.Err(); err != nil {
+		fyne.Do(func() {
+			fmt.Println("Connection lost:", err)
+		})
+	}
 }
