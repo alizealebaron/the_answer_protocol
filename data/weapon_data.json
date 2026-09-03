@@ -48,15 +48,5 @@
         "nbCopies": -1,
         "nbAvail": -1,
 		"damage": 15
-	},
-	{
-        "id": 9,
-        "name": "Couteau Grandement Terrifiant",
-        "descriptionFr": "Attention à ne pas trop le brusquer, il a tendance à facilement vouloir se révolter.",
-        "descriptionEn": "Be careful not to push him too hard, he tends to rebel easily.",
-        "cost": 50,
-        "nbCopies": -1,
-        "nbAvail": -1,
-		"damage": 20
 	}
 ]

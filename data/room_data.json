@@ -12,7 +12,7 @@
 		"id": 2,
 		"name": "Place Sénile",
 		"allies": [3],
-		"ennemies": [],
+		"ennemies": [11],
 		"items": [14],
 		"neighborRoom": { "north": 6, "south": 3, "east": 5, "west": 4 },
 		"fishing": []
