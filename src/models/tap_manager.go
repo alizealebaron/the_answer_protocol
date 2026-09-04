@@ -119,7 +119,7 @@ func (tap TapManager) ToString() string {
     return tap_str
 }
 
-func (tap TapManager) RemovePlayer(player_id int) {
+func (tap *TapManager) RemovePlayer(player_id int) {
     for i, p := range tap.Lst_Player {
         if p.Id == player_id {
             tap.Lst_Player = append(tap.Lst_Player[:i], tap.Lst_Player[i+1:]...)
