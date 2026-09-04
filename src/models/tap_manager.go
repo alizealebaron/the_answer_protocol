@@ -26,13 +26,14 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 type TapManager struct {
-    Lst_item    []Item
-    Lst_Player  []Player
-    Lst_Quest   []Quest
-    Lst_Npc     []Npc
-    Lst_Monster []Monster
-    Lst_Room    []Room
-	Lst_Group   []*Group
+    Lst_item     []Item
+    Lst_Player   []Player
+    Lst_Quest    []Quest
+    Lst_Npc      []Npc
+    Lst_Monster  []Monster
+    Lst_Room     []Room
+	Lst_Group    []*Group
+	Entity_index int
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -43,7 +44,7 @@ func NewTapManager(Lst_item []Item, Lst_Quest []Quest, Lst_Npc []Npc, Lst_Monste
 
     Lst_Player := []Player{}
     Lst_Group  := []*Group{}
-    tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc, Lst_Monster, Lst_Room, Lst_Group}
+    tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc, Lst_Monster, Lst_Room, Lst_Group, 1}
     return tap
 }
 

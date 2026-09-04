@@ -18,7 +18,9 @@ package commands
 
 import (
 	"errors"
+	"fmt"
 	"math/rand/v2"
+	"strconv"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
 )
@@ -41,18 +43,23 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 	}
 
 	for _, e := range room.Ennemies {
-		if args[0] == e.Name {
-			luck := rand.IntN(10)
-			if err != nil {
-				return err
-			}
+		id, err := strconv.Atoi(args[0])
+		if err != nil {
+			return errors.New("ERR ATOI_ERROR")
+		}
+		if id == e.Id {
+			luck := rand.IntN(10) + 1
+
 			if luck >= e.SpawnRate {
+				e.Entity_id = tapManager.Entity_index
+				tapManager.Entity_index += 1
 				room.AddMonsterToRoom(e)
-				server_write.ServerWrite(player.Conn, "OK "+e.Name+" summon in the arena"+"\n")
+				message := fmt.Sprint("Ok ", e.Name,  "[", e.Entity_id, "] summon in the arena \n")
+				server_write.ServerWrite(player.Conn, message)
 				return nil
 			}
-			server_write.ServerWrite(player.Conn, "KO failed to summon in the arena"+"\n")
-			// server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + room.ToString())
+			server_write.ServerWrite(player.Conn, "KO failed to summon monster in the arena"+"\n")
+			server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + room.ToString())
 			return nil
 		}
 	}

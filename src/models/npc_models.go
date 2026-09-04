@@ -92,6 +92,7 @@ type Monster struct {
 	QuantityMin  int  `json:"quantityMin"`
 	QuantityMax  int  `json:"quantityMax"`
 	SpawnRate    int  `json:"spawnRate"`
+	Entity_id    int  `json:"entity_id"`
 }
 
 func (m Monster) ToString() string {

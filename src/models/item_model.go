@@ -31,7 +31,6 @@ type Item interface {
 	GetName()         string
 	IsItemAvailable() bool
 	GetCost()         int
-	GetDamage()       int
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -51,7 +50,6 @@ type Loot struct {
 func (l Loot) GetId()   int    { return l.Id   }
 func (l Loot) GetName() string { return l.Name }
 func (l Loot) GetCost() int    { return l.Cost }
-func (l Loot) GetDamage() int {return 0}
 
 func (l Loot) IsItemAvailable() bool {
 	return (l.NbAvail > 0)
@@ -81,8 +79,6 @@ func (w Weapon) ToString() string {
 	}
 	return string(b)
 }
-
-func (w Weapon) GetDamage() int {return w.Damage}
 
 /* +---------------------------------------------------------------------+ */
 /* |                                Edible                               | */
