@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 16:20:31 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/31 13:17:24 by alebaron        ###   ########.fr       */
+/* Updated: 2026/09/04 15:15:04 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -154,6 +154,22 @@ func (p *Player) InventoryToString() string {
 		return fmt.Sprintf("erreur: %v", err)
 	}
 	return string(b)
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                        Gestion du gambling                          | */
+/* +---------------------------------------------------------------------+ */
+
+func (p *Player) IsEnoughGamblingCoin(bet int) (bool, error) {
+	
+	// Parcours des objets de l'inventaire
+	for it := range p.Inventory {
+		// Gestion des items si on le trouve
+		if it.GetId() == 1 && p.Inventory[it] >= bet {
+			return true, nil
+		}
+	}
+	return false, errors.New("ERR 999 NOT_ENOUGH_COIN")
 }
 
 /* +---------------------------------------------------------------------+ */
