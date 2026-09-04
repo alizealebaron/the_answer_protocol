@@ -53,6 +53,8 @@ var map_commands = map[string]CommandFunc{
 	"TRADE":     commands.Trade,
 	"STATUS":    commands.Status,
 	"INVENTORY": commands.Inventory,
+	"SEARCH":    commands.Search,
+	"ATTACK":	 commands.Attack,
 }
 
 /* ----------------------------------------------------------------------- */
@@ -117,7 +119,10 @@ func handleConnection(conn net.Conn) {
 		reader := bufio.NewReader(conn)
 		line, err := reader.ReadString('\n')
 		if err != nil {
-			log.Printf("Read error: %v", err)
+			server_write.WriteLog(conn, "ERROR", "Read error: " + err.Error())
+			if (err.Error() == "EOF" && is_connected == true) {
+				commands.Quit(TapManager, self_player)
+			}
 			return
 		}
 
@@ -129,13 +134,11 @@ func handleConnection(conn net.Conn) {
 
 		// Gestion des commandes selon si l'utilisateur est connecté ou non //
 		if is_connected == false {
-			// 3 possbilités HELP, CONNECT ou autre
-			if command[0] == "HELP" {
-				continue
-			} else if command[0] == "CONNECT" && len(command) == 3 {
+			// 2 possbilités CONNECT ou autre
+			if command[0] == "CONNECT" && len(command) == 3 {
 				self_player, code_error = commands.Connect(TapManager, conn, command[1], command[2])
 				if code_error != "" {
-					fmt.Print("Connection attempt failed\n")
+					server_write.WriteLog(conn, "ERROR", "Connection attempt failed")
 				} else {
 					server_write.WriteLog(conn, "INFO", "Player "+self_player.Name+" connected")
 					is_connected = true
@@ -152,7 +155,7 @@ func handleConnection(conn net.Conn) {
 			server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
 
 			// Envoie de la ligne parse dans les différentes commandes
-			if err := dispatch(command, TapManager, &self_player, conn); err != nil {
+			if err := dispatch(command, TapManager, &self_player); err != nil {
 				server_write.WriteLog(conn, "WARN", self_player.Name+" received a warn: "+err.Error())
 				server_write.ServerWrite(conn, err.Error()+"\n")
 			}
@@ -169,7 +172,7 @@ func handleConnection(conn net.Conn) {
 	}
 }
 
-func dispatch(fields []string, tap *models.TapManager, player *models.Player, conn net.Conn) error {
+func dispatch(fields []string, tap *models.TapManager, player *models.Player) error {
 
 	// Vérification de la longueur de la commande
 	if len(fields) == 0 {
