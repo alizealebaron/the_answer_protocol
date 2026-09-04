@@ -6,11 +6,12 @@
 		"dialogueEn": ["GRUIIIII !"],
 		"pv": 30,
 		"attack": 10,
-		"defense": 0,
+		"defense": 5,
 		"isBoss": false,
 		"loot": 11,
 		"quantityMin": 1,
-		"quantityMax": 2
+		"quantityMax": 2,
+		"spawnRate": 8
 	},
 	{
 		"id": 7,
@@ -19,11 +20,12 @@
 		"dialogueEn": ["Every contribution helps shape everyone's future *laughs sarcastically*"],
 		"pv": 30,
 		"attack": 10,
-		"defense": 0,
+		"defense": 8,
 		"isBoss": false,
 		"loot": 3,
 		"quantityMin": 1,
-		"quantityMax": 2
+		"quantityMax": 2,
+		"spawnRate": 6
 	},
 	{
 		"id": 8,
@@ -36,7 +38,8 @@
 		"isBoss": false,
 		"loot": 3,
 		"quantityMin": 1,
-		"quantityMax": 3
+		"quantityMax": 3,
+		"spawnRate": 4
 	},
 	{
 		"id": 9,
@@ -62,6 +65,7 @@
 		"isBoss": false,
 		"loot": 1,
 		"quantityMin": 1,
-		"quantityMax": 1
+		"quantityMax": 1,
+		"spawnRate": 10
 	}
 ]

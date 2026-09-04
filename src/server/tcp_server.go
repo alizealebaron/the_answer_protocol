@@ -53,6 +53,8 @@ var map_commands = map[string]CommandFunc{
 	"TRADE":     commands.Trade,
 	"STATUS":    commands.Status,
 	"INVENTORY": commands.Inventory,
+	"SEARCH":    commands.Search,
+	"ATTACK":	 commands.Attack,
 }
 
 /* ----------------------------------------------------------------------- */

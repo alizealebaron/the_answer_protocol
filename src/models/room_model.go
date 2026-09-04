@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* room_model.go                                     :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: rruiz, alebaron, emarette                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 15:56:01 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/31 12:45:44 by alebaron        ###   ########.fr       */
+/* Updated: 2026/08/30 13:35:37 by emarette        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -61,7 +61,7 @@ type Room struct {
 	Ennemies      []Monster      `json:"-"`
 	Items         []Item         `json:"-"`
 	Lst_Player    []Player       `json:"-"`
-
+	Arena		  []*Monster
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -112,6 +112,21 @@ func (r *Room) RemoveItemToRoom(itID int) (*Item, error) {
 	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
 }
 
+func (r *Room) AddMonsterToRoom(monster Monster) {
+	r.Arena = append(r.Arena, &monster)
+}
+
+func (r *Room) RemoveMonsterToRoom(monster Monster) (*Monster, error) {
+
+    for i, m := range r.Arena {
+        if m.Entity_id == monster.Entity_id {
+            r.Arena = append(r.Arena[:i], r.Arena[i+1:]...)
+            return m, nil
+        }
+    }
+	return nil, errors.New("ERR 404 MONSTER_NOT_FOUND")
+}
+
 /* +---------------------------------------------------------------------+ */
 /* |                             To_string                               | */
 /* +---------------------------------------------------------------------+ */
@@ -137,6 +152,11 @@ func (r Room) ToString() string {
 		ennemies = append(ennemies, toIdName(e.GetId(), e.GetName()))
 	}
 
+	arena := make([]IdName, 0, len(r.Arena))
+	for _, e := range r.Arena {
+		arena = append(arena, toIdName(e.Entity_id, e.GetName()))
+	}
+
 	out := struct {
 		Id           int            `json:"id"`
 		Name         string         `json:"name"`
@@ -145,6 +165,7 @@ func (r Room) ToString() string {
 		Items        []IdName       `json:"items"`
 		NeighborRoom NeighborRoom   `json:"neighborRoom"`
 		Fishing      []FishingEntry `json:"fishing"`
+		Arena        []IdName       `json:"arena"`
 	}{
 		Id:           r.Id,
 		Name:         r.Name,
@@ -153,6 +174,7 @@ func (r Room) ToString() string {
 		Items:        items,
 		NeighborRoom: r.NeighborRoom,
 		Fishing:      r.Fishing,
+		Arena:        arena,
 	}
 
 	b, err := json.Marshal(out)
