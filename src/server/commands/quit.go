@@ -26,7 +26,13 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 func Quit(tapManager *models.TapManager, player models.Player) {
+
+	// === Récupération de la room actuelle du Joueur === //
+	room, _ := tapManager.FindPlayerRoom(player.Id)
+
+	// === Suppression du joueur de partout === //
+	room.RemovePlayerToRoom(player)
 	tapManager.RemovePlayer(player.Id)
-	server_write.ServerWrite(player.Conn, "Ok bye\n")
-	server_write.WriteLog(player.Conn, "INFO", "Player " + player.Name + " disconnected")
+	server_write.ServerWrite(player.Conn, "OK bye\n")
+	server_write.WriteLog(player.Conn, "INFO", "Player "+player.Name+" disconnected")
 }
