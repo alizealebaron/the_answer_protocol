@@ -28,5 +28,5 @@ sujet.md
 /target
 .vscode
 
-/log/*
+log/*
 GUI_game.png

@@ -1,13 +1,13 @@
-2026-09-07 09:19:56 (127.0.0.1) : [INFO]    Player A connected
-2026-09-07 09:20:06 (127.0.0.1) : [ERROR]   Connection attempt failed
-2026-09-07 09:20:12 (127.0.0.1) : [INFO]    Player Q connected
-2026-09-07 09:23:42 (127.0.0.1) : [COMMAND] A use WHO
-2026-09-07 09:23:42 (127.0.0.1) : [SERVER]  To A: Ok players=2
-2026-09-07 09:44:28 (127.0.0.1) : [COMMAND] A use MOVE NORTH
-2026-09-07 09:44:28 (127.0.0.1) : [SERVER]  To A: OK Forêt, épisode 1
-2026-09-07 09:44:33 (127.0.0.1) : [COMMAND] A use WHO
-2026-09-07 09:44:33 (127.0.0.1) : [SERVER]  To A: Ok players=2
-2026-09-07 09:44:42 (127.0.0.1) : [COMMAND] A use MOVE SOUTH
-2026-09-07 09:44:42 (127.0.0.1) : [SERVER]  To A: OK Place Sénile
-2026-09-07 10:26:52 (127.0.0.1) : [ERROR]   Read error: EOF
-2026-09-07 10:26:52 (127.0.0.1) : [INFO]    Player A disconnected
+2026-09-07 13:37:38 (10.11.6.17): [INFO]    Player ALE connected
+2026-09-07 13:37:40 (10.11.6.17): [INFO]    Player ALE disconnected
+2026-09-07 13:37:50 (10.11.6.17): [INFO]    Player ALE connected
+2026-09-07 13:37:53 (10.11.6.17): [COMMAND] ALE use WHO
+2026-09-07 13:37:53 (10.11.6.17): [SERVER]  To ALE: OK { "room": ["ALE"], "server": 1 }
+2026-09-07 13:38:22 (10.11.6.17): [INFO]    Player A connected
+2026-09-07 13:38:23 (10.11.6.17): [COMMAND] A use WHO
+2026-09-07 13:38:23 (10.11.6.17): [SERVER]  To A: OK { "room": ["ALE","A"], "server": 2 }
+2026-09-07 13:38:29 (10.11.6.17): [COMMAND] ALE use WHO
+2026-09-07 13:38:29 (10.11.6.17): [SERVER]  To ALE: OK { "room": ["ALE","A"], "server": 2 }
+2026-09-07 13:38:30 (10.11.6.17): [INFO]    Player A disconnected
+2026-09-07 13:38:36 (10.11.6.17): [COMMAND] ALE use WHO
+2026-09-07 13:38:36 (10.11.6.17): [SERVER]  To ALE: OK { "room": ["ALE"], "server": 1 }
