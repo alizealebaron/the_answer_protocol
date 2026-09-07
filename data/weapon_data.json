@@ -4,7 +4,7 @@
         "name": "Baguette de pain",
         "descriptionFr": "Aussi curieux que cela puisse paraître, cette baguette permet de lancer des sorts.",
         "descriptionEn": "As strange as it may seem, this baguette can be used to cast spells.",
-        "cost": 0,
+        "cost": 10,
         "nbCopies": -1,
         "nbAvail": -1,
 		"damage": 10
@@ -14,7 +14,7 @@
         "name": "Épée de bwa",
         "descriptionFr": "Épée faite en bwa, un arbre très spécifique provenant de la région de Mousse-en-Arbre.",
         "descriptionEn": "A sword made from bwa, a very specific type of tree native to the Mousse-en-Arbre region.",
-        "cost": 0,
+        "cost": 10,
         "nbCopies": -1,
         "nbAvail": -1,
 		"damage": 10
@@ -24,7 +24,7 @@
         "name": "Hache en mousse",
         "descriptionFr": "A ne pas donner à un pyrobarbare sous peine de la voir partir en fumée.",
         "descriptionEn": "Do not give this to a pyrobarbarian, or it will go up in smoke.",
-        "cost": 0,
+        "cost": 10,
         "nbCopies": -1,
         "nbAvail": -1,
 		"damage": 10
@@ -34,7 +34,7 @@
         "name": "Propulseur de fléchette",
         "descriptionFr": "Pourquoi ne pas mettre un Kayou ?",
         "descriptionEn": "Why not have a Kayou ?",
-        "cost": 0,
+        "cost": 10 ,
         "nbCopies": -1,
         "nbAvail": -1,
 		"damage": 10

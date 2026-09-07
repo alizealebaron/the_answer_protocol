@@ -3,7 +3,7 @@
 /*                                                     :::      ::::::::   */
 /* player_model.go                                   :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/* By: rruiz, alebaron, emarette                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 16:20:31 by alebaron        #+#    #+#              */
 /* Updated: 2026/09/04 15:15:04 by alebaron        ###   ########.fr       */
@@ -56,7 +56,7 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 
 	lstItem := make(map[Item]int)
 	dialogueProgress := make(map[int]int)
-	player := Player{totalPlayer, name, 100, 100, "healthy", 5, language, 1000, lstItem, conn, nil, dialogueProgress}
+	player := Player{totalPlayer, name, 1, 100, "healthy", 5, language, 10, lstItem, conn, nil, dialogueProgress}
 	totalPlayer += 1
 	return player
 }
@@ -154,6 +154,37 @@ func (p *Player) InventoryToString() string {
 		return fmt.Sprintf("erreur: %v", err)
 	}
 	return string(b)
+}
+
+func (p *Player) PlayerDeath(tapManager *TapManager) error {
+	p.Pv = 30
+	group, err := tapManager.GetGroupById(p.Id)
+	if err == nil {
+		group.RemovePlayerFromGroup(*p)
+	}
+	p_room, err := tapManager.FindPlayerRoom(p.Id)
+	if err != nil {
+		return err
+	}
+	p_room.RemovePlayerToRoom(*p)
+	p_room, err = tapManager.GetRoomById(5)
+	if err != nil {
+		return err
+	}
+	p_room.AddPlayerToRoom(*p)
+	return nil
+}
+
+func (p *Player) AddLifePoint(value int) error {
+	p.Pv += value
+	if p.Pv > 50 {
+		p.Status = "healthy"
+	} else if p.Pv <= 50 && p.Pv > 0 {
+		p.Status = "bloody"
+	} else {
+		p.Status = "dead"
+	}
+	return nil
 }
 
 /* +---------------------------------------------------------------------+ */
