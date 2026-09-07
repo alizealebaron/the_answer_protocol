@@ -94,5 +94,14 @@
 		"quest": 1,
 		"dialogueFinFr": ["(TODO)", "(TODO)"],
 		"dialogueFinEn": ["(TODO)", "(TODO)"]
+	},
+	{
+		"id": 11,
+		"name": "Gauss",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"],
+		"quest": 1,
+		"dialogueFinFr": ["(TODO)", "(TODO)"],
+		"dialogueFinEn": ["(TODO)", "(TODO)"]
 	}
 ]
