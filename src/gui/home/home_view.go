@@ -146,6 +146,7 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			fmt.Println("CONNECT", name, language)
 
 			line, _ = reader.ReadString('\n')
+			line = strings.TrimSpace(line)
 
 			if strings.HasPrefix(line, "OK connected") {
 				go stdoutListening(stdout, listener)
@@ -153,8 +154,8 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 					window.SetContent(game.GameView(window, stdin, listener))
 				})
 			} else {
-				fmt.Println('[', line, ']')
 				displayError(errText, errContent, "Error, during connection to the network.", size)
+				fmt.Println(strings.TrimSpace(line))
 				cmd.Process.Kill()
 				return
 			}
