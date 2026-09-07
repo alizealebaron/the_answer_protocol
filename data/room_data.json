@@ -2,7 +2,7 @@
 	{
 		"id": 1,
 		"name": "CASINO",
-		"allies": [],
+		"allies": [11],
 		"ennemies": [],
 		"items": [1, 1],
 		"neighborRoom": { "north": 4, "south": 0, "east": 3, "west": 0 },

@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/31 11:07:24 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/31 13:51:26 by alebaron        ###   ########.fr       */
+/* Updated: 2026/09/04 17:36:50 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -76,7 +76,7 @@ func Trade(args []string, tapManager *models.TapManager, player *models.Player) 
 		return errors.New("ERR 666 ENCODAGE_ERROR")
 	}
 
-	output := "OK " + string(inv_json) + "\n"
+	output := "OK trade=" + string(inv_json) + "\n"
 	server_write.ServerWrite(player.Conn, output)
 	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+output)
 
@@ -134,7 +134,7 @@ func Buy(args []string, tapManager *models.TapManager, player *models.Player) er
 
 	// === Envoie des messages === //
 
-	str_ret := fmt.Sprintf("OK buy={\"id\":%d,\"name\":%s,\"quantity\":%d}, price=%d\n", item.GetId(), item.GetName(), quantite, prix)
+	str_ret := fmt.Sprintf("OK buy={{\"id\":%d,\"name\":%s,\"quantity\":%d}, price=%d}\n", item.GetId(), item.GetName(), quantite, prix)
 	server_write.ServerWrite(player.Conn, str_ret)
 	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
 
@@ -193,7 +193,7 @@ func Sell(args []string, tapManager *models.TapManager, player *models.Player) e
 
 	// === Envoie des messages === //
 
-	str_ret := fmt.Sprintf("OK sell={\"id\":%d,\"name\":%s,\"quantity\":%d}, money=%d\n", item.GetId(), item.GetName(), quantite, vente)
+	str_ret := fmt.Sprintf("OK sell={{\"id\":%d,\"name\":%s,\"quantity\":%d}, money=%d}\n", item.GetId(), item.GetName(), quantite, vente)
 	server_write.ServerWrite(player.Conn, str_ret)
 	server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
 
