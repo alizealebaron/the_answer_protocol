@@ -6,14 +6,13 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:21 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/03 17:22:33 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/07 13:39:15 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
 package game
 
 import (
-	"fmt"
 	"io"
 
 	"image/color"
@@ -116,17 +115,6 @@ func goingOnWidget() *fyne.Container {
 
 	border := container.NewBorder(label, nil, nil, nil, square)
 	return container.NewStack(frame, border)
-}
-
-func playerCountLabel(listener *Listener) *fyne.Container {
-	label := widget.NewLabel(fmt.Sprintf("Nombre de joueur dans la room: %d\nNombre de joueur global: %d", 1, 42))
-	listener.Subscribe(func(line string) {
-		label.SetText(line)
-	})
-	label.Wrapping = fyne.TextWrapWord
-	label.Alignment = fyne.TextAlignCenter
-
-	return container.NewCenter(label)
 }
 
 func groupWidget() *fyne.Container {
