@@ -33,7 +33,7 @@ var totalGroup int
 
 type Group struct {
 	Id            int
-	Lst_Player    []Player
+	Lst_Player    []*Player
 	Lst_Invited   []Player
 }
 
@@ -41,10 +41,10 @@ type Group struct {
 /* |                            Constructeur                             | */
 /* +---------------------------------------------------------------------+ */
 
-func NewGroup(player Player) Group {
+func NewGroup(player *Player) Group {
 
 	lst_inv := []Player{}
-	lst_player := []Player{player}
+	lst_player := []*Player{player}
 	group := Group{totalGroup, lst_player, lst_inv}
 	totalGroup += 1
 	return group
@@ -54,10 +54,10 @@ func NewGroup(player Player) Group {
 /* |                         Gestion des joueurs                         | */
 /* +---------------------------------------------------------------------+ */
 
-func (g *Group) AddPlayerToGroup(player Player) error {
+func (g *Group) AddPlayerToGroup(player *Player) error {
 
 	g.Lst_Player = append(g.Lst_Player, player)
-	g.RemovePlayerFromInvit(player)
+	g.RemovePlayerFromInvit(*player)
 
 	return nil
 }
