@@ -61,7 +61,7 @@ func create(player *models.Player, tap *models.TapManager) error {
 	}
 
 	// Sinon on le met dans un groupe
-	group := models.NewGroup(*player)
+	group := models.NewGroup(player)
 	(*player).Group = &group
 	tap.Lst_Group = append(tap.Lst_Group, &group)
 
@@ -142,7 +142,7 @@ func join(args []string, player *models.Player, tap *models.TapManager) error {
 	}
 
 	// Ajout du joueur dans le groupe
-	group.AddPlayerToGroup(*player)
+	group.AddPlayerToGroup(player)
 	player.Group = group
 
 	// On envoie les messages
