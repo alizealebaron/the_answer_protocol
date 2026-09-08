@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/07 16:26:05 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/08 14:50:47 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -72,7 +72,7 @@ var commandByCategory = map[string][]string{
 	"Gambling":    {"GAMBLING"},
 }
 
-func commandWidget(stdin io.WriteCloser) *fyne.Container {
+func commandWidget(stdin io.WriteCloser, listener *Listener) *fyne.Container {
 	commandFrame := canvas.NewRectangle(color.Transparent)
 	commandFrame.StrokeColor = color.White
 	commandFrame.StrokeWidth = float32(2)
@@ -81,25 +81,25 @@ func commandWidget(stdin io.WriteCloser) *fyne.Container {
 	subScroll := container.NewScroll(subCommandBox)
 
 	buttonBar := container.NewGridWithColumns(6,
-		createButton("Environment", subCommandBox, stdin),
-		createButton("Social", subCommandBox, stdin),
-		createButton("Fight", subCommandBox, stdin),
-		createButton("Quest", subCommandBox, stdin),
-		createButton("Inventory", subCommandBox, stdin),
-		createButton("Gambling", subCommandBox, stdin),
+		createButton("Environment", subCommandBox, stdin, listener),
+		createButton("Social", subCommandBox, stdin, listener),
+		createButton("Fight", subCommandBox, stdin, listener),
+		createButton("Quest", subCommandBox, stdin, listener),
+		createButton("Inventory", subCommandBox, stdin, listener),
+		createButton("Gambling", subCommandBox, stdin, listener),
 	)
 
 	layout := container.NewBorder(buttonBar, nil, nil, nil, subScroll)
 	return container.NewStack(commandFrame, container.NewPadded(layout))
 }
 
-func createButton(category string, subCommandsBox *fyne.Container, stdin io.WriteCloser) *widget.Button {
+func createButton(category string, subCommandsBox *fyne.Container, stdin io.WriteCloser, listener *Listener) *widget.Button {
 	button := widget.NewButton(category, func() {
 		subCommandsBox.RemoveAll()
 
 		for _, command := range commandByCategory[category] {
 			commandButton := widget.NewButton(command, func() {
-				executeCommand(stdin, command)
+				executeCommand(stdin, command, listener)
 			})
 			commandButton.Importance = widget.LowImportance
 			subCommandsBox.Add(commandButton)
@@ -110,33 +110,5 @@ func createButton(category string, subCommandsBox *fyne.Container, stdin io.Writ
 	return button
 }
 
-func executeCommand(stdin io.WriteCloser, command string) {
-	commandInfo := allCommand[command]
-	// fmt.Fprintf(stdin, "CONNECT %s %s\n")
+func executeCommand(stdin io.WriteCloser, command string, listener *Listener) {
 }
-
-func startCommand(command string, subCommandsBox *fyne.Container, stdin io.WriteCloser) {
-	commandInfo := allCommand[command]
-
-	if commandInfo.parameters.name == "" {
-		executeCommand(stdin, command)
-		return
-	}
-
-}
-
-func renderParams(parameter *parameter, command string, box *fyne.Container, stdin io.WriteCloser) {
-	box.RemoveAll()
-
-	if parameter.form == list {
-		renderList()
-	} else if parameter.form == field {
-		renderField()
-	}
-
-	box.Refresh()
-}
-
-func renderList() {}
-
-func renderField() {}
