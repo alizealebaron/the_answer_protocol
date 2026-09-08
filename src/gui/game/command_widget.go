@@ -113,3 +113,29 @@ func createButton(category string, subCommandsBox *fyne.Container, stdin io.Writ
 func executeCommand(stdin io.WriteCloser, command string) {
 	commandInfo := allCommand[command]
 }
+
+func startCommand(command string, subCommandsBox *fyne.Container, stdin io.WriteCloser) {
+	commandInfo := allCommand[command]
+
+	if commandInfo.parameters.name == "" {
+		executeCommand(stdin, command)
+		return
+	}
+
+}
+
+func renderParams(parameter *parameter, command string, box *fyne.Container, stdin io.WriteCloser) {
+	box.RemoveAll()
+
+	if parameter.form == list {
+		renderList()
+	} else if parameter.form == field {
+		renderField()
+	}
+
+	box.Refresh()
+}
+
+func renderList() {}
+
+func renderField() {}
