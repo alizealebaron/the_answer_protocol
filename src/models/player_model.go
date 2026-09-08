@@ -42,10 +42,10 @@ type Player struct {
 	Attack           int
 	Language         string
 	Money            int
-	Inventory        map[Item]int
-	Conn             net.Conn
-	Group            *Group
-	DialogueProgress map[int]int
+	Inventory        map[Item]int  `json:"-"`
+	Conn             net.Conn      `json:"-"`
+	Group            *Group        `json:"-"`
+	DialogueProgress map[int]int   `json:"-"`
 }
 
 /* +---------------------------------------------------------------------+ */
