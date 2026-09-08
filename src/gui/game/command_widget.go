@@ -112,6 +112,7 @@ func createButton(category string, subCommandsBox *fyne.Container, stdin io.Writ
 
 func executeCommand(stdin io.WriteCloser, command string) {
 	commandInfo := allCommand[command]
+	// fmt.Fprintf(stdin, "CONNECT %s %s\n")
 }
 
 func startCommand(command string, subCommandsBox *fyne.Container, stdin io.WriteCloser) {
