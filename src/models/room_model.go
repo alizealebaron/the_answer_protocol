@@ -56,12 +56,15 @@ type Room struct {
 	ItemsId       []int          `json:"items"`
 	NeighborRoom  NeighborRoom   `json:"neighborRoom"`
 	Fishing       []FishingEntry `json:"fishing"`
+	Type          string         `json:"type"`
+	X             int            `json:"x"`
+	Y             int            `json:"y"`
 
 	Allies        []Npc          `json:"-"`
 	Ennemies      []Monster      `json:"-"`
 	Items         []Item         `json:"-"`
 	Lst_Player    []Player       `json:"-"`
-	Arena		  []*Monster
+	Arena		  []*Monster     `json:"-"`
 }
 
 /* +---------------------------------------------------------------------+ */

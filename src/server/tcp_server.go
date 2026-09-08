@@ -17,12 +17,13 @@
 package server
 
 import (
-	"bufio"
-	"errors"
 	"fmt"
 	"log"
 	"net"
+	"bufio"
+	"errors"
 	"strings"
+	"encoding/json"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/commands"
 	"the_answer_protocol/src/server/server_write"
@@ -149,18 +150,26 @@ func handleConnection(conn net.Conn) {
 			}
 		} else {
 			if command[0] == "QUIT" {
+				server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
 				commands.Quit(TapManager, self_player)
 				return
-			}
-			// Ecriture de la commande dans les logs
-			server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
+			} else if command[0] == "SECRET" {
+				output, err := json.Marshal(TapManager)
+				if err != nil {
+					server_write.ServerWrite(conn, err.Error())
+					return
+				}
+				server_write.ServerWrite(conn, string(output)+"\n")
+			} else {
+				// Ecriture de la commande dans les logs
+				server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
 
-			// Envoie de la ligne parse dans les différentes commandes
-			if err := dispatch(command, TapManager, &self_player); err != nil {
-				server_write.WriteLog(conn, "WARN", self_player.Name+" received a warn: "+err.Error())
-				server_write.ServerWrite(conn, err.Error()+"\n")
+				// Envoie de la ligne parse dans les différentes commandes
+				if err := dispatch(command, TapManager, &self_player); err != nil {
+					server_write.WriteLog(conn, "WARN", self_player.Name+" received a warn: "+err.Error())
+					server_write.ServerWrite(conn, err.Error()+"\n")
+				}
 			}
-
 			// fmt.Printf("%+v\n", TapManager.Lst_Group[0])
 		}
 
