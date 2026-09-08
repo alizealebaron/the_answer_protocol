@@ -26,13 +26,13 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 type TapManager struct {
-    Lst_item     []Item
-    Lst_Player   []Player
-    Lst_Quest    []Quest
-    Lst_Npc      []Npc
-    Lst_Monster  []Monster
-    Lst_Room     []Room
-	Lst_Group    []*Group
+	Lst_item     []Item    `json:"lst_item"`
+	Lst_Player   []Player  `json:"lst_player"`
+	Lst_Quest    []Quest   `json:"lst_quest"`
+	Lst_Npc      []Npc     `json:"lst_npc"`
+	Lst_Monster  []Monster `json:"lst_monster"`
+	Lst_Room     []Room    `json:"lst_room"`
+	Lst_Group    []*Group  `json:"lst_group"`
 	Entity_index int
 }
 
@@ -42,10 +42,10 @@ type TapManager struct {
 
 func NewTapManager(Lst_item []Item, Lst_Quest []Quest, Lst_Npc []Npc, Lst_Monster []Monster, Lst_Room []Room) TapManager {
 
-    Lst_Player := []Player{}
-    Lst_Group  := []*Group{}
-    tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc, Lst_Monster, Lst_Room, Lst_Group, 1}
-    return tap
+	Lst_Player := []Player{}
+	Lst_Group := []*Group{}
+	tap := TapManager{Lst_item, Lst_Player, Lst_Quest, Lst_Npc, Lst_Monster, Lst_Room, Lst_Group, 1}
+	return tap
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -100,36 +100,35 @@ func (tm *TapManager) GetGroupById(id int) (*Group, error) {
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
 
-
 func (tap TapManager) ToString() string {
-    var tap_str string
-    
-    for _, item := range tap.Lst_item {
+	var tap_str string
+
+	for _, item := range tap.Lst_item {
 		tap_str += item.ToString()
 	}
 
 	tap_str += "\n\n"
 
-    for _, item := range tap.Lst_Quest {
+	for _, item := range tap.Lst_Quest {
 		tap_str += item.ToString()
 	}
 
-    tap_str += "\n\n"
+	tap_str += "\n\n"
 
-    for _, item := range tap.Lst_Npc {
+	for _, item := range tap.Lst_Npc {
 		tap_str += item.ToString()
 	}
 
-    return tap_str
+	return tap_str
 }
 
 func (tap *TapManager) RemovePlayer(player_id int) {
-    for i, p := range tap.Lst_Player {
-        if p.Id == player_id {
-            tap.Lst_Player = append(tap.Lst_Player[:i], tap.Lst_Player[i+1:]...)
-            return
-        }
-    } 
+	for i, p := range tap.Lst_Player {
+		if p.Id == player_id {
+			tap.Lst_Player = append(tap.Lst_Player[:i], tap.Lst_Player[i+1:]...)
+			return
+		}
+	}
 }
 
 func (tap *TapManager) FindPlayerRoom(player_id int) (*Room, error) {

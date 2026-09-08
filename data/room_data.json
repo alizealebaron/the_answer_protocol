@@ -6,7 +6,10 @@
 		"ennemies": [],
 		"items": [1, 1],
 		"neighborRoom": { "north": 4, "south": 0, "east": 3, "west": 0 },
-		"fishing": []
+		"fishing": [],
+		"type": "casino",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 2,
@@ -15,7 +18,10 @@
 		"ennemies": [11],
 		"items": [14],
 		"neighborRoom": { "north": 6, "south": 3, "east": 5, "west": 4 },
-		"fishing": []
+		"fishing": [],
+		"type": "village",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 3,
@@ -24,7 +30,10 @@
 		"ennemies": [],
 		"items": [],
 		"neighborRoom": { "north": 2, "south": 0, "east": 0, "west": 1 },
-		"fishing": []
+		"fishing": [],
+		"type": "village",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 4,
@@ -36,7 +45,10 @@
 		"fishing": [
 			{ "itemId": 12, "lootRate": 90 },
 			{ "itemId":  1, "lootRate": 10 }
-		]
+		],
+		"type": "village",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 5,
@@ -45,7 +57,10 @@
 		"ennemies": [],
 		"items": [10],
 		"neighborRoom": { "north": 0, "south": 0, "east": 0, "west": 2 },
-		"fishing": []
+		"fishing": [],
+		"type": "village",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 6,
@@ -54,7 +69,10 @@
 		"ennemies": [6, 7],
 		"items": [],
 		"neighborRoom": { "north": 7, "south": 2, "east": 0, "west": 0 },
-		"fishing": []
+		"fishing": [],
+		"type": "forest",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 7,
@@ -63,7 +81,10 @@
 		"ennemies": [6, 7],
 		"items": [],
 		"neighborRoom": { "north": 9, "south": 6, "east": 8, "west": 10 },
-		"fishing": []
+		"fishing": [],
+		"type": "forest",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 8,
@@ -72,7 +93,10 @@
 		"ennemies": [6, 7],
 		"items": [],
 		"neighborRoom": { "north": 0, "south": 0, "east": 11, "west": 7 },
-		"fishing": []
+		"fishing": [],
+		"type": "forest",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 9,
@@ -81,7 +105,10 @@
 		"ennemies": [6, 7],
 		"items": [],
 		"neighborRoom": { "north": 0, "south": 7, "east": 0, "west": 0 },
-		"fishing": []
+		"fishing": [],
+		"type": "forest",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 10,
@@ -93,7 +120,10 @@
 		"fishing": [
 			{ "itemId": 14, "lootRate": 10 },
 			{ "itemId": 12, "lootRate": 90 }
-		]
+		],
+		"type": "lake",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 11,
@@ -102,7 +132,10 @@
 		"ennemies": [9],
 		"items": [],
 		"neighborRoom": { "north": 0, "south": 0, "east": 0, "west": 0 },
-		"fishing": []
+		"fishing": [],
+		"type": "cave",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 12,
@@ -111,7 +144,10 @@
 		"ennemies": [6, 7],
 		"items": [],
 		"neighborRoom": { "north":  0, "south": 13, "east": 10, "west": 0 },
-		"fishing": []
+		"fishing": [],
+		"type": "forest",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 13,
@@ -120,7 +156,10 @@
 		"ennemies": [6, 7],
 		"items": [],
 		"neighborRoom": { "north": 12, "south": 14, "east": 0, "west": 0 },
-		"fishing": []
+		"fishing": [],
+		"type": "forest",
+		"x": 0,
+		"y": 0
 	},
 	{
 		"id": 14,
@@ -129,6 +168,9 @@
 		"ennemies": [6, 7],
 		"items": [],
 		"neighborRoom": { "north": 13, "south": 0, "east": 4, "west": 0 },
-		"fishing": []
+		"fishing": [],
+		"type": "forest",
+		"x": 0,
+		"y": 0
 	}
 ]
