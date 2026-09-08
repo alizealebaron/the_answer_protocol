@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/08 14:50:47 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/08 23:11:08 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -111,4 +111,21 @@ func createButton(category string, subCommandsBox *fyne.Container, stdin io.Writ
 }
 
 func executeCommand(stdin io.WriteCloser, command string, listener *Listener) {
+	switch command {
+	case "LOOK":
+	case "MOVE":
+	case "WHO":
+	case "TALK":
+	case "CHAT":
+	case "GROUP":
+	case "STATUS":
+	case "INVENTORY":
+	case "USE":
+	case "TRADE":
+	case "BUY":
+	case "SELL":
+	case "TAKE":
+	case "DROP":
+	case "GAMBLING":
+	}
 }
