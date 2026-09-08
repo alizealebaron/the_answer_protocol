@@ -1,3 +1,0 @@
-2026-09-08 08:23:29 (10.11.6.17): [INFO]    Player ALE connected
-2026-09-08 08:23:38 (10.11.6.17): [ERROR]   Read error: EOF
-2026-09-08 08:23:38 (10.11.6.17): [INFO]    Player ALE disconnected

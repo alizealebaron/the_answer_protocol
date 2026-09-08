@@ -8,8 +8,8 @@
 		"neighborRoom": { "north": 4, "south": 0, "east": 3, "west": 0 },
 		"fishing": [],
 		"type": "casino",
-		"x": 0,
-		"y": 0
+		"x": -1,
+		"y": -1
 	},
 	{
 		"id": 2,
@@ -33,7 +33,7 @@
 		"fishing": [],
 		"type": "village",
 		"x": 0,
-		"y": 0
+		"y": -1
 	},
 	{
 		"id": 4,
@@ -47,7 +47,7 @@
 			{ "itemId":  1, "lootRate": 10 }
 		],
 		"type": "village",
-		"x": 0,
+		"x": -1,
 		"y": 0
 	},
 	{
@@ -59,7 +59,7 @@
 		"neighborRoom": { "north": 0, "south": 0, "east": 0, "west": 2 },
 		"fishing": [],
 		"type": "village",
-		"x": 0,
+		"x": 1,
 		"y": 0
 	},
 	{
@@ -72,7 +72,7 @@
 		"fishing": [],
 		"type": "forest",
 		"x": 0,
-		"y": 0
+		"y": 1
 	},
 	{
 		"id": 7,
@@ -84,7 +84,7 @@
 		"fishing": [],
 		"type": "forest",
 		"x": 0,
-		"y": 0
+		"y": 2
 	},
 	{
 		"id": 8,
@@ -95,8 +95,8 @@
 		"neighborRoom": { "north": 0, "south": 0, "east": 11, "west": 7 },
 		"fishing": [],
 		"type": "forest",
-		"x": 0,
-		"y": 0
+		"x": 1,
+		"y": 2
 	},
 	{
 		"id": 9,
@@ -108,7 +108,7 @@
 		"fishing": [],
 		"type": "forest",
 		"x": 0,
-		"y": 0
+		"y": 3
 	},
 	{
 		"id": 10,
@@ -122,8 +122,8 @@
 			{ "itemId": 12, "lootRate": 90 }
 		],
 		"type": "lake",
-		"x": 0,
-		"y": 0
+		"x": -1,
+		"y": 2
 	},
 	{
 		"id": 11,
@@ -134,8 +134,8 @@
 		"neighborRoom": { "north": 0, "south": 0, "east": 0, "west": 0 },
 		"fishing": [],
 		"type": "cave",
-		"x": 0,
-		"y": 0
+		"x": 2,
+		"y": 2
 	},
 	{
 		"id": 12,
@@ -146,8 +146,8 @@
 		"neighborRoom": { "north":  0, "south": 13, "east": 10, "west": 0 },
 		"fishing": [],
 		"type": "forest",
-		"x": 0,
-		"y": 0
+		"x": -2,
+		"y": 2
 	},
 	{
 		"id": 13,
@@ -158,8 +158,8 @@
 		"neighborRoom": { "north": 12, "south": 14, "east": 0, "west": 0 },
 		"fishing": [],
 		"type": "forest",
-		"x": 0,
-		"y": 0
+		"x": -2,
+		"y": 1
 	},
 	{
 		"id": 14,
@@ -170,7 +170,7 @@
 		"neighborRoom": { "north": 13, "south": 0, "east": 4, "west": 0 },
 		"fishing": [],
 		"type": "forest",
-		"x": 0,
+		"x": -2,
 		"y": 0
 	}
 ]
