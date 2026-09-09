@@ -51,12 +51,13 @@ var map_commands = map[string]CommandFunc{
 	"TAKE":      commands.Take,
 	"TALK":      commands.Talk,
 	"GROUP":     commands.Group,
+	"QUEST":     commands.Quest,
 	"TRADE":     commands.Trade,
+	"ATTACK":	 commands.Attack,
+	"SEARCH":    commands.Search,
 	"STATUS":    commands.Status,
 	"GAMBLING":  commands.Gambling,
 	"INVENTORY": commands.Inventory,
-	"SEARCH":    commands.Search,
-	"ATTACK":	 commands.Attack,
 }
 
 /* ----------------------------------------------------------------------- */
@@ -170,7 +171,7 @@ func handleConnection(conn net.Conn) {
 					server_write.ServerWrite(conn, err.Error()+"\n")
 				}
 			}
-			// fmt.Printf("%+v\n", TapManager.Lst_Group[0])
+			// fmt.Printf("%+v\n", self_player.Lst_Quest)
 		}
 
 		// ackMsg := strings.ToUpper(strings.TrimSpace(message))

@@ -43,6 +43,7 @@ type Player struct {
 	Language         string
 	Money            int
 	Inventory        map[Item]int  `json:"-"`
+	Lst_Quest        []Quest       `json:"-"`
 	Conn             net.Conn      `json:"-"`
 	Group            *Group        `json:"-"`
 	DialogueProgress map[int]int   `json:"-"`
@@ -56,7 +57,8 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 
 	lstItem := make(map[Item]int)
 	dialogueProgress := make(map[int]int)
-	player := Player{totalPlayer, name, 1, 100, "healthy", 5, language, 10, lstItem, conn, nil, dialogueProgress}
+	lst_quest := []Quest{}
+	player := Player{totalPlayer, name, 1, 100, "healthy", 5, language, 10, lstItem, lst_quest, conn, nil, dialogueProgress}
 	totalPlayer += 1
 	return player
 }
@@ -156,6 +158,11 @@ func (p *Player) InventoryToString() string {
 	return string(b)
 }
 
+/* +---------------------------------------------------------------------+ */
+/* |                     Gestion de la vie du joueur                     | */
+/* +---------------------------------------------------------------------+ */
+
+
 func (p *Player) PlayerDeath(tapManager *TapManager) error {
 	p.Pv = 30
 	group, err := tapManager.GetGroupById(p.Id)
@@ -186,6 +193,29 @@ func (p *Player) AddLifePoint(value int) error {
 	}
 	return nil
 }
+
+/* +---------------------------------------------------------------------+ */
+/* |                         Gestion des quêtes                          | */
+/* +---------------------------------------------------------------------+ */
+
+func (p *Player) AddQuestToPlayer(quest Quest) error {
+
+	// Vérification que le joueur n'a pas déjà la quête
+	for _, q := range p.Lst_Quest {
+		if q.GetId() == quest.GetId() {
+			return errors.New("ERR 406 NO_QUEST_AVAILABLE")
+		}
+	}
+
+	// Mise à jour du status de la quête
+	quest.SetStatus("active")
+
+	// Ajout de la quête à la liste du joueur
+	p.Lst_Quest = append(p.Lst_Quest, quest)
+
+	return nil
+}
+
 
 /* +---------------------------------------------------------------------+ */
 /* |                        Gestion du gambling                          | */

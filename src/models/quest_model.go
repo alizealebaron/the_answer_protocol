@@ -34,6 +34,7 @@ type Quest interface {
 	GetRewardId()      int
 
 	SetReward(item Item)
+	SetStatus(s string)
 
 	ToString()         string
 }
@@ -52,6 +53,7 @@ type QuestModel struct {
 	RewardId      int    `json:"reward"`
 	Reward        Item   `json:"-"`
 	Quantity      int    `json:"quantity"`
+	Status        string `json:"-"`
 }
 
 // === Accesseurs === //
@@ -65,7 +67,8 @@ func (q QuestModel) GetRewardId()      int    { return q.RewardId      }
 
 // === Modificateurs === //
 
-func (q *QuestModel) SetReward(item Item) {q.Reward = item}
+func (q *QuestModel) SetReward(item Item)   {q.Reward = item}
+func (q *QuestModel) SetStatus(s    string) {q.Status = s}
 
 // === ToString === //
 
