@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/11 17:47:38 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/11 21:59:45 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -130,14 +130,17 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		fmt.Fprintf(stdin, "WHO\n")
 		fmt.Println("WHO")
 	case "TALK":
+		commands.Talk(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Inventory", subCommandBox, stdin, listener)
+		})
 	case "CHAT":
 	case "GROUP":
 	case "STATUS":
 		fmt.Fprintf(stdin, "STATUS\n")
 		fmt.Println("STATUS")
 	case "INVENTORY":
-		fmt.Fprintf(stdin, "STATUS\n")
-		fmt.Println("STATUS")
+		fmt.Fprintf(stdin, "INVENTORY\n")
+		fmt.Println("INVENTORY")
 	case "USE":
 	case "TRADE":
 	case "BUY":
