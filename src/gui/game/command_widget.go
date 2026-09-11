@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/11 21:59:45 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/11 22:12:35 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -135,6 +135,12 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		})
 	case "CHAT":
 	case "GROUP":
+		commands.Group(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Social", subCommandBox, stdin, listener)
+		})
+		commands.Group(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Inventory", subCommandBox, stdin, listener)
+		})
 	case "STATUS":
 		fmt.Fprintf(stdin, "STATUS\n")
 		fmt.Println("STATUS")
