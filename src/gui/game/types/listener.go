@@ -6,22 +6,36 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/03 16:14:59 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/03 16:33:07 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/09 12:32:31 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
-
-package game
+package types
 
 type Listener struct {
-	functions []func(string)
+	functions map[int]func(string)
+	nextID    int
 }
 
-func (l *Listener) Subscribe(functionToAdd func(string)) {
-	l.functions = append(l.functions, functionToAdd)
+func (l *Listener) Subscribe(functionToAdd func(string)) int {
+	if l.functions == nil {
+		l.functions = make(map[int]func(string))
+	}
+
+	id := l.nextID
+	l.functions[id] = functionToAdd
+	l.nextID++
+
+	return id
+}
+
+func (l *Listener) Unsubscribe(idToRemove int) {
+	delete(l.functions, idToRemove)
 }
 
 func (l *Listener) Distribute(line string) {
 	for _, function := range l.functions {
-		function(line)
+		if function != nil {
+			function(line)
+		}
 	}
 }

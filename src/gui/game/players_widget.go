@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/07 11:17:14 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/07 13:32:44 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/09 14:50:29 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -20,14 +20,16 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
+
+	"the_answer_protocol/src/gui/game/types"
 )
 
 type WhoInfo struct {
-	Room   []string `json:"room"`
-	Server int      `json:"server"`
+	RoomInfo   []string `json:"room"`
+	ServerInfo int      `json:"server"`
 }
 
-func playerCountLabel(listener *Listener) *fyne.Container {
+func playerCountLabel(listener *types.Listener) *fyne.Container {
 	label := widget.NewLabel("Use the “WHO” command to view information about players number.")
 	listener.Subscribe(func(line string) {
 		if strings.HasPrefix(line, "OK { \"room\":") {
@@ -37,7 +39,7 @@ func playerCountLabel(listener *Listener) *fyne.Container {
 			if err != nil {
 				return
 			}
-			label.SetText(fmt.Sprintf("Nombre de joueur dans la room: %d\nNombre de joueur global: %d", len(data.Room), data.Server))
+			label.SetText(fmt.Sprintf("Nombre de joueur dans la room: %d\nNombre de joueur global: %d", len(data.RoomInfo), data.ServerInfo))
 			fmt.Println(line)
 		}
 	})
