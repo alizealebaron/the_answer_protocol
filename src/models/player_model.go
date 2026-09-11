@@ -40,6 +40,7 @@ type Player struct {
 	MaxPv            int
 	Status           string
 	Attack           int
+	Defense          int
 	Language         string
 	Money            int
 	Inventory        map[Item]int  `json:"-"`
@@ -56,7 +57,7 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 
 	lstItem := make(map[Item]int)
 	dialogueProgress := make(map[int]int)
-	player := Player{totalPlayer, name, 1, 100, "healthy", 5, language, 10, lstItem, conn, nil, dialogueProgress}
+	player := Player{totalPlayer, name, 100, 100, "healthy", 5, 10, language, 10, lstItem, conn, nil, dialogueProgress}
 	totalPlayer += 1
 	return player
 }
