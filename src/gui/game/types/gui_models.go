@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/08 21:22:30 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/09 15:27:51 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/11 17:45:31 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -145,4 +145,17 @@ type GroupInfo struct {
 	Id         int          `json:"Id"`
 	LstPlayer  []PlayerInfo `json:"Lst_Player"`
 	LstInvited []PlayerInfo `json:"Lst_Invited"`
+}
+
+// Is a mirror of the struct returned by models.Player.InventoryToString() (reply to INVENTORY).
+type InventoryInfo struct {
+	Items []InventoryItemInfo `json:"items"`
+	Money int                 `json:"money"`
+}
+
+// Is a mirror of each item entry inside the INVENTORY reply.
+type InventoryItemInfo struct {
+	Id       int    `json:"id"`
+	Name     string `json:"name"`
+	Quantity int    `json:"quantity"`
 }
