@@ -1,18 +1,18 @@
-/* *********************************************************************** */
-/*                                                                         */
-/*                                                     :::      ::::::::   */
-/* room_model.go                                     :+:      :+:    :+:   */
-/*                                                 +:+ +:+         +:+     */
-/* By: rruiz, alebaron, emarette                 +#+  +:+       +#+        */
-/*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/21 15:56:01 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/30 13:35:37 by emarette        ###   ########.fr       */
-/*                                                                         */
-/* *********************************************************************** */
+/* ************************************************************************ */
+/*      _  _     ____                     ,~~.                              */
+/*     | || |   |___  \             ,   (  ^ )>                             */
+/*     | || |_    __) |             )\~~'   (       _      _      _         */
+/*     |__   _|  / __/             (  .__)   )    >(.)__ <(^)__ =(o)__      */
+/*        |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/      */
+/*                                                                          */
+/* ************************************************************************ */
+/* name   : room_model.go                                                   */
+/* author : alebaron <alebaron@student.42.fr>                               */
+/*                                                                          */
+/* creation : Invalid date        by -----------                            */
+/* update   : 2026/09/11 20:07:34 by alebaron                               */
+/* ************************************************************************ */
 
-/* +---------------------------------------------------------------------+ */
-/* |                          Package & Import                           | */
-/* +---------------------------------------------------------------------+ */
 
 package models
 
@@ -102,14 +102,17 @@ func (r *Room) RemovePlayerToRoom(player Player) {
 	for i, p := range r.Lst_Player {
 		if p.Id == player.Id {
 			r.Lst_Player = append(r.Lst_Player[:i], r.Lst_Player[i+1:]...)
+
 			// == Envoie à la room de départ == //
-			for _, p := range r.Lst_Player {
+			for _, pl := range r.Lst_Player {
 				output := fmt.Sprintf("EVT ROOM PRESENCE LEAVE %s\n", p.Name)
-				server_write.ServerWrite(p.Conn, output)
+				server_write.ServerWrite(pl.Conn, output)
 			}
 			return
 		}
 	}
+
+	
 }
 
 func (r *Room) AddItemToRoom(it Item) {

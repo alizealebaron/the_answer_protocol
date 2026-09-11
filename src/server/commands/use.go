@@ -1,25 +1,25 @@
-/* *********************************************************************** */
-/*                                                                         */
-/*                                                     :::      ::::::::   */
-/* use.go                                            :+:      :+:    :+:   */
-/*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
-/*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/28 09:38:03 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/28 16:13:12 by alebaron        ###   ########.fr       */
-/*                                                                         */
-/* *********************************************************************** */
-
-/* +---------------------------------------------------------------------+ */
-/* |                          Package & Import                           | */
-/* +---------------------------------------------------------------------+ */
+/* ************************************************************************ */
+/*      _  _     ____                     ,~~.                              */
+/*     | || |   |___  \             ,   (  ^ )>                             */
+/*     | || |_    __) |             )\~~'   (       _      _      _         */
+/*     |__   _|  / __/             (  .__)   )    >(.)__ <(^)__ =(o)__      */
+/*        |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/      */
+/*                                                                          */
+/* ************************************************************************ */
+/* name   : use.go                                                          */
+/* author : alebaron <alebaron@student.42.fr>                               */
+/*                                                                          */
+/* creation : Invalid date        by -----------                            */
+/* update   : 2026/09/11 19:39:44 by alebaron                               */
+/* ************************************************************************ */
 
 package commands
 
 import (
 	"errors"
-	"strconv"
+	"fmt"
 	"math/rand/v2"
+	"strconv"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
 )
@@ -29,7 +29,7 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 func Use(args []string, tapManager *models.TapManager, player *models.Player) error {
-	
+
 	// === Vérification de la longueur des arguments === //
 	if len(args) != 1 {
 		return errors.New("ERR 302 NO_ITEM_SEND")
@@ -44,27 +44,51 @@ func Use(args []string, tapManager *models.TapManager, player *models.Player) er
 	// === Vérification de la présence de l'item dans l'inventaire === //
 	id, err := strconv.Atoi(args[0])
 
-	item , err := player.GetItem(id)
+	item, err := player.GetItem(id)
 	if err != nil {
 		return errors.New("ERR 404 ITEM_NOT_FOUND")
 	}
 
-	// === Vérification de l'item utilisé === //
+	// === Vérification de si l'item est un edible === //
 
-	switch (*item).GetId() {
-    case 2:
-        return fish(player, *room, *tapManager)
-	default:
-        return errors.New("ERR 407 ITEM_NOT_USABLE_HERE")
-    }
+	edible, ok := (*item).(models.Edible)
+	if ok {
+		if edible.Effect == "HEAL" {
+			player.AddLifePoint(edible.Value)
+		}
+		if edible.Effect == "DAMAGE" {
+			player.AddLifePoint(-edible.Value)
+		}
+
+		player.RemoveItemToPlayer(edible.Id)
+		// === Envoie des messages au client et dans les logs === //
+
+		str_ret := fmt.Sprintf("OK {\"used\": \"%s\", \"effect\": \"%s\", \"value\": %d}\n", edible.Name, edible.Effect, edible.Value)
+		server_write.ServerWrite(player.Conn, str_ret)
+		server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
+
+		return nil
+	}
+
+	// === Vérification de si l'item est un Usable === //
+
+	usable, ok := (*item).(models.Edible)
+	if ok {
+		switch usable.Id {
+		case 2:
+			return fish(player, *room, *tapManager)
+		}
+	}
+
+	return errors.New("ERR 407 ITEM_NOT_USABLE")
 }
 
 func fish(player *models.Player, room models.Room, tap models.TapManager) error {
-	
+
 	if len(room.Fishing) == 0 {
 		return errors.New("ERR 407 ITEM_NOT_USABLE_HERE")
 	}
-	
+
 	// Calcul de la somme totale des taux de loot (Si pas égale à 100 plante pas)
 	total := 0
 	for _, entry := range room.Fishing {
@@ -83,7 +107,7 @@ func fish(player *models.Player, room models.Room, tap models.TapManager) error 
 	for _, entry := range room.Fishing {
 		cumulative += entry.LootRate
 		if roll < cumulative {
-	
+
 			item, err := tap.GetItemById(entry.ItemID)
 			if err != nil {
 				return errors.New("ERR 404 ITEM_NOT_FOUND")
@@ -93,8 +117,8 @@ func fish(player *models.Player, room models.Room, tap models.TapManager) error 
 			// === Envoie des messages au client et dans les logs === //
 			str_ret := "OK fishing=" + (item).GetName() + "\n"
 			server_write.ServerWrite(player.Conn, str_ret)
-			server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + str_ret)
-			
+			server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+str_ret)
+
 			return nil
 		}
 	}
