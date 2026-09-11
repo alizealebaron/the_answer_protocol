@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/08 21:22:30 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/11 17:45:31 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/11 22:27:48 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -126,6 +126,11 @@ type RoomInfo struct {
 type IdNameInfo struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
+}
+
+type WhoInfo struct {
+	RoomInfo   []string `json:"room"`
+	ServerInfo int      `json:"server"`
 }
 
 // Is a mirror of the JSON returned by models.Room.ToString() (reply to LOOK).
