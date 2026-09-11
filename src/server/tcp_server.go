@@ -17,13 +17,14 @@
 package server
 
 import (
+	"bufio"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net"
-	"bufio"
-	"errors"
+	"strconv"
 	"strings"
-	"encoding/json"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/commands"
 	"the_answer_protocol/src/server/server_write"
@@ -53,7 +54,7 @@ var map_commands = map[string]CommandFunc{
 	"GROUP":     commands.Group,
 	"QUEST":     commands.Quest,
 	"TRADE":     commands.Trade,
-	"ATTACK":	 commands.Attack,
+	"ATTACK":    commands.Attack,
 	"QUESTS":    commands.Quests,
 	"SEARCH":    commands.Search,
 	"STATUS":    commands.Status,
@@ -62,7 +63,7 @@ var map_commands = map[string]CommandFunc{
 }
 
 /* ----------------------------------------------------------------------- */
-/*                                Fonctions                                */
+/*                         Fonctions Principales                           */
 /* ----------------------------------------------------------------------- */
 
 func Tcp_server(tapManager *models.TapManager) {
@@ -123,8 +124,8 @@ func handleConnection(conn net.Conn) {
 		reader := bufio.NewReader(conn)
 		line, err := reader.ReadString('\n')
 		if err != nil {
-			server_write.WriteLog(conn, "ERROR", "Read error: " + err.Error())
-			if (err.Error() == "EOF" && is_connected == true) {
+			server_write.WriteLog(conn, "ERROR", "Read error: "+err.Error())
+			if err.Error() == "EOF" && is_connected == true {
 				commands.Quit(TapManager, self_player)
 			}
 			return
@@ -145,6 +146,12 @@ func handleConnection(conn net.Conn) {
 					server_write.WriteLog(conn, "ERROR", "Connection attempt failed")
 				} else {
 					server_write.WriteLog(conn, "INFO", "Player "+self_player.Name+" connected")
+
+					// === Envoie de l'évènement de compte de joueur === //
+					for _, p := range TapManager.Lst_Player {
+						server_write.ServerWrite(p.Conn, "EVT STATS players="+strconv.Itoa(len(TapManager.Lst_Player))+"\n")
+					}
+
 					is_connected = true
 				}
 			} else {
@@ -184,6 +191,10 @@ func handleConnection(conn net.Conn) {
 	}
 }
 
+/* ----------------------------------------------------------------------- */
+/*                       Fonctions Supplémentaires                         */
+/* ----------------------------------------------------------------------- */
+
 func dispatch(fields []string, tap *models.TapManager, player *models.Player) error {
 
 	// Vérification de la longueur de la commande
@@ -203,3 +214,8 @@ func dispatch(fields []string, tap *models.TapManager, player *models.Player) er
 
 	return fn(args, tap, player)
 }
+
+// func check_quest(player *models.Player) error {
+
+// 	return nil
+// }

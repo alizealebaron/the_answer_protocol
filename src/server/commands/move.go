@@ -17,7 +17,7 @@
 package commands
 
 import (
-    "fmt"
+    // "fmt"
 	"errors"
 	"strings"
 	"the_answer_protocol/src/models"
@@ -75,22 +75,6 @@ func Move(args []string, tapManager *models.TapManager, player *models.Player) e
 		nei_room.AddPlayerToRoom(*player)
 		server_write.ServerWrite(player.Conn, "OK " + nei_room.Name + "\n")
 		server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": OK " + nei_room.Name)
-
-		// === Envoie d'un message à tous les joueurs présents dans les rooms === //
-
-		// == Envoie à la room quittée == //
-
-		for _ , p := range room.Lst_Player {
-			output := fmt.Sprintf("EVT ROOM PRESENCE LEAVE %s\n", player.Name)
-			server_write.ServerWrite(p.Conn, output)
-		}
-
-		// == Envoie à la room d'arrivée == //
-
-		for _ , p := range nei_room.Lst_Player {
-			output := fmt.Sprintf("EVT ROOM PRESENCE ENTER %s\n", player.Name)
-			server_write.ServerWrite(p.Conn, output)
-		}
 	}
 
 	return nil

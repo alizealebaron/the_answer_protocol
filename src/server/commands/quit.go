@@ -17,6 +17,7 @@
 package commands
 
 import (
+	"strconv"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
 )
@@ -34,5 +35,11 @@ func Quit(tapManager *models.TapManager, player models.Player) {
 	room.RemovePlayerToRoom(player)
 	tapManager.RemovePlayer(player.Id)
 	server_write.ServerWrite(player.Conn, "OK bye\n")
+
+	// === Envoie de l'évènement de compte de joueur === //
+	for _, p := range tapManager.Lst_Player {
+		server_write.ServerWrite(p.Conn, "EVT STATS players="+strconv.Itoa(len(tapManager.Lst_Player))+"\n")
+	}
+
 	server_write.WriteLog(player.Conn, "INFO", "Player "+player.Name+" disconnected")
 }
