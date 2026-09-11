@@ -1,10 +1,25 @@
-2026-09-09 15:52:20 (10.11.6.17): [INFO]    Player ALE connected
-2026-09-09 15:53:57 (10.11.6.17): [COMMAND] ALE use MOVE EAST
-2026-09-09 15:53:57 (10.11.6.17): [SERVER]  To ALE: OK Taverne de la pucelle
-2026-09-09 15:54:28 (10.11.6.17): [COMMAND] ALE use LOOK
-2026-09-09 15:54:28 (10.11.6.17): [SERVER]  To ALE: {"id":5,"name":"Taverne de la pucelle","allies":[{"id":2,"name":"Jeanne"},{"id":10,"name":"Gaspard Savoureux"}],"ennemies":[],"items":[{"id":10,"name":"Jambon Beurre"}],"neighborRoom":{"north":0,"south":0,"east":0,"west":2},"fishing":[],"arena":[]}
-2026-09-09 15:54:42 (10.11.6.17): [COMMAND] ALE use QUEST 10
-2026-09-09 15:54:46 (10.11.6.17): [COMMAND] ALE use LOOK
-2026-09-09 15:54:46 (10.11.6.17): [SERVER]  To ALE: {"id":5,"name":"Taverne de la pucelle","allies":[{"id":2,"name":"Jeanne"},{"id":10,"name":"Gaspard Savoureux"}],"ennemies":[],"items":[{"id":10,"name":"Jambon Beurre"}],"neighborRoom":{"north":0,"south":0,"east":0,"west":2},"fishing":[],"arena":[]}
-2026-09-09 15:55:49 (10.11.6.17): [ERROR]   Read error: EOF
-2026-09-09 15:55:49 (10.11.6.17): [INFO]    Player ALE disconnected
+2026-09-11 16:48:16 (10.11.6.2) : [INFO]    Player ALE connected
+2026-09-11 16:48:39 (10.11.6.2) : [COMMAND] ALE use MOVE EAST
+2026-09-11 16:48:39 (10.11.6.2) : [SERVER]  To ALE: OK Taverne de la pucelle
+2026-09-11 16:48:43 (10.11.6.2) : [COMMAND] ALE use QUESTS
+2026-09-11 16:48:43 (10.11.6.2) : [SERVER]  To ALE: OK []
+2026-09-11 16:48:49 (10.11.6.2) : [COMMAND] ALE use QUEST 10
+2026-09-11 16:48:49 (10.11.6.2) : [SERVER]  To ALE: OK {"id":1,"title":"Mon village, mon jambon beurre.","desc":"Gaspard vous a demandé de ramener 5 Jambon pour sa fameuse recette de jambon.","reward":"Gambling Coin","quantity":20,"status":"active"}
+2026-09-11 16:49:06 (10.11.6.2) : [COMMAND] ALE use QUESTS
+2026-09-11 16:49:06 (10.11.6.2) : [SERVER]  To ALE: OK [{"id":1,"title":"Mon village, mon jambon beurre.","desc":"Gaspard vous a demandé de ramener 5 Jambon pour sa fameuse recette de jambon.","reward":"Gambling Coin","quantity":20,"status":"active"}]
+2026-09-11 16:49:16 (10.11.6.2) : [COMMAND] ALE use MOVE WEST
+2026-09-11 16:49:16 (10.11.6.2) : [SERVER]  To ALE: OK Place Sénile
+2026-09-11 16:49:19 (10.11.6.2) : [COMMAND] ALE use MOVE NORTH
+2026-09-11 16:49:19 (10.11.6.2) : [SERVER]  To ALE: OK Forêt, épisode 1
+2026-09-11 16:49:22 (10.11.6.2) : [COMMAND] ALE use MONE NORTH
+2026-09-11 16:49:22 (10.11.6.2) : [WARN]    ALE received a warn: ERR 902 COMMAND_UNKNOWN "MONE"
+2026-09-11 16:49:26 (10.11.6.2) : [COMMAND] ALE use MOVE NORTH
+2026-09-11 16:49:26 (10.11.6.2) : [SERVER]  To ALE: OK Forêt fantôme
+2026-09-11 16:49:30 (10.11.6.2) : [COMMAND] ALE use MOVE NORTH
+2026-09-11 16:49:30 (10.11.6.2) : [SERVER]  To ALE: OK Forêt la revanche
+2026-09-11 16:49:32 (10.11.6.2) : [COMMAND] ALE use LOOK
+2026-09-11 16:49:32 (10.11.6.2) : [SERVER]  To ALE: {"id":9,"name":"Forêt la revanche","allies":[{"id":5,"name":"Bertrand"}],"ennemies":[{"id":6,"name":"Gruiking"},{"id":7,"name":"Percepteur des impôts"}],"items":[],"neighborRoom":{"north":0,"south":7,"east":0,"west":0},"fishing":[],"arena":[]}
+2026-09-11 16:49:37 (10.11.6.2) : [COMMAND] ALE use QUEST 5
+2026-09-11 16:49:37 (10.11.6.2) : [SERVER]  To ALE: OK {"id":2,"title":"Le fou du village.","desc":"Le fou de la forêt vous demande de tabasser quelques percepteurs des impôts qui traînent dans la forêt.","reward":"Gourdin en cobalt","quantity":1,"status":"active"}
+2026-09-11 16:49:41 (10.11.6.2) : [COMMAND] ALE use QUESTS
+2026-09-11 16:49:41 (10.11.6.2) : [SERVER]  To ALE: OK [{"id":1,"title":"Mon village, mon jambon beurre.","desc":"Gaspard vous a demandé de ramener 5 Jambon pour sa fameuse recette de jambon.","reward":"Gambling Coin","quantity":20,"status":"active"}, {"id":2,"title":"Le fou du village.","desc":"Le fou de la forêt vous demande de tabasser quelques percepteurs des impôts qui traînent dans la forêt.","reward":"Gourdin en cobalt","quantity":1,"status":"active"}]

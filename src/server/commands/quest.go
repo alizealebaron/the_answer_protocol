@@ -17,11 +17,12 @@
 package commands
 
 import (
-	"fmt"
+	// "fmt"
 	"errors"
 	"strconv"
+	// "encoding/json"
 	"the_answer_protocol/src/models"
-	// "the_answer_protocol/src/server/server_write"
+	"the_answer_protocol/src/server/server_write"
 )
 
 /* +---------------------------------------------------------------------+ */
@@ -55,7 +56,22 @@ func Quest(args []string, tapManager *models.TapManager, player *models.Player) 
 		return err
 	}
 
-	fmt.Printf("%+v\n", player.Lst_Quest[0])
+	// === Envoie des messages au client et dans les logs === //
+	str_ret := "OK " + quest.ToStringQuest(*player) + "\n"
+	server_write.ServerWrite(player.Conn, str_ret)
+	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + str_ret)
+
+	return nil
+}
+
+func Quests(args []string, tapManager *models.TapManager, player *models.Player) error {
+
+	format_lst_quest := getPrettyLstQuest(player.Lst_Quest, *player)
+
+	// === Envoie des messages au client et dans les logs === //
+	str_ret := "OK " + format_lst_quest + "\n"
+	server_write.ServerWrite(player.Conn, str_ret)
+	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + str_ret)
 
 	return nil
 }
@@ -63,6 +79,20 @@ func Quest(args []string, tapManager *models.TapManager, player *models.Player) 
 /* +---------------------------------------------------------------------+ */
 /* |                      Fonctions Supplémentaires                      | */
 /* +---------------------------------------------------------------------+ */
+
+func getPrettyLstQuest(lst_quest []models.Quest, p models.Player) string {
+
+	ret_str := "["
+
+	for i, q := range lst_quest {
+		ret_str = ret_str + q.ToStringQuest(p)
+		if i != len(lst_quest) - 1 {
+			ret_str += ", "
+		}
+	}
+	
+	return ret_str + "]"
+}
 
 func getGiverQuest(room models.Room, npcId int) (models.Quest, error) {
 
