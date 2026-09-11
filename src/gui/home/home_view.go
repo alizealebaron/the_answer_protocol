@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:17 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/03 17:40:35 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/09 10:57:32 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -20,6 +20,7 @@ import (
 	"regexp"
 	"strings"
 	"the_answer_protocol/src/gui/game"
+	"the_answer_protocol/src/gui/game/types"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -119,7 +120,7 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 				return
 			}
 
-			listener := &game.Listener{}
+			listener := &types.Listener{}
 
 			// If Start() return a error.
 			if err := cmd.Start(); err != nil {
@@ -197,7 +198,7 @@ func quitButton(window fyne.Window, width float32, height float32) *widget.Butto
 	return quitButton
 }
 
-func stdoutListening(stdout io.ReadCloser, listener *game.Listener) {
+func stdoutListening(stdout io.ReadCloser, listener *types.Listener) {
 	scanner := bufio.NewScanner(stdout)
 	for scanner.Scan() {
 		line := scanner.Text()

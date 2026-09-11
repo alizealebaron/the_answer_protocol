@@ -6,13 +6,14 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/08 23:11:08 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/09 17:17:01 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
 package game
 
 import (
+	"fmt"
 	"image/color"
 	"io"
 
@@ -20,6 +21,9 @@ import (
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
+
+	"the_answer_protocol/src/gui/game/commands"
+	"the_answer_protocol/src/gui/game/types"
 )
 
 var list = "list"
@@ -72,7 +76,7 @@ var commandByCategory = map[string][]string{
 	"Gambling":    {"GAMBLING"},
 }
 
-func commandWidget(stdin io.WriteCloser, listener *Listener) *fyne.Container {
+func commandWidget(stdin io.WriteCloser, listener *types.Listener) *fyne.Container {
 	commandFrame := canvas.NewRectangle(color.Transparent)
 	commandFrame.StrokeColor = color.White
 	commandFrame.StrokeWidth = float32(2)
@@ -93,33 +97,47 @@ func commandWidget(stdin io.WriteCloser, listener *Listener) *fyne.Container {
 	return container.NewStack(commandFrame, container.NewPadded(layout))
 }
 
-func createButton(category string, subCommandsBox *fyne.Container, stdin io.WriteCloser, listener *Listener) *widget.Button {
+func createButton(category string, subCommandBox *fyne.Container, stdin io.WriteCloser, listener *types.Listener) *widget.Button {
 	button := widget.NewButton(category, func() {
-		subCommandsBox.RemoveAll()
-
-		for _, command := range commandByCategory[category] {
-			commandButton := widget.NewButton(command, func() {
-				executeCommand(stdin, command, listener)
-			})
-			commandButton.Importance = widget.LowImportance
-			subCommandsBox.Add(commandButton)
-		}
-		subCommandsBox.Refresh()
+		showCommandCategory(category, subCommandBox, stdin, listener)
 	})
-
 	return button
 }
 
-func executeCommand(stdin io.WriteCloser, command string, listener *Listener) {
+func showCommandCategory(category string, subCommandBox *fyne.Container, stdin io.WriteCloser, listener *types.Listener) {
+	subCommandBox.RemoveAll()
+
+	for _, command := range commandByCategory[category] {
+		commandButton := widget.NewButton(command, func() {
+			executeCommand(stdin, command, listener, subCommandBox)
+		})
+		commandButton.Importance = widget.LowImportance
+		subCommandBox.Add(commandButton)
+	}
+	subCommandBox.Refresh()
+}
+
+func executeCommand(stdin io.WriteCloser, command string, listener *types.Listener, subCommandBox *fyne.Container) {
 	switch command {
 	case "LOOK":
+		fmt.Fprintf(stdin, "LOOK\n")
+		fmt.Println("LOOK")
 	case "MOVE":
+		commands.Move(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Environment", subCommandBox, stdin, listener)
+		})
 	case "WHO":
+		fmt.Fprintf(stdin, "WHO\n")
+		fmt.Println("WHO")
 	case "TALK":
 	case "CHAT":
 	case "GROUP":
 	case "STATUS":
+		fmt.Fprintf(stdin, "STATUS\n")
+		fmt.Println("STATUS")
 	case "INVENTORY":
+		fmt.Fprintf(stdin, "STATUS\n")
+		fmt.Println("STATUS")
 	case "USE":
 	case "TRADE":
 	case "BUY":

@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:21 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/08 23:36:04 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/09 10:58:12 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -15,6 +15,7 @@ package game
 import (
 	"fmt"
 	"io"
+	"the_answer_protocol/src/gui/game/types"
 
 	"image/color"
 
@@ -62,7 +63,7 @@ func newRatioSplit(ratio float32, horizontal bool, gap float32, a, b fyne.Canvas
 	return container.New(&ratioLayout{ratio: ratio, horizontal: horizontal, gap: gap}, a, b)
 }
 
-func GameView(window fyne.Window, stdin io.WriteCloser, listener *Listener) fyne.CanvasObject {
+func GameView(window fyne.Window, stdin io.WriteCloser, listener *types.Listener) fyne.CanvasObject {
 	const gap = float32(8)
 
 	subscribeGameData(listener)

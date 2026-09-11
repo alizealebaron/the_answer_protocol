@@ -6,11 +6,11 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/08 21:22:30 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/08 23:14:37 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/09 15:27:51 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
-package game
+package types
 
 // The JSON returned by SECRET.
 type Secret struct {
@@ -120,6 +120,24 @@ type RoomInfo struct {
 	Type         string             `json:"type"`
 	X            int                `json:"x"`
 	Y            int                `json:"y"`
+}
+
+// Is a mirror of models.IdName.
+type IdNameInfo struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+// Is a mirror of the JSON returned by models.Room.ToString() (reply to LOOK).
+type LookInfo struct {
+	Id           int                `json:"id"`
+	Name         string             `json:"name"`
+	Allies       []IdNameInfo       `json:"allies"`
+	Ennemies     []IdNameInfo       `json:"ennemies"`
+	Items        []IdNameInfo       `json:"items"`
+	NeighborRoom NeighborRoomInfo   `json:"neighborRoom"`
+	Fishing      []FishingEntryInfo `json:"fishing"`
+	Arena        []IdNameInfo       `json:"arena"`
 }
 
 // Is a mirror of models.Group.
