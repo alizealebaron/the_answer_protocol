@@ -97,6 +97,15 @@
 	},
 	{
 		"id": 11,
+		"name": "Tanar",
+		"dialogueFr": ["(TODO)", "(TODO)"],
+		"dialogueEn": ["(TODO)", "(TODO)"],
+		"quest": 1,
+		"dialogueFinFr": ["(TODO)", "(TODO)"],
+		"dialogueFinEn": ["(TODO)", "(TODO)"]
+	},
+	{
+		"id": 12,
 		"name": "Gauss",
 		"dialogueFr": ["(TODO)", "(TODO)"],
 		"dialogueEn": ["(TODO)", "(TODO)"],

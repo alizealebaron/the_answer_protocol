@@ -34,8 +34,10 @@ type Quest interface {
 	GetRewardId()      int
 
 	SetReward(item Item)
+	SetStatus(s string)
 
-	ToString()         string
+	ToStringQuest(p Player) string
+	ToString()              string
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -52,6 +54,7 @@ type QuestModel struct {
 	RewardId      int    `json:"reward"`
 	Reward        Item   `json:"-"`
 	Quantity      int    `json:"quantity"`
+	Status        string `json:"-"`
 }
 
 // === Accesseurs === //
@@ -65,12 +68,45 @@ func (q QuestModel) GetRewardId()      int    { return q.RewardId      }
 
 // === Modificateurs === //
 
-func (q *QuestModel) SetReward(item Item) {q.Reward = item}
+func (q *QuestModel) SetReward(item Item)   {q.Reward = item}
+func (q *QuestModel) SetStatus(s    string) {q.Status = s}
 
 // === ToString === //
 
 func (q QuestModel) ToString() string {
 	b, err := json.Marshal(q)
+	if err != nil {
+		return fmt.Sprintf("erreur: %v", err)
+	}
+	return string(b)
+}
+
+func (q QuestModel) ToStringQuest(p Player) string {
+
+	var desc string
+	if p.Language == "FR" {
+		desc = q.DescriptionFr
+	} else {
+		desc = q.DescriptionEn
+	}
+
+	out := struct {
+		Id           int            `json:"id"`
+		Title        string         `json:"title"`
+		Description  string         `json:"desc"`
+		Reward       string         `json:"reward"`
+		Quantity     int            `json:"quantity"`
+		Status       string         `json:"status"`
+	}{
+		Id:           q.Id,
+		Title:        q.Title,
+		Description:  desc,
+		Reward:       q.Reward.GetName(),
+		Quantity:     q.Quantity,
+		Status:       q.Status,
+	}
+
+	b, err := json.Marshal(out)
 	if err != nil {
 		return fmt.Sprintf("erreur: %v", err)
 	}
@@ -90,8 +126,6 @@ type QuestItem struct {
 }
 
 func (q *QuestItem) SetReward(item Item) {q.Reward = item}
-
-// === ToString === //
 
 func (q QuestItem) ToString() string {
 	b, err := json.Marshal(q)
@@ -114,10 +148,6 @@ type QuestMonster struct {
 	MonsterSlay     int
 }
 
-func (q *QuestMonster) SetReward(item Item) {q.Reward = item}
-
-// === ToString === //
-
 func (q QuestMonster) ToString() string {
 	b, err := json.Marshal(q)
 	if err != nil {
@@ -125,3 +155,5 @@ func (q QuestMonster) ToString() string {
 	}
 	return string(b)
 }
+
+func (q *QuestMonster) SetReward(item Item) {q.Reward = item}
