@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/09 17:17:01 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/11 17:11:35 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -143,6 +143,9 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 	case "BUY":
 	case "SELL":
 	case "TAKE":
+		commands.Take(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Inventory", subCommandBox, stdin, listener)
+		})
 	case "DROP":
 	case "GAMBLING":
 	}

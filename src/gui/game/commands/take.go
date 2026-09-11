@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* move.go                                           :+:      :+:    :+:   */
+/* take.go                                           :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/09/09 10:10:18 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/11 17:29:16 by rruiz           ###   ########.fr       */
+/* Created: 2026/09/11 15:28:14 by rruiz           #+#    #+#              */
+/* Updated: 2026/09/11 17:31:27 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -23,7 +23,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Move(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+func Take(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -36,38 +36,31 @@ func Move(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 			return
 		}
 		listener.Unsubscribe(id)
-		showDirections(stdin, subCommandBox, data, back)
+		showSelectableObjects(stdin, subCommandBox, data, back)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
-func showDirections(stdin io.WriteCloser, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
+func showSelectableObjects(stdin io.WriteCloser, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
-
-	directions := map[string]int{
-		"NORTH": room.NeighborRoom.North,
-		"EAST":  room.NeighborRoom.East,
-		"SOUTH": room.NeighborRoom.South,
-		"WEST":  room.NeighborRoom.West,
-	}
 
 	len := 0
 
-	for direction, id := range directions {
-		if id != 0 {
-			dir := direction
-			directionButton := widget.NewButton(dir, func() {
-				fmt.Fprintf(stdin, "MOVE %s\n", dir)
-				fmt.Printf("MOVE %s\n", dir)
-				back()
-			})
-			directionButton.Importance = widget.LowImportance
-			subCommandBox.Add(directionButton)
-			len += 1
-		}
+	for _, item := range room.Items {
+		itemName := item.Name
+		itemId := item.Id
+		itemButton := widget.NewButton(itemName, func() {
+			fmt.Fprintf(stdin, "TAKE %d\n", itemId)
+			fmt.Printf("TAKE %d\n", itemId)
+			back()
+		})
+		itemButton.Importance = widget.LowImportance
+		subCommandBox.Add(itemButton)
+		len += 1
 	}
 	if len == 0 {
 		back()
 	}
+
 	subCommandBox.Refresh()
 }
