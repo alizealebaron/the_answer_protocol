@@ -10,7 +10,7 @@
 /* author : alebaron <alebaron@student.42.fr>                               */
 /*                                                                          */
 /* creation : Invalid date        by -----------                            */
-/* update   : 2026/09/11 20:20:29 by alebaron                               */
+/* update   : 2026/09/11 20:22:18 by alebaron                               */
 /* ************************************************************************ */
 
 package models
@@ -58,7 +58,7 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 	lstItem := make(map[Item]int)
 	dialogueProgress := make(map[int]int)
 	lst_quest := []Quest{}
-	player := Player{totalPlayer, name, 100, 100, "healthy", 5, language, 10, lstItem, lst_quest, conn, nil, dialogueProgress}
+	player := Player{totalPlayer, name, 100, 100, "healthy", 5, 10, language, 10, lstItem, lst_quest, conn, nil, dialogueProgress}
 	totalPlayer += 1
 	return player
 }
