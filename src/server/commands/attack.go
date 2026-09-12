@@ -34,6 +34,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 
 	// on declare les variable \\
 	var target *models.Monster
+	var new_target *models.Monster
 	var damage int
 	var status string
 	var message1 string
@@ -119,8 +120,12 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	message1 = fmt.Sprintf("Ok [{\"attacker\": %s, \"attack dice\": %d, \"attacker_hp\": %d, \"target_hp\": %d, \"damage\": %d, \"target_status\": %s}]", player.Name, attack_dice, player.Pv, target.Pv, damage, status)
 	
 	// la cible attack le joueur
-	index := rand.IntN(len(player.Group.Lst_Player))
-	new_target := player.Group.Lst_Player[index]
+	if (player.Group != nil) {
+		index := rand.IntN(len(player.Group.Lst_Player))
+		new_target := player.Group.Lst_Player[index]
+	} else {
+		new_target := player
+	}
 	attack_dice = rand.IntN(20 - 1) + 1
 	if attack_dice > new_target.Defense {
 		if attack_dice == 20 {

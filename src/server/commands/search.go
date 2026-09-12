@@ -54,13 +54,16 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 				e.Entity_id = tapManager.Entity_index
 				tapManager.Entity_index += 1
 				room.AddMonsterToRoom(e)
-				message := fmt.Sprint("Ok ", e.Name, "[", e.Entity_id, "] summon in the arena \n")
-				server_write.ServerWrite(player.Conn, message)
-				server_write.WriteLog(player.Conn, "SERVER", message )
+				message := fmt.Sprintf("EVT %s[%d] summon in this room \n", e.Name, e.Entity_id)
+
+				for _, p := range room.Lst_Player {
+					server_write.ServerWrite(p.Conn, message)
+				}
+				server_write.WriteLog(player.Conn, "SERVER", message)
 				return nil
 			}
 			server_write.ServerWrite(player.Conn, "KO failed to summon monster in the arena"+"\n")
-			server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": failed to summon a monster" )
+			server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": failed to summon a monster")
 			return nil
 		}
 	}
