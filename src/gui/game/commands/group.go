@@ -28,7 +28,7 @@ type groupAction struct {
 	run  func()
 }
 
-func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, playerName string, back func()) {
 	subCommandBox.RemoveAll()
 
 	actions := []groupAction{
@@ -38,7 +38,7 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 			back()
 		}},
 		{"INVITE", func() {
-			showPlayersToInvite(stdin, listener, subCommandBox, back)
+			showPlayersToInvite(stdin, listener, subCommandBox, playerName, back)
 		}},
 		{"JOIN", func() {
 			showJoinForm(stdin, subCommandBox, back)
@@ -61,34 +61,36 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 	subCommandBox.Refresh()
 }
 
-func showPlayersToInvite(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+func showPlayersToInvite(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, playerName string, back func()) {
 	var id int
 	id = listener.Subscribe(func(line string) {
-		if !strings.HasPrefix(line, "OK { \"room\":") {
+		if !strings.HasPrefix(line, "{\"lst_item\":[") {
 			return
 		}
-		whoJson := strings.TrimPrefix(line, "OK ")
-		var data types.WhoInfo
-		if err := json.Unmarshal([]byte(whoJson), &data); err != nil {
+		var data types.Secret
+		if err := json.Unmarshal([]byte(line), &data); err != nil {
 			listener.Unsubscribe(id)
 			return
 		}
 		listener.Unsubscribe(id)
-		showInvitablePlayers(stdin, subCommandBox, data, back)
+		showInvitablePlayers(stdin, subCommandBox, data, playerName, back)
 	})
-	fmt.Fprintf(stdin, "WHO\n")
+	fmt.Fprintf(stdin, "SECRET\n")
 }
 
-func showInvitablePlayers(stdin io.WriteCloser, subCommandBox *fyne.Container, who types.WhoInfo, back func()) {
+func showInvitablePlayers(stdin io.WriteCloser, subCommandBox *fyne.Container, who types.Secret, playerName string, back func()) {
 	subCommandBox.RemoveAll()
 
 	len := 0
 
-	for _, player := range who.RoomInfo {
-		playerName := player
-		playerButton := widget.NewButton(playerName, func() {
-			fmt.Fprintf(stdin, "GROUP INVITE %s\n", playerName)
-			fmt.Printf("GROUP INVITE %s\n", playerName)
+	for _, player := range who.Players {
+		otherPlayerName := player.Name
+		if otherPlayerName == playerName {
+			continue
+		}
+		playerButton := widget.NewButton(otherPlayerName, func() {
+			fmt.Fprintf(stdin, "GROUP INVITE %s\n", otherPlayerName)
+			fmt.Printf("GROUP INVITE %s\n", otherPlayerName)
 			back()
 		})
 		playerButton.Importance = widget.LowImportance
