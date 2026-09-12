@@ -79,31 +79,26 @@ func (p *Player) GetItem(itID int) (*Item, error) {
 	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
 }
 
-func (p *Player) AddItemToPlayer(it Item) {
-	p.Inventory[it] += 1
-}
-
-func (p *Player) AddItemToPlayerWQuantity(it Item, q int) {
-	p.Inventory[it] += q
-}
-
-func (p *Player) RemoveItemToPlayer(itID int) (*Item, error) {
+func (p Player) GetQuantityItem(itID int) (int, error) {
 
 	// Parcours des objets de l'inventaire
 	for it, qty := range p.Inventory {
-
 		// Gestion des items si on le trouve
 		if it.GetId() == itID {
-			if qty <= 1 {
-				delete(p.Inventory, it)
-			} else {
-				p.Inventory[it] = qty - 1
-			}
-			itemCopy := it
-			return &itemCopy, nil
+			return qty, nil
 		}
 	}
-	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
+
+	return 0, errors.New("ERR 404 ITEM_NOT_FOUND")
+}
+
+func (p *Player) AddItemToPlayerWQuantity(it Item, q int) {
+
+	// Ajout à l'inventaire
+	p.Inventory[it] += q
+
+	// Mise à jour des potentielles quêtes
+	p.UpdateQuestItem(it.GetId(), q)
 }
 
 func (p *Player) RemoveItemToPlayerWQuantity(itID int, q int) (*Item, error) {
@@ -120,6 +115,8 @@ func (p *Player) RemoveItemToPlayerWQuantity(itID int, q int) (*Item, error) {
 			} else {
 				p.Inventory[it] = qty - q
 			}
+			// Mise à jour des potentielles quêtes
+			p.UpdateQuestItemBrut(it.GetId(), (qty - q))
 			itemCopy := it
 			return &itemCopy, nil
 		}
@@ -135,7 +132,6 @@ func (p *Player) InventoryToString() string {
 		Is_Usable bool   `json:"is_usable"`
 	}
 
-	
 	items := make([]ItemEntry, 0, len(p.Inventory))
 	for it, qty := range p.Inventory {
 
@@ -143,12 +139,12 @@ func (p *Player) InventoryToString() string {
 		_, ok_ed := it.(Edible)
 		_, ok_us := it.(Usable)
 		is_usable := ok_ed || ok_us
-		
+
 		// Ajout de l'item à l'inventaire
 		items = append(items, ItemEntry{
-			Id:       it.GetId(),
-			Name:     it.GetName(),
-			Quantity: qty,
+			Id:        it.GetId(),
+			Name:      it.GetName(),
+			Quantity:  qty,
 			Is_Usable: is_usable,
 		})
 	}
@@ -174,6 +170,7 @@ func (p *Player) InventoryToString() string {
 
 func (p *Player) PlayerDeath(tapManager *TapManager) error {
 	p.Pv = 30
+	p.Status = "bloody"
 	group, err := tapManager.GetGroupById(p.Id)
 	if err == nil {
 		group.RemovePlayerFromGroup(*p)
@@ -222,8 +219,57 @@ func (p *Player) AddQuestToPlayer(quest Quest) error {
 	// Mise à jour du status de la quête
 	quest.SetStatus("active")
 
+	// Si la quête est une quête à Item vérifié le nombre d'item déjà présent dans l'inventaire
+	questItem, ok := quest.(*QuestItem)
+	if ok {
+		qty, _ := p.GetQuantityItem(questItem.ItemNeededId)
+		questItem.UpdateProgress(qty)
+	}
+
 	// Ajout de la quête à la liste du joueur
-	p.Lst_Quest = append(p.Lst_Quest, quest)
+	p.Lst_Quest = append(p.Lst_Quest, questItem)
+
+	return nil
+}
+
+func (p *Player) UpdateQuestMonster(monster Monster) error {
+
+	for _, quest := range p.Lst_Quest {
+		questMonster, ok := quest.(*QuestMonster)
+		if ok {
+			if questMonster.MonsterNeededId == monster.Id {
+				questMonster.UpdateProgress(1)
+			}
+		}
+	}
+
+	return nil
+}
+
+func (p *Player) UpdateQuestItem(id_item int, quantity int) error {
+
+	for _, quest := range p.Lst_Quest {
+		questItem, ok := quest.(*QuestItem)
+		if ok {
+			if questItem.ItemNeededId == id_item {
+				questItem.UpdateProgress(quantity)
+			}
+		}
+	}
+
+	return nil
+}
+
+func (p *Player) UpdateQuestItemBrut(id_item int, quantity int) error {
+
+	for _, quest := range p.Lst_Quest {
+		questItem, ok := quest.(*QuestItem)
+		if ok {
+			if questItem.ItemNeededId == id_item {
+				questItem.UpdateProgressBrut(quantity)
+			}
+		}
+	}
 
 	return nil
 }

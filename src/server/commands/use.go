@@ -60,7 +60,7 @@ func Use(args []string, tapManager *models.TapManager, player *models.Player) er
 			player.AddLifePoint(-edible.Value)
 		}
 
-		player.RemoveItemToPlayer(edible.Id)
+		player.RemoveItemToPlayerWQuantity(edible.Id, 1)
 		// === Envoie des messages au client et dans les logs === //
 
 		str_ret := fmt.Sprintf("OK {\"used\": \"%s\", \"effect\": \"%s\", \"value\": %d}\n", edible.Name, edible.Effect, edible.Value)
@@ -112,7 +112,7 @@ func fish(player *models.Player, room models.Room, tap models.TapManager) error 
 			if err != nil {
 				return errors.New("ERR 404 ITEM_NOT_FOUND")
 			}
-			player.AddItemToPlayer(item)
+			player.AddItemToPlayerWQuantity(item, 1)
 
 			// === Envoie des messages au client et dans les logs === //
 			str_ret := "OK fishing=" + (item).GetName() + "\n"

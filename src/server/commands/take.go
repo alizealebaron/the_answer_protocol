@@ -50,7 +50,7 @@ func Take(args []string, tapManager *models.TapManager, player *models.Player) e
 	}
 
 	// === Ajout de l'item à l'inventaire du joueur === //
-	player.AddItemToPlayer(*item)
+	player.AddItemToPlayerWQuantity(*item, 1)
 	
 	// === Envoie des messages au client et dans les logs === //
 	str_ret := "OK taken=" + (*item).GetName() + "\n"

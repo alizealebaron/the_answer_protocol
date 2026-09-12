@@ -36,6 +36,8 @@ type Quest interface {
 	SetReward(item Item)
 	SetStatus(s string)
 
+	UpdateProgress(quantity int)
+
 	ToStringQuest(p Player) string
 	ToString()              string
 }
@@ -47,14 +49,16 @@ type Quest interface {
 // === Constructeur === //
 
 type QuestModel struct {
-	Id            int    `json:"id"`
-	Title         string `json:"title"`
-	DescriptionFr string `json:"descriptionFr"`
-	DescriptionEn string `json:"descriptionEn"`
-	RewardId      int    `json:"reward"`
-	Reward        Item   `json:"-"`
-	Quantity      int    `json:"quantity"`
-	Status        string `json:"-"`
+	Id             int    `json:"id"`
+	Title          string `json:"title"`
+	DescriptionFr  string `json:"descriptionFr"`
+	DescriptionEn  string `json:"descriptionEn"`
+	RewardId       int    `json:"reward"`
+	Reward         Item   `json:"-"`
+	Quantity       int    `json:"quantity"`
+	SearchQuantity int    `json:"src_quantity"`
+	Status         string `json:"-"`
+	Progress       int    `json:"-"`
 }
 
 // === Accesseurs === //
@@ -68,8 +72,8 @@ func (q QuestModel) GetRewardId()      int    { return q.RewardId      }
 
 // === Modificateurs === //
 
-func (q *QuestModel) SetReward(item Item)   {q.Reward = item}
-func (q *QuestModel) SetStatus(s    string) {q.Status = s}
+func (q *QuestModel) SetReward(item   Item  ) {q.Reward   = item}
+func (q *QuestModel) SetStatus(s      string) {q.Status   = s   }
 
 // === ToString === //
 
@@ -90,12 +94,15 @@ func (q QuestModel) ToStringQuest(p Player) string {
 		desc = q.DescriptionEn
 	}
 
+	progress := fmt.Sprintf("%d/%d", q.Progress, q.SearchQuantity)
+
 	out := struct {
 		Id           int            `json:"id"`
 		Title        string         `json:"title"`
 		Description  string         `json:"desc"`
 		Reward       string         `json:"reward"`
 		Quantity     int            `json:"quantity"`
+		Progress     string         `json:"progress"`
 		Status       string         `json:"status"`
 	}{
 		Id:           q.Id,
@@ -103,6 +110,7 @@ func (q QuestModel) ToStringQuest(p Player) string {
 		Description:  desc,
 		Reward:       q.Reward.GetName(),
 		Quantity:     q.Quantity,
+		Progress:     progress,
 		Status:       q.Status,
 	}
 
@@ -113,6 +121,44 @@ func (q QuestModel) ToStringQuest(p Player) string {
 	return string(b)
 }
 
+// Update Progress
+
+func (q *QuestModel) UpdateProgress(quantity int) {
+
+	// Mise à jour de la quantité récupérée pour la quête
+	q.UpdateProgressBrut(q.Progress + quantity)
+
+}
+
+func (q *QuestModel) UpdateProgressBrut(quantity int) {
+
+	fmt.Println(quantity)
+
+	if (q.Status != "rewarded") {
+		q.Progress = quantity
+	} else {
+		return
+	}
+
+	// Vérification que la quantité est entre 0 et q.SearchQuantity
+	if q.Progress > q.SearchQuantity {
+		q.Progress = q.SearchQuantity
+	}
+	if q.Progress < 0 {
+		q.Progress = 0
+	}
+
+	// Mise à jour du statut de la quête
+
+	if q.Progress == 0 {
+		q.Status = "active"
+	} else if (q.Progress > 0 && q.Progress < q.SearchQuantity) {
+		q.Status = "in progress"
+	} else {
+		q.Status = "completed"
+	}
+}
+
 /* +---------------------------------------------------------------------+ */
 /* |                             QuestItem                               | */
 /* +---------------------------------------------------------------------+ */
@@ -121,11 +167,8 @@ func (q QuestModel) ToStringQuest(p Player) string {
 
 type QuestItem struct {
 	QuestModel
-	ItemNeededId int   `json:"ItemNeededId"`
-	ItemNeededQu int   `json:"ItemNeededQu"`
+	ItemNeededId int   `json:"itemNeededId"`
 }
-
-func (q *QuestItem) SetReward(item Item) {q.Reward = item}
 
 func (q QuestItem) ToString() string {
 	b, err := json.Marshal(q)
@@ -143,9 +186,7 @@ func (q QuestItem) ToString() string {
 
 type QuestMonster struct {
 	QuestModel
-	MonsterNeededId int      `json:"MonsterNeededId"`
-	MonsterNeededQu int      `json:"MonsterNeededQu"`
-	MonsterSlay     int
+	MonsterNeededId int      `json:"monsterNeededId"`
 }
 
 func (q QuestMonster) ToString() string {
@@ -155,5 +196,3 @@ func (q QuestMonster) ToString() string {
 	}
 	return string(b)
 }
-
-func (q *QuestMonster) SetReward(item Item) {q.Reward = item}

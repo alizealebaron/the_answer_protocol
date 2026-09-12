@@ -32,7 +32,7 @@ func Look(args []string, tapManager *models.TapManager, player *models.Player) e
 	room, err := tapManager.FindPlayerRoom(player.Id)
 
 	if err != nil {
-		return errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+		return errors.New("ERR 404 PLAYER_NOT_FOUND")
 	}
 
 	server_write.ServerWrite(player.Conn, "OK " + room.ToString() + "\n")

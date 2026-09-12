@@ -6,7 +6,7 @@
 		"descriptionEn": "The forest madman wants you to beat up a few tax collectors who are hanging about in the forest.",
 		"reward": 8,
 		"quantity": 1,
-        "MonsterNeededId": 7,
-        "MonsterNeededQu": 3
+		"src_quantity": 3,
+        "monsterNeededId": 7
 	}
 ]

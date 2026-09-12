@@ -2,11 +2,11 @@
     {
 		"id": 1,
 		"title": "Mon village, mon jambon beurre.",
-		"descriptionFr": "Gaspard vous a demandé de ramener 5 Jambon pour sa fameuse recette de jambon.",
+		"descriptionFr": "Gaspard vous a demandé de ramener 5 Jambon pour sa fameuse recette de sandouich jambon beurre.",
 		"descriptionEn": "Gaspard has asked you to bring back 5 hams for his famous ham recipe.",
 		"reward": 1,
 		"quantity": 20,
-		"ItemNeededId": 11,
-		"ItemNeededQu": 5
+		"src_quantity": 5,
+		"itemNeededId": 11
 	}
 ]

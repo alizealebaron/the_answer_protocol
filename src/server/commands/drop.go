@@ -44,7 +44,7 @@ func Drop(args []string, tapManager *models.TapManager, player *models.Player) e
 	// === Vérification de la présence de l'item dans l'inventaire === //
 	id, err := strconv.Atoi(args[0])
 
-	item, err := player.RemoveItemToPlayer(id)
+	item, err := player.RemoveItemToPlayerWQuantity(id, 1)
 	if err != nil {
 		return errors.New("ERR 404 ITEM_NOT_FOUND")
 	}

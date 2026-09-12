@@ -113,14 +113,24 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 		quantity := rand.IntN(target.QuantityMax - target.QuantityMin) + target.QuantityMax
 		for i := 1; i <= quantity; i++ {
 			p_room.AddItemToRoom(target.Loot)
-		} 
+		}
+
+		// On udpate les quêtes du joueurs si besoin
+		player.UpdateQuestMonster(*target)
 	}
 	// on ecris la premiere moitier du message
-	message1 = fmt.Sprintf("Ok [{\"attacker\": %s, \"attack dice\": %d, \"attacker_hp\": %d, \"target_hp\": %d, \"damage\": %d, \"target_status\": %s}]", player.Name, attack_dice, player.Pv, target.Pv, damage, status)
+	message1 = fmt.Sprintf("OK [{\"attacker\": %s, \"attack dice\": %d, \"attacker_hp\": %d, \"target_hp\": %d, \"damage\": %d, \"target_status\": %s}]", player.Name, attack_dice, player.Pv, target.Pv, damage, status)
 	
 	// la cible attack le joueur
-	index := rand.IntN(len(player.Group.Lst_Player))
-	new_target := player.Group.Lst_Player[index]
+	var new_target *models.Player
+
+	if player.Group != nil {
+		index := rand.IntN(len(player.Group.Lst_Player))
+		new_target = player.Group.Lst_Player[index]
+	} else {
+		new_target = player
+	}
+	
 	attack_dice = rand.IntN(20 - 1) + 1
 	if attack_dice > new_target.Defense {
 		if attack_dice == 20 {
@@ -133,12 +143,15 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	
 	// on ecris la deuxieme moitier du message
 	message2 = fmt.Sprintf(" [{\"attacker\": %s, \"attack dice\": %d, \"attacker_hp\": %d, \"target\": %s, \"target_hp\": %d, \"damage\": %d, \"target_status\": %s}]", target.Name, attack_dice, target.Pv, new_target.Name, new_target.Pv, damage, new_target.Status)
-	// on verfie si le joueur est mort
-	if new_target.Status == "dead" {
-		new_target.PlayerDeath(tapManager)
-	}
+	
 	// on ecris le resultat de l'attaque
 	server_write.ServerWrite(player.Conn, message1+message2+"\n")
 	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + message1+message2+"\n")
+
+	// on verfie si le joueur est mort (Je le mets ici pour que le message de changement de room soit dans le bon ordre ~Alizéa)
+	if new_target.Status == "dead" {
+		new_target.PlayerDeath(tapManager)
+	}
+
 	return nil
 }

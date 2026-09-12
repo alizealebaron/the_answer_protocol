@@ -13,7 +13,6 @@
 /* update   : 2026/09/11 20:07:34 by alebaron                               */
 /* ************************************************************************ */
 
-
 package models
 
 import (
@@ -42,6 +41,13 @@ type FishingEntry struct {
 type IdName struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
+}
+
+type IdNameNpc struct {
+	Id        int    `json:"id"`
+	Name      string `json:"name"`
+	Is_trader bool   `json:"is_trader"`
+	Is_qg     bool   `json:"is_qg"`
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -112,7 +118,6 @@ func (r *Room) RemovePlayerToRoom(player Player) {
 		}
 	}
 
-	
 }
 
 func (r *Room) AddItemToRoom(it Item) {
@@ -155,14 +160,20 @@ func (r Room) ToString() string {
 		return IdName{Id: id, Name: name}
 	}
 
+	toIdNameNpc := func(id int, name string, b1 bool, b2 bool) IdNameNpc {
+		return IdNameNpc{Id: id, Name: name, Is_trader: b1, Is_qg: b2}
+	}
+
 	items := make([]IdName, 0, len(r.Items))
 	for _, it := range r.Items {
 		items = append(items, toIdName(it.GetId(), it.GetName()))
 	}
 
-	allies := make([]IdName, 0, len(r.Allies))
+	allies := make([]IdNameNpc, 0, len(r.Allies))
 	for _, a := range r.Allies {
-		allies = append(allies, toIdName(a.GetId(), a.GetName()))
+		_, ok1 := a.(Trader)
+		_, ok2 := a.(QuestGiver)
+		allies = append(allies, toIdNameNpc(a.GetId(), a.GetName(), ok1, ok2))
 	}
 
 	ennemies := make([]IdName, 0, len(r.Ennemies))
@@ -178,7 +189,7 @@ func (r Room) ToString() string {
 	out := struct {
 		Id           int            `json:"id"`
 		Name         string         `json:"name"`
-		Allies       []IdName       `json:"allies"`
+		Allies       []IdNameNpc    `json:"allies"`
 		Ennemies     []IdName       `json:"ennemies"`
 		Items        []IdName       `json:"items"`
 		NeighborRoom NeighborRoom   `json:"neighborRoom"`
