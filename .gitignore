@@ -28,4 +28,4 @@ sujet.md
 /target
 .vscode
 
-log/*
+/log/*
