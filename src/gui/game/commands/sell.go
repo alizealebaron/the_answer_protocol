@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/14 14:44:04 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 16:00:53 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/14 16:07:02 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -61,7 +61,7 @@ func showTrader2(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 						return
 					}
 					listener.Unsubscribe(id)
-					showInventory(stdin, listener, subCommandBox, data, traderId, back)
+					showInventory(stdin, subCommandBox, data, traderId, back)
 				})
 				fmt.Fprintf(stdin, "INVENTORY\n")
 			})
@@ -77,7 +77,7 @@ func showTrader2(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 	subCommandBox.Refresh()
 }
 
-func showInventory(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, inventory types.InventoryInfo, traderId int, back func()) {
+func showInventory(stdin io.WriteCloser, subCommandBox *fyne.Container, inventory types.InventoryInfo, traderId int, back func()) {
 	subCommandBox.RemoveAll()
 
 	if len(inventory.Items) == 0 {
