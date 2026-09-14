@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/08 21:22:30 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/11 22:27:48 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/14 12:12:11 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -36,6 +36,7 @@ type ItemInfo struct {
 	Damage        int    `json:"damage"`
 	Effect        string `json:"effect"`
 	Value         int    `json:"value"`
+	Location      string `json:"location"`
 }
 
 // Is a mirror of models.Player.
@@ -46,6 +47,7 @@ type PlayerInfo struct {
 	MaxPv    int    `json:"MaxPv"`
 	Status   string `json:"Status"`
 	Attack   int    `json:"Attack"`
+	Defense  int    `json:"Defense"`
 	Language string `json:"Language"`
 	Money    int    `json:"Money"`
 }
@@ -58,6 +60,7 @@ type QuestInfo struct {
 	DescriptionEn   string `json:"descriptionEn"`
 	RewardId        int    `json:"reward"`
 	Quantity        int    `json:"quantity"`
+	SearchQuantity  int    `json:"src_quantity"`
 	ItemNeededId    int    `json:"ItemNeededId"`
 	ItemNeededQu    int    `json:"ItemNeededQu"`
 	MonsterNeededId int    `json:"MonsterNeededId"`
@@ -128,6 +131,14 @@ type IdNameInfo struct {
 	Name string `json:"name"`
 }
 
+// Is a mirror of models.IdNameNpc (allies inside the LOOK reply).
+type IdNameNpcInfo struct {
+	Id        int    `json:"id"`
+	Name      string `json:"name"`
+	Is_trader bool   `json:"is_trader"`
+	Is_qg     bool   `json:"is_qg"`
+}
+
 type WhoInfo struct {
 	RoomInfo   []string `json:"room"`
 	ServerInfo int      `json:"server"`
@@ -137,7 +148,7 @@ type WhoInfo struct {
 type LookInfo struct {
 	Id           int                `json:"id"`
 	Name         string             `json:"name"`
-	Allies       []IdNameInfo       `json:"allies"`
+	Allies       []IdNameNpcInfo    `json:"allies"`
 	Ennemies     []IdNameInfo       `json:"ennemies"`
 	Items        []IdNameInfo       `json:"items"`
 	NeighborRoom NeighborRoomInfo   `json:"neighborRoom"`
@@ -160,7 +171,22 @@ type InventoryInfo struct {
 
 // Is a mirror of each item entry inside the INVENTORY reply.
 type InventoryItemInfo struct {
-	Id       int    `json:"id"`
-	Name     string `json:"name"`
-	Quantity int    `json:"quantity"`
+	Id        int    `json:"id"`
+	Name      string `json:"name"`
+	Quantity  int    `json:"quantity"`
+	Is_Usable bool   `json:"is_usable"`
+}
+
+// Is a mirror of commands.LittleInv (reply to TRADE).
+type TradeInfo struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+	Cost int    `json:"cost"`
+}
+
+// Is a mirror of the JSON returned by the STATUS command.
+type StatusInfo struct {
+	Hp     int    `json:"hp"`
+	MaxHp  int    `json:"max_hp"`
+	Status string `json:"status"`
 }
