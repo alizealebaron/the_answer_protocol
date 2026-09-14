@@ -2,22 +2,22 @@
 	{
 		"id": 1,
 		"name": "Grégoin",
-		"dialogueFr": ["(TODO)", "(TODO)"],
-		"dialogueEn": ["(TODO)", "(TODO)"],
+		"dialogueFr": ["Bonzour ! Vous êtes qui ?", "Ma maman m'a toujours dit de pas parler aux inconnus, mais vous m'avez l'air sympa.", "Si vous avez besoin je peux vous donner de quoi vous battre !"],
+		"dialogueEn": ["Hi! Who are you?", "My mom always told me not to talk to strangers, but you guys seem nice.", "If you need it, I can give you something to fight with!"],
         "inventory": [4, 5, 6, 7]
 	},
     {
 		"id": 4,
 		"name": "Léon",
-		"dialogueFr": ["(TODO)", "(TODO)"],
-		"dialogueEn": ["(TODO)", "(TODO)"],
+		"dialogueFr": ["Bonjour ! Je suis Léon le marchand, enchanté !", "N'hésitez pas à venir me voir si vous avez besoin de quoi que ce soit !"],
+		"dialogueEn": ["Hello! I'm Léon the merchant—nice to meet you!", "Please feel free to come see me if you need anything!"],
         "inventory": [2, 10]
 	},
     {
 		"id": 12,
 		"name": "Gauss",
-		"dialogueFr": ["(TODO)", "(TODO)"],
-		"dialogueEn": ["(TODO)", "(TODO)"],
+		"dialogueFr": ["Bonjour, bienvenue au comptoir d'échange des gambling coins du CASINO.", "N'hésitez pas à essayer de gambling, 100% des gagnants ont joué un jour !"],
+		"dialogueEn": ["Hello, welcome to the CASINO's gambling coin exchange counter.", "Don't hesitate to try your hand at gambling—100% of winners have gambled at some point!"],
         "inventory": [1]
 	}
 ]

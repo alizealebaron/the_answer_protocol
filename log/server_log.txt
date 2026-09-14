@@ -1,11 +1,6 @@
-2026-09-14 11:51:32 (127.0.0.1) : [INFO]    Player ALE connected
-2026-09-14 11:51:38 (127.0.0.1) : [COMMAND] ALE use LOOK
-2026-09-14 11:51:38 (127.0.0.1) : [SERVER]  To ALE: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile","is_trader":false,"is_qg":false}],"ennemies":[{"id":11,"name":"Tanard"}],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[],"arena":[]}
-2026-09-14 11:51:44 (127.0.0.1) : [COMMAND] ALE use TAKE 14
-2026-09-14 11:51:44 (127.0.0.1) : [WORLD]   ALE took a "Kayou" in room "Place Sénile"
-2026-09-14 11:51:44 (127.0.0.1) : [SERVER]  To ALE: OK taken=Kayou
-2026-09-14 11:51:47 (127.0.0.1) : [COMMAND] ALE use DROP 14
-2026-09-14 11:51:47 (127.0.0.1) : [WORLD]   ALE dropped a "Kayou" in room "Place Sénile"
-2026-09-14 11:51:47 (127.0.0.1) : [SERVER]  To ALE: OK dropped=Kayou
-2026-09-14 11:52:49 (127.0.0.1) : [COMMAND] ALE use TALK 3
-2026-09-14 11:52:49 (127.0.0.1) : [SERVER]  To ALE: OK Premier dialogue FR
+2026-09-14 13:58:29 (127.0.0.1) : [INFO]    Player ALE connected
+2026-09-14 13:58:32 (127.0.0.1) : [COMMAND] ALE use TAKE 2
+2026-09-14 13:58:32 (127.0.0.1) : [WORLD]   ALE took a "Kana pêche" in room "Place Sénile"
+2026-09-14 13:58:32 (127.0.0.1) : [SERVER]  To ALE: OK taken=Kana pêche
+2026-09-14 13:58:35 (127.0.0.1) : [COMMAND] ALE use INVENTORY
+2026-09-14 13:58:35 (127.0.0.1) : [SERVER]  To ALE: OK {"items":[{"id":2,"name":"Kana pêche","quantity":1,"is_usable":true,"is_weapon":false}],"money":10}
