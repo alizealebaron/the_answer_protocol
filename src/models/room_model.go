@@ -136,7 +136,14 @@ func (r *Room) RemoveItemToRoom(itID int) (*Item, error) {
 }
 
 func (r *Room) AddMonsterToRoom(monster Monster) {
+
+	// Ajout du monstre à la room
 	r.Arena = append(r.Arena, &monster)
+
+	// Envoie d'un évènement à tous les joueurs de la room
+	for _, p := range r.Lst_Player {
+		server_write.ServerWrite(p.Conn, "EVT ROOM MONSTER HAS SPAWN\n")
+	}
 }
 
 func (r *Room) RemoveMonsterToRoom(monster Monster) (*Monster, error) {

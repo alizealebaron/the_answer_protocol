@@ -66,6 +66,6 @@
 		"loot": 1,
 		"quantityMin": 1,
 		"quantityMax": 1,
-		"spawnRate": 10
+		"spawnRate": 1
 	}
 ]
