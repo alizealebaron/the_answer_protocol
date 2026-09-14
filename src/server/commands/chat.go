@@ -30,7 +30,7 @@ import (
 
 func Chat(args []string, tapManager *models.TapManager, player *models.Player) error {
 	if len(args) != 2 {
-		return errors.New("ERR ARGUMENTS_NOT_FOUND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 	
 	scope := args[0]

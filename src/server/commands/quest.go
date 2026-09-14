@@ -33,7 +33,7 @@ func Quest(args []string, tapManager *models.TapManager, player *models.Player) 
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) != 1 {
-		return errors.New("ERR 302 NO_PNJ_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// === Récupération de la room actuelle du Joueur === //

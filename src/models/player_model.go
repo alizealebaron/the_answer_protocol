@@ -112,7 +112,7 @@ func (p *Player) RemoveItemToPlayerWQuantity(itID int, q int) (*Item, error) {
 			if qty == q {
 				delete(p.Inventory, it)
 			} else if qty < q {
-				return nil, errors.New("ERR 420 NOT_ENOUGH_ITEM")
+				return nil, errors.New("ERR 407 NOT_ENOUGH_ITEM")
 			} else {
 				p.Inventory[it] = qty - q
 			}
@@ -122,7 +122,7 @@ func (p *Player) RemoveItemToPlayerWQuantity(itID int, q int) (*Item, error) {
 			return &itemCopy, nil
 		}
 	}
-	return nil, errors.New("ERR 404 ITEM_NOT_FOUND")
+	return nil, errors.New("ERR 404 ITEM_NOT_IN_INVENTORY")
 }
 
 func (p *Player) InventoryToString() string {
@@ -317,7 +317,7 @@ func (p *Player) IsEnoughGamblingCoin(bet int) (bool, error) {
 			return true, nil
 		}
 	}
-	return false, errors.New("ERR 999 NOT_ENOUGH_COIN")
+	return false, errors.New("ERR 407 NOT_ENOUGH_COIN")
 }
 
 /* +---------------------------------------------------------------------+ */

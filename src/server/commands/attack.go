@@ -41,7 +41,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	var message2 string
 
 	if len(args) != 2 && len(args) != 1{
-		return errors.New("ERR 302 NO_ITEM_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// on récupère l'arme du joueur depuis son inventaire grace a l'id de l'objet \\
@@ -49,13 +49,13 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	if len(args) == 2 {
 		id, err := strconv.Atoi(args[1])
 		if err != nil {
-			return errors.New("ERR WEAPON_NOT_FOUND")
+			return errors.New("ERR 404 WEAPON_NOT_FOUND")
 		}
 		for i, _ := range player.Inventory {
 			if i.GetId() == id {
 				weapon, err := i.(models.Weapon)
 				if !err {
-					return errors.New("ERR WEAPON_NOT_FOUND")
+					return errors.New("ERR 404 WEAPON_NOT_FOUND")
 				}
 				weapon_damage = weapon.Damage
 			}
@@ -71,7 +71,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	// On converti le deuxieme argument en int \\
 	id, err := strconv.Atoi(args[0])
 	if err != nil {
-		return errors.New("ERR TARGET_NOT_FOUND")
+		return errors.New("ERR 404 TARGET_NOT_FOUND")
 	}
 	
 	// Grace a l'id precedant on essaie de recuperer la cible depuis la room du joueur \\
@@ -85,7 +85,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 
 	// si on ne trouve pas la cible on renvoie une erreur \\
 	if (target_exist == false) {
-		return errors.New("ERR TARGET_NOT_FOUND")
+		return errors.New("ERR 404 TARGET_NOT_FOUND")
 	}
 
 	// le joueur attaque la cible \\

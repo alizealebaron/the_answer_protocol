@@ -32,13 +32,13 @@ func Use(args []string, tapManager *models.TapManager, player *models.Player) er
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) != 1 {
-		return errors.New("ERR 302 NO_ITEM_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// === Récupération de la room actuelle du Joueur === //
 	room, err := tapManager.FindPlayerRoom(player.Id)
 	if err != nil {
-		return errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+		return errors.New("ERR 404 PLAYER_NOT_FOUND")
 	}
 
 	// === Vérification de la présence de l'item dans l'inventaire === //
@@ -80,13 +80,13 @@ func Use(args []string, tapManager *models.TapManager, player *models.Player) er
 		}
 	}
 
-	return errors.New("ERR 407 ITEM_NOT_USABLE")
+	return errors.New("ERR 408 ITEM_NOT_USABLE")
 }
 
 func fish(player *models.Player, room models.Room, tap models.TapManager) error {
 
 	if len(room.Fishing) == 0 {
-		return errors.New("ERR 407 ITEM_NOT_USABLE_HERE")
+		return errors.New("ERR 408 INVALID_LOCATION")
 	}
 
 	// Calcul de la somme totale des taux de loot (Si pas égale à 100 plante pas)
@@ -96,7 +96,7 @@ func fish(player *models.Player, room models.Room, tap models.TapManager) error 
 	}
 
 	if total <= 0 {
-		return errors.New("ERR 500 INVALID_LOOT_TABLE")
+		return errors.New("ERR 999 INVALID_LOOT_TABLE")
 	}
 
 	// Tirage aléatoire entre 0 et total-1
@@ -124,5 +124,5 @@ func fish(player *models.Player, room models.Room, tap models.TapManager) error 
 	}
 
 	// Ne devrait normalement jamais arriver mais on sait pas hein
-	return errors.New("ERR 500 FISHING_ROLL_FAILED")
+	return errors.New("ERR 999 FISHING_ROLL_FAILED")
 }

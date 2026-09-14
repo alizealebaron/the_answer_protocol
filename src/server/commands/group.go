@@ -32,7 +32,7 @@ func Group(args []string, tapManager *models.TapManager, player *models.Player) 
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) < 1 {
-		return errors.New("ERR 302 NO_ARGUMENTS")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	switch args[0] {
@@ -45,7 +45,7 @@ func Group(args []string, tapManager *models.TapManager, player *models.Player) 
 	case "LEAVE":
 		return leave(player)
 	default:
-		return errors.New("ERR 302 WRONG_ARGUMENTS")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 }
 
@@ -79,7 +79,7 @@ func invite(args []string, player *models.Player, tap *models.TapManager) error 
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) < 2 {
-		return errors.New("ERR 302 NO_ARGUMENTS")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// Vérification que le joueur a bien un groupe
@@ -116,7 +116,7 @@ func join(args []string, player *models.Player, tap *models.TapManager) error {
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) < 2 {
-		return errors.New("ERR 302 NO_ARGUMENTS")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// Vérification que le joueur n'a pas déjà un groupe
@@ -138,7 +138,7 @@ func join(args []string, player *models.Player, tap *models.TapManager) error {
 
 	// Vérification que le groupe n'est pas déjà full (4 joueurs)
 	if len(group.Lst_Player) == 4 {
-		return errors.New("ERR 402 GROUP_ALREADY_FULL")
+		return errors.New("ERR 401 GROUP_ALREADY_FULL")
 	}
 
 	// Ajout du joueur dans le groupe

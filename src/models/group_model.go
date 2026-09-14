@@ -106,7 +106,7 @@ func (g *Group) IsPlayerInGroup(player Player) bool {
 func (g *Group) AddPlayerToInvited(player Player) error {
 	
 	if g.IsPlayerInvited(player) {
-		return errors.New("ERR 409 PLAYER_ALREADY_INVITED")
+		return errors.New("ERR 403 PLAYER_ALREADY_INVITED")
 	}
 
 	if g.IsPlayerInGroup(player) {

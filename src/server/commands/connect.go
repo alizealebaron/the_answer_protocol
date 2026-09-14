@@ -36,8 +36,8 @@ func Connect(tapManager *models.TapManager, conn net.Conn, name string, language
 		}
 	}
 	if language != "FR" && language != "EN" {
-		server_write.ServerWrite(conn, "ERR 202 LANGUAGE_IN_USE\n")
-		return player, "ERR 202 LANGUAGE_IN_USE"
+		server_write.ServerWrite(conn, "ERR 202 INCORRECT_LANGUAGE\n")
+		return player, "ERR 202 INCORRECT_LANGUAGE"
 	}
 
 	tapManager.Lst_Player = append(tapManager.Lst_Player, player)

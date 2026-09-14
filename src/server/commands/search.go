@@ -33,7 +33,7 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 
 	// on verifie le nombre d'argument
 	if len(args) != 1 {
-		return errors.New("ERR 302 NO_ID_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// on cherche la room dans lequel se trouve le joueur
@@ -45,7 +45,7 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 	for _, e := range room.Ennemies {
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
-			return errors.New("ERR 785 ATOI_ERROR")
+			return errors.New("ERR 904 WRONG_COMMAND_ARG")
 		}
 		if id == e.Id {
 			luck := rand.IntN(10) + 1
@@ -59,7 +59,7 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 				server_write.WriteLog(player.Conn, "SERVER", message )
 				return nil
 			}
-			server_write.ServerWrite(player.Conn, "ERR 960 FAILED_TO_SUMMON (TRY AGAIN)"+"\n")
+			server_write.ServerWrite(player.Conn, "ERR 409 FAILED_TO_SUMMON (TRY AGAIN)"+"\n")
 			server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + room.ToString())
 			return nil
 		}

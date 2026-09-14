@@ -142,7 +142,7 @@ func handleConnection(conn net.Conn) {
 			if command[0] == "CONNECT" && len(command) == 3 {
 				self_player, code_error = commands.Connect(TapManager, conn, command[1], command[2])
 				if code_error != "" {
-					server_write.WriteLog(conn, "ERROR", "Connection attempt failed")
+					server_write.WriteLog(conn, "ERROR", "900 CONNECTION_FAILED")
 				} else {
 					server_write.WriteLog(conn, "INFO", "Player "+self_player.Name+" connected")
 
@@ -154,6 +154,7 @@ func handleConnection(conn net.Conn) {
 					is_connected = true
 				}
 			} else {
+				server_write.ServerWrite(conn, "ERR 900 CONNECTION_FAILED\n")
 				server_write.ServerWrite(conn, "use \"CONNECT [Name] [Language]\"\n")
 			}
 		} else {
@@ -180,13 +181,6 @@ func handleConnection(conn net.Conn) {
 			}
 			// fmt.Printf("%+v\n", self_player.Lst_Quest)
 		}
-
-		// ackMsg := strings.ToUpper(strings.TrimSpace(message))
-		// response := fmt.Sprintf("ACK: %s\n", ackMsg)
-		// _, err = conn.Write([]byte(response))
-		// if err != nil {
-		//     log.Printf("Server write error: %v", err)
-		// }
 	}
 }
 
@@ -214,7 +208,3 @@ func dispatch(fields []string, tap *models.TapManager, player *models.Player) er
 	return fn(args, tap, player)
 }
 
-// func check_quest(player *models.Player) error {
-
-// 	return nil
-// }

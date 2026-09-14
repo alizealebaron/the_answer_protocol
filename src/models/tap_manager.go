@@ -141,7 +141,7 @@ func (tap *TapManager) FindPlayerRoom(player_id int) (*Room, error) {
 		}
 	}
 
-	return nil, errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+	return nil, errors.New("ERR 404 PLAYER_NOT_FOUND")
 }
 
 func (tap *TapManager) FindMonsterRoom(monster_id int) (*Room, error) {

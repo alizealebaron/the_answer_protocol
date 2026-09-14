@@ -33,13 +33,13 @@ func Move(args []string, tapManager *models.TapManager, player *models.Player) e
 	// === Gestion des erreurs potentielles === //
 
 	if len(args) != 1 {
-		return errors.New("ERR 302 NO_DIRECTION_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	room, err := tapManager.FindPlayerRoom(player.Id)
 
 	if err != nil {
-		return errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+		return errors.New("ERR 404 PLAYER_NOT_FOUND")
 	}
 	
 	// === Gestion de la direction du joueurs === //
@@ -57,7 +57,7 @@ func Move(args []string, tapManager *models.TapManager, player *models.Player) e
 	case "west":
         id_nei_room = room.NeighborRoom.West
 	default:
-		return errors.New("ERR 303 DIRECTION_INCORRECT")
+		return errors.New("ERR 408 DIRECTION_INCORRECT")
     }
 
 	if id_nei_room == 0 {
@@ -66,7 +66,7 @@ func Move(args []string, tapManager *models.TapManager, player *models.Player) e
 
 		nei_room, err := tapManager.GetRoomById(id_nei_room)
 		if err != nil {
-			return errors.New("ERR ROOM_NOT_FOUND")
+			return errors.New("ERR 404 ROOM_NOT_FOUND")
 		}
 
 		// === Ajout dans les nouvelles rooms et envoie du message === //
