@@ -121,6 +121,7 @@ func (r *Room) RemovePlayerToRoom(player Player) {
 }
 
 func (r *Room) AddItemToRoom(it Item) {
+	
 	r.Items = append(r.Items, it)
 }
 

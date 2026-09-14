@@ -116,6 +116,9 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 			p_room.AddItemToRoom(target.Loot)
 		}
 
+		// On envoie une log au serveur
+		server_write.WriteLog(player.Conn, "WORLD", player.Name + " defeated \""+ target.Name +"\" in \""+ p_room.Name +"\"\n")
+
 		// On udpate les quêtes du joueurs si besoin
 		player.UpdateQuestMonster(*target)
 	}
@@ -151,6 +154,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	// on verfie si le joueur est mort (Je le mets ici pour que le message de changement de room soit dans le bon ordre ~Alizéa)
 	if new_target.Status == "dead" {
 		new_target.PlayerDeath(tapManager)
+		server_write.WriteLog(player.Conn, "WORLD", player.Name + " was obliterated by a \""+ target.Name +"\" in \""+ p_room.Name +"\"\n")
 	}
 
 	return nil

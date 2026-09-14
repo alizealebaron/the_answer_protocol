@@ -65,7 +65,7 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 
 				// Ajout du monstre à la room (Dans cet ordre pour un joli rendu côté client ~Alizéa)
 				room.AddMonsterToRoom(e)
-
+				server_write.WriteLog(player.Conn, "WORLD", player.Name + " summoned a \""+ e.GetName() +"\" in \""+ room.Name +"\"\n")
 				return nil
 			}
 			server_write.ServerWrite(player.Conn, "ERR 409 FAILED_TO_SUMMON (TRY AGAIN)"+"\n")

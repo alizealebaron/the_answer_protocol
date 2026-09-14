@@ -1,6 +1,21 @@
-2026-09-14 16:24:11 (127.0.0.1) : [INFO]    Player ALE connected
-2026-09-14 16:29:46 (127.0.0.1) : [INFO]    Player AL connected
-2026-09-14 16:29:54 (127.0.0.1) : [COMMAND] AL use SEARCH 11
-2026-09-14 16:29:54 (127.0.0.1) : [SERVER]  OK summon={"monster": "Tanard", "id": 1}
-2026-09-14 16:29:58 (127.0.0.1) : [COMMAND] ALE use LOOK
-2026-09-14 16:29:58 (127.0.0.1) : [SERVER]  To ALE: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile","is_trader":false,"is_qg":false}],"ennemies":[{"id":11,"name":"Tanard"}],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[],"arena":[{"id":1,"name":"Tanard"}]}
+2026-09-14 16:45:08 (127.0.0.1) : [INFO]    Player ALE connected
+2026-09-14 16:45:12 (127.0.0.1) : [COMMAND] ALE use MOVE NORTH
+2026-09-14 16:45:12 (127.0.0.1) : [SERVER]  To ALE: OK Forêt, épisode 1
+2026-09-14 16:45:14 (127.0.0.1) : [COMMAND] ALE use SEARCH 6
+2026-09-14 16:45:14 (127.0.0.1) : [SERVER]  To ALE: {"id":6,"name":"Forêt, épisode 1","allies":[],"ennemies":[{"id":6,"name":"Gruiking"},{"id":7,"name":"Percepteur des impôts"}],"items":[],"neighborRoom":{"north":7,"south":2,"east":0,"west":0},"fishing":[],"arena":[]}
+2026-09-14 16:45:17 (127.0.0.1) : [COMMAND] ALE use SEARCH 6
+2026-09-14 16:45:17 (127.0.0.1) : [SERVER]  To ALE: {"id":6,"name":"Forêt, épisode 1","allies":[],"ennemies":[{"id":6,"name":"Gruiking"},{"id":7,"name":"Percepteur des impôts"}],"items":[],"neighborRoom":{"north":7,"south":2,"east":0,"west":0},"fishing":[],"arena":[]}
+2026-09-14 16:45:19 (127.0.0.1) : [COMMAND] ALE use SEARCH 6
+2026-09-14 16:45:19 (127.0.0.1) : [SERVER]  To ALE: {"id":6,"name":"Forêt, épisode 1","allies":[],"ennemies":[{"id":6,"name":"Gruiking"},{"id":7,"name":"Percepteur des impôts"}],"items":[],"neighborRoom":{"north":7,"south":2,"east":0,"west":0},"fishing":[],"arena":[]}
+2026-09-14 16:45:21 (127.0.0.1) : [COMMAND] ALE use SEARCH 6
+2026-09-14 16:45:21 (127.0.0.1) : [SERVER]  OK summon={"monster": "Gruiking", "id": 1}
+2026-09-14 16:45:21 (127.0.0.1) : [WORLD]   ALE summoned a "Gruiking" in "Forêt, épisode 1"
+2026-09-14 16:45:25 (127.0.0.1) : [COMMAND] ALE use ATTACK 1
+2026-09-14 16:45:25 (127.0.0.1) : [SERVER]  To ALE: OK [{"attacker": ALE, "attack dice": 1, "attacker_hp": 1, "target_hp": 20, "damage": 0, "target_status": bloody}] [{"attacker": Gruiking, "attack dice": 19, "attacker_hp": 20, "target": ALE, "target_hp": -3, "damage": 4, "target_status": dead}]
+2026-09-14 16:45:25 (127.0.0.1) : [WORLD]   ALE was obliterated by a "Gruiking" in "Forêt, épisode 1"
+2026-09-14 16:49:35 (127.0.0.1) : [COMMAND] ALE use MOVE SOUTH
+2026-09-14 16:49:35 (127.0.0.1) : [WARN]    ALE received a warn: ERR 301 NO_EXIT
+2026-09-14 16:49:40 (127.0.0.1) : [COMMAND] ALE use LOOK
+2026-09-14 16:49:40 (127.0.0.1) : [SERVER]  To ALE: {"id":5,"name":"Taverne de la pucelle","allies":[{"id":2,"name":"Jeanne","is_trader":false,"is_qg":false},{"id":10,"name":"Gaspard Savoureux","is_trader":false,"is_qg":true}],"ennemies":[],"items":[{"id":10,"name":"Jambon Beurre"}],"neighborRoom":{"north":0,"south":0,"east":0,"west":2},"fishing":[],"arena":[]}
+2026-09-14 16:49:50 (127.0.0.1) : [ERROR]   Read error: EOF
+2026-09-14 16:49:50 (127.0.0.1) : [INFO]    Player ALE disconnected

@@ -17,12 +17,12 @@
 package server_write
 
 import (
-	"the_answer_protocol/src/utils"
     "os"
     "net"
     "fmt"
     "time"
     "strings"
+	"the_answer_protocol/src/utils"
 )
 
 /* +---------------------------------------------------------------------+ */
