@@ -175,6 +175,7 @@ type InventoryItemInfo struct {
 	Name      string `json:"name"`
 	Quantity  int    `json:"quantity"`
 	Is_Usable bool   `json:"is_usable"`
+	Cost      int    `json:"cost"`
 }
 
 // Is a mirror of commands.LittleInv (reply to TRADE).

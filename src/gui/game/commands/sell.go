@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* buy.go                                            :+:      :+:    :+:   */
+/* sell.go                                           :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/09/12 16:32:52 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 16:01:02 by rruiz           ###   ########.fr       */
+/* Created: 2026/09/14 14:44:04 by rruiz           #+#    #+#              */
+/* Updated: 2026/09/14 16:00:53 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -24,7 +24,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Buy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+func Sell(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -37,12 +37,12 @@ func Buy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Con
 			return
 		}
 		listener.Unsubscribe(id)
-		showTrader(stdin, listener, subCommandBox, data, back)
+		showTrader2(stdin, listener, subCommandBox, data, back)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
-func showTrader(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
+func showTrader2(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 
 	len := 0
@@ -54,16 +54,16 @@ func showTrader(stdin io.WriteCloser, listener *types.Listener, subCommandBox *f
 			traderButton := widget.NewButton(traderName, func() {
 				var id int
 				id = listener.Subscribe(func(line string) {
-					trade := strings.TrimPrefix(line, "OK trade=")
-					var data []types.TradeInfo
+					trade := strings.TrimPrefix(line, "OK ")
+					var data types.InventoryInfo
 					if err := json.Unmarshal([]byte(trade), &data); err != nil {
 						listener.Unsubscribe(id)
 						return
 					}
 					listener.Unsubscribe(id)
-					showTraderInventory(stdin, listener, subCommandBox, data, traderId, back)
+					showInventory(stdin, listener, subCommandBox, data, traderId, back)
 				})
-				fmt.Fprintf(stdin, "TRADE %d\n", traderId)
+				fmt.Fprintf(stdin, "INVENTORY\n")
 			})
 			traderButton.Importance = widget.LowImportance
 			subCommandBox.Add(traderButton)
@@ -77,15 +77,20 @@ func showTrader(stdin io.WriteCloser, listener *types.Listener, subCommandBox *f
 	subCommandBox.Refresh()
 }
 
-func showTraderInventory(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, traderInventory []types.TradeInfo, traderId int, back func()) {
+func showInventory(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, inventory types.InventoryInfo, traderId int, back func()) {
 	subCommandBox.RemoveAll()
 
-	for _, item := range traderInventory {
+	if len(inventory.Items) == 0 {
+		back()
+	}
+
+	for _, item := range inventory.Items {
 		itemName := item.Name
 		itemId := item.Id
-		itemCost := item.Cost
+		itemCost := int(float64(item.Cost) * 0.6)
+		itemQuantity := item.Quantity
 		itemButton := widget.NewButton(fmt.Sprintf("%s   |   %d", itemName, itemCost), func() {
-			showQuantityEntryBuy(stdin, listener, subCommandBox, traderId, itemId, itemCost, back)
+			showQuantityEntrySell(stdin, subCommandBox, traderId, itemId, itemQuantity, back)
 		})
 		itemButton.Importance = widget.LowImportance
 		subCommandBox.Add(itemButton)
@@ -94,13 +99,13 @@ func showTraderInventory(stdin io.WriteCloser, listener *types.Listener, subComm
 	subCommandBox.Refresh()
 }
 
-func showQuantityEntryBuy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, traderId int, itemId int, itemCost int, back func()) {
+func showQuantityEntrySell(stdin io.WriteCloser, subCommandBox *fyne.Container, traderId int, itemId int, itemQuantity int, back func()) {
 	subCommandBox.RemoveAll()
 
 	quantityEntry := widget.NewEntry()
-	quantityEntry.SetPlaceHolder("Enter the quantity you would like to purchase.")
+	quantityEntry.SetPlaceHolder("Enter the quantity you would like to sell.")
 
-	buyButton := widget.NewButton("BUY", func() {
+	buyButton := widget.NewButton("SELL", func() {
 		quantity, err := strconv.Atoi(strings.TrimSpace(quantityEntry.Text))
 		if err != nil {
 			quantityEntry.SetPlaceHolder("The quantity must be an integer.")
@@ -118,41 +123,21 @@ func showQuantityEntryBuy(stdin io.WriteCloser, listener *types.Listener, subCom
 			return
 		}
 
-		getPlayerMoney(stdin, listener, func(money int) {
-			if money < quantity*itemCost {
-				quantityEntry.SetPlaceHolder("You need to have enough money to buy it. ")
+		if quantity > itemQuantity {
+			quantityEntry.SetPlaceHolder("You must own the item.")
 
-				quantityEntry.SetText("")
-				quantityEntry.Refresh()
-				return
-			}
-			fmt.Fprintf(stdin, "BUY %d %d %d\n", traderId, itemId, quantity)
-			fmt.Printf("BUY %d %d %d\n", traderId, itemId, quantity)
-			back()
-		})
+			quantityEntry.SetText("")
+			quantityEntry.Refresh()
+			return
+		}
+
+		fmt.Fprintf(stdin, "SELL %d %d %d\n", traderId, itemId, quantity)
+		fmt.Printf("SELL %d %d %d\n", traderId, itemId, quantity)
+		back()
 	})
 
 	subCommandBox.Add(quantityEntry)
 	subCommandBox.Add(buyButton)
 
 	subCommandBox.Refresh()
-
-}
-
-func getPlayerMoney(stdin io.WriteCloser, listener *types.Listener, callback func(int)) {
-	var id int
-	id = listener.Subscribe(func(line string) {
-		if !strings.HasPrefix(line, "OK {\"items\":") {
-			return
-		}
-		raw := strings.TrimPrefix(line, "OK ")
-		var data types.InventoryInfo
-		if err := json.Unmarshal([]byte(raw), &data); err != nil {
-			listener.Unsubscribe(id)
-			return
-		}
-		listener.Unsubscribe(id)
-		callback(data.Money)
-	})
-	fmt.Fprintf(stdin, "INVENTORY\n")
 }
