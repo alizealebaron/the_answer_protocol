@@ -5,16 +5,16 @@
 		"dialogueFr": ["Vous venez de Sengluten-sur-Pain ?", "Ce sont des FOUS là-bas, surtout Vieux Sénile.", "Vous avez déjà entendu parlez des reptiliens ?", "Ils sont partout, dans nos villes et dans nos campagnes.", "Vous êtes pas d'accord ?", "On peut plus rien dire de toute façon."],
 		"dialogueEn": ["Are you from Sengluten-sur-Pain?", "They're a bunch of MADMEN over there, especially Vieux Sénile.", "Have you ever heard of the Reptilians?", "They're everywhere, in our towns and in the countryside", "Don't you agree?", "You can't say anything anymore anyway."],
 		"quest": 2,
-		"dialogueFinFr": "A bas les inspecteur des impôts !",
-		"dialogueFinEn": "Down with the tax inspectors!"
+		"dialogueFinFr": "Merci aventurier ! Grâce à vous cette forêt est moins effrayante.. Enfin, tout cela reste entre nous, n'est-ce pas ?",
+		"dialogueFinEn": "Thanks, adventurer! Thanks to you, this forest isn't so scary anymore... But let's keep this between us, okay?"
 	},
 	{
 		"id": 10,
 		"name": "Gaspard Savoureux",
-		"dialogueFr": ["(TODO)", "(TODO)"],
-		"dialogueEn": ["(TODO)", "(TODO)"],
+		"dialogueFr": ["BIENVENUE A L'AUBERGE DE LA PUCELLE AVENTURIER !", "Je vous aurai bien offert un sandouich mais je suis à court de jambon.", "Ma femme m'avait pourtant dit de ne pas tout dépenser dans le CASINO.."],
+		"dialogueEn": ["WELCOME TO THE AUBERGE DE LA PUCELLE, ADVENTURER!", "I would have loved to offer you a sandwich, but I'm out of ham.", "My wife had told me not to spend it all at the CASINO, though..."],
 		"quest": 1,
-		"dialogueFinFr": "Miam miam",
-		"dialogueFinEn": "Yum yum"
+		"dialogueFinFr": "Merci, laissez-moi vous offrir quelques pièces. Et n'oubliez pas, toujours tout miser sur le rouge.",
+		"dialogueFinEn": "Thank you. Let me treat you to a few coins. And don't forget: always bet everything on red."
 	}
 ]
