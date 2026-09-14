@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/12 15:29:26 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/14 14:42:24 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -120,49 +120,102 @@ func showCommandCategory(category string, subCommandBox *fyne.Container, stdin i
 
 func executeCommand(stdin io.WriteCloser, command string, listener *types.Listener, subCommandBox *fyne.Container, playerName string, subScroll *container.Scroll) {
 	switch command {
+
+	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+	// |                                                       Environment                                                               |
+	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
 	case "LOOK":
 		fmt.Fprintf(stdin, "LOOK\n")
 		fmt.Println("LOOK")
+
 	case "MOVE":
 		commands.Move(stdin, listener, subCommandBox, func() {
 			showCommandCategory("Environment", subCommandBox, stdin, listener, playerName, subScroll)
 		})
+
 	case "WHO":
 		fmt.Fprintf(stdin, "WHO\n")
 		fmt.Println("WHO")
+
+	case "SEARCH":
+
+		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+		// |                                                            Social                                                               |
+		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
 	case "TALK":
 		commands.Talk(stdin, listener, subCommandBox, func() {
 			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
 		})
+
 	case "CHAT":
+
 	case "GROUP":
 		commands.Group(stdin, listener, subCommandBox, playerName, func() {
 			showCommandCategory("Social", subCommandBox, stdin, listener, playerName, subScroll)
 		})
+
+		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+		// |                                                            Fight                                                                |
+		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
+	case "ATTACK":
+
 	case "STATUS":
 		fmt.Fprintf(stdin, "STATUS\n")
 		fmt.Println("STATUS")
+
+		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+		// |                                                            Quest                                                                |
+		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
+	case "QUEST":
+
+	case "QUESTS":
+
+		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+		// |                                                         Inventory                                                               |
+		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
 	case "INVENTORY":
 		fmt.Fprintf(stdin, "INVENTORY\n")
 		fmt.Println("INVENTORY")
+
 	case "USE":
 		commands.Use(stdin, listener, subCommandBox, func() {
 			showCommandCategory("Social", subCommandBox, stdin, listener, playerName, subScroll)
 		})
+
 	case "TRADE":
+		commands.Trade(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
+		})
+
 	case "BUY":
 		commands.Buy(stdin, listener, subCommandBox, func() {
 			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
 		})
+
 	case "SELL":
+		commands.Buy(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
+		})
+
 	case "TAKE":
 		commands.Take(stdin, listener, subCommandBox, func() {
 			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
 		})
+
 	case "DROP":
 		commands.Drop(stdin, listener, subCommandBox, func() {
 			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
 		})
+
+		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+		// |                                                          Gambling                                                               |
+		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
 	case "GAMBLING":
 		commands.Gambling(stdin, listener, subCommandBox, func() {
 			showCommandCategory("Gambling", subCommandBox, stdin, listener, playerName, subScroll)
