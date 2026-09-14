@@ -148,7 +148,7 @@ func Buy(args []string, tapManager *models.TapManager, player *models.Player) er
 func Sell(args []string, tapManager *models.TapManager, player *models.Player) error {
 
 	// === Vérification de la longueur des arguments === //
-	if len(args) < 1 {
+	if len(args) < 3 {
 		return errors.New("ERR 302 NO_PNJ_SEND")
 	}
 

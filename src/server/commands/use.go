@@ -72,7 +72,7 @@ func Use(args []string, tapManager *models.TapManager, player *models.Player) er
 
 	// === Vérification de si l'item est un Usable === //
 
-	usable, ok := (*item).(models.Edible)
+	usable, ok := (*item).(models.Usable)
 	if ok {
 		switch usable.Id {
 		case 2:

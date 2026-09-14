@@ -49,7 +49,26 @@ func Talk(args []string, tapManager *models.TapManager, player *models.Player) e
 	}
 
 	// === Envoie du dialogue du NPC === //
-	dialogue := player.GetNextDialogueLine(*npc)
+
+	// = Vérification qu'une quête n'est pas complétée = //
+
+	isRewarded := false
+	dialogue := ""
+
+	quest_giver, ok := (*npc).(models.QuestGiver)
+	if ok {
+		isRewarded = player.IsNpcQuestCompleted(quest_giver)
+	}
+
+	if (!isRewarded) {
+		dialogue = player.GetNextDialogueLine(*npc)
+	} else {
+		if player.Language == "FR" {
+			dialogue = quest_giver.DialogueFinFr
+		} else {
+			dialogue = quest_giver.DialogueFinEn
+		}
+	}
 
 	str_ret := "OK " + dialogue + "\n"
 	server_write.ServerWrite(player.Conn, str_ret)

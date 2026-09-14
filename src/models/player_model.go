@@ -130,6 +130,7 @@ func (p *Player) InventoryToString() string {
 		Name      string `json:"name"`
 		Quantity  int    `json:"quantity"`
 		Is_Usable bool   `json:"is_usable"`
+		Is_Weapon bool   `json:"is_weapon"`
 	}
 
 	items := make([]ItemEntry, 0, len(p.Inventory))
@@ -139,6 +140,7 @@ func (p *Player) InventoryToString() string {
 		_, ok_ed := it.(Edible)
 		_, ok_us := it.(Usable)
 		is_usable := ok_ed || ok_us
+		_, is_weapon := it.(Weapon)
 
 		// Ajout de l'item à l'inventaire
 		items = append(items, ItemEntry{
@@ -146,6 +148,7 @@ func (p *Player) InventoryToString() string {
 			Name:      it.GetName(),
 			Quantity:  qty,
 			Is_Usable: is_usable,
+			Is_Weapon: is_weapon,
 		})
 	}
 
@@ -227,7 +230,7 @@ func (p *Player) AddQuestToPlayer(quest Quest) error {
 	}
 
 	// Ajout de la quête à la liste du joueur
-	p.Lst_Quest = append(p.Lst_Quest, questItem)
+	p.Lst_Quest = append(p.Lst_Quest, quest)
 
 	return nil
 }
@@ -272,6 +275,28 @@ func (p *Player) UpdateQuestItemBrut(id_item int, quantity int) error {
 	}
 
 	return nil
+}
+
+func (p *Player) IsNpcQuestCompleted(npc QuestGiver) bool {
+
+	for _, q := range p.Lst_Quest {
+		if q.GetId() == npc.QuestId && q.GetStatus() == "completed" {
+
+			// Ajout des récompenses à maj du statut
+			p.AddItemToPlayerWQuantity(q.GetReward(), q.GetQuantity())
+			q.SetStatus("rewarded")
+
+			// On retire les items demandés si c'est une quête d'item
+			itemquest, ok := q.(*QuestItem)
+			if ok {
+				p.RemoveItemToPlayerWQuantity(itemquest.ItemNeededId, itemquest.SearchQuantity)
+			}
+
+			return true
+		}
+	}
+
+	return false
 }
 
 /* +---------------------------------------------------------------------+ */

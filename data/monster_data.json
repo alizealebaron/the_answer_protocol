@@ -18,7 +18,7 @@
 		"name": "Percepteur des impôts",
 		"dialogueFr": ["Chaque contribution construit l'avenir de tous *rire de droite*"],
 		"dialogueEn": ["Every contribution helps shape everyone's future *laughs sarcastically*"],
-		"pv": 20,
+		"pv": 10,
 		"attack": 10,
 		"defense": 7,
 		"isBoss": false,

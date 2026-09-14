@@ -32,6 +32,8 @@ type Quest interface {
 	GetDescriptionEn() string
 	GetReward()        Item
 	GetRewardId()      int
+	GetStatus()        string
+	GetQuantity()      int
 
 	SetReward(item Item)
 	SetStatus(s string)
@@ -69,6 +71,8 @@ func (q QuestModel) GetDescriptionFr() string { return q.DescriptionFr }
 func (q QuestModel) GetDescriptionEn() string { return q.DescriptionEn }
 func (q QuestModel) GetReward()        Item   { return q.Reward        }
 func (q QuestModel) GetRewardId()      int    { return q.RewardId      }
+func (q QuestModel) GetStatus()        string { return q.Status        }
+func (q QuestModel) GetQuantity()      int    { return q.Quantity      }
 
 // === Modificateurs === //
 
@@ -93,6 +97,8 @@ func (q QuestModel) ToStringQuest(p Player) string {
 	} else {
 		desc = q.DescriptionEn
 	}
+
+	fmt.Println(q.Reward)
 
 	progress := fmt.Sprintf("%d/%d", q.Progress, q.SearchQuantity)
 

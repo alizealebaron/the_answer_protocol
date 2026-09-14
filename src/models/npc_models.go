@@ -65,8 +65,8 @@ type QuestGiver struct {
 	Dialoguer
 	QuestId       int      `json:"quest"`
 	Quest         Quest    `json:"-"`
-	DialogueFinFr []string `json:"dialogueFinFr"`
-	DialogueFinEn []string `json:"dialogueFinEn"`
+	DialogueFinFr string `json:"dialogueFinFr"`
+	DialogueFinEn string `json:"dialogueFinEn"`
 }
 
 func (q QuestGiver) ToString() string {

@@ -5,8 +5,8 @@
 		"dialogueFr": ["Vous venez de Sengluten-sur-Pain ?", "Ce sont des FOUS là-bas, surtout Vieux Sénile.", "Vous avez déjà entendu parlez des reptiliens ?", "Ils sont partout, dans nos villes et dans nos campagnes.", "Vous êtes pas d'accord ?", "On peut plus rien dire de toute façon."],
 		"dialogueEn": ["Are you from Sengluten-sur-Pain?", "They're a bunch of MADMEN over there, especially Vieux Sénile.", "Have you ever heard of the Reptilians?", "They're everywhere, in our towns and in the countryside", "Don't you agree?", "You can't say anything anymore anyway."],
 		"quest": 2,
-		"dialogueFinFr": ["A bas les inspecteur des impôts !"],
-		"dialogueFinEn": ["Down with the tax inspectors!"]
+		"dialogueFinFr": "A bas les inspecteur des impôts !",
+		"dialogueFinEn": "Down with the tax inspectors!"
 	},
 	{
 		"id": 10,
@@ -14,7 +14,7 @@
 		"dialogueFr": ["(TODO)", "(TODO)"],
 		"dialogueEn": ["(TODO)", "(TODO)"],
 		"quest": 1,
-		"dialogueFinFr": ["(TODO)", "(TODO)"],
-		"dialogueFinEn": ["(TODO)", "(TODO)"]
+		"dialogueFinFr": "Miam miam",
+		"dialogueFinEn": "Yum yum"
 	}
 ]
