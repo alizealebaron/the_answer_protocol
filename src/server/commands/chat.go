@@ -17,6 +17,7 @@
 package commands
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"the_answer_protocol/src/models"
@@ -28,6 +29,10 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 func Chat(args []string, tapManager *models.TapManager, player *models.Player) error {
+	if len(args) != 2 {
+		return errors.New("ERR ARGUMENTS_NOT_FOUND")
+	}
+	
 	scope := args[0]
 	message := strings.Join(args[1:], " ")
 	if scope == "GLOBAL" {

@@ -1,11 +1,20 @@
-2026-09-14 11:51:32 (127.0.0.1) : [INFO]    Player ALE connected
-2026-09-14 11:51:38 (127.0.0.1) : [COMMAND] ALE use LOOK
-2026-09-14 11:51:38 (127.0.0.1) : [SERVER]  To ALE: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile","is_trader":false,"is_qg":false}],"ennemies":[{"id":11,"name":"Tanard"}],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[],"arena":[]}
-2026-09-14 11:51:44 (127.0.0.1) : [COMMAND] ALE use TAKE 14
-2026-09-14 11:51:44 (127.0.0.1) : [WORLD]   ALE took a "Kayou" in room "Place Sénile"
-2026-09-14 11:51:44 (127.0.0.1) : [SERVER]  To ALE: OK taken=Kayou
-2026-09-14 11:51:47 (127.0.0.1) : [COMMAND] ALE use DROP 14
-2026-09-14 11:51:47 (127.0.0.1) : [WORLD]   ALE dropped a "Kayou" in room "Place Sénile"
-2026-09-14 11:51:47 (127.0.0.1) : [SERVER]  To ALE: OK dropped=Kayou
-2026-09-14 11:52:49 (127.0.0.1) : [COMMAND] ALE use TALK 3
-2026-09-14 11:52:49 (127.0.0.1) : [SERVER]  To ALE: OK Premier dialogue FR
+2026-09-11 15:29:54 (127.0.0.1) : [ERROR]   Connection attempt failed
+2026-09-11 15:30:00 (127.0.0.1) : [INFO]    Player ENZO connected
+2026-09-11 15:30:12 (127.0.0.1) : [COMMAND] ENZO use CHAT
+2026-09-11 15:30:12 (127.0.0.1) : [WARN]    ENZO received a warn: ERR ARGUMENTS_NOT_FOUND
+2026-09-11 15:30:14 (127.0.0.1) : [COMMAND] ENZO use SERACH
+2026-09-11 15:30:14 (127.0.0.1) : [WARN]    ENZO received a warn: ERR 902 COMMAND_UNKNOWN "SERACH"
+2026-09-11 15:30:19 (127.0.0.1) : [COMMAND] ENZO use SEARCH
+2026-09-11 15:30:19 (127.0.0.1) : [WARN]    ENZO received a warn: ERR 302 NO_ITEM_SEND
+2026-09-11 15:30:22 (127.0.0.1) : [COMMAND] ENZO use SEARCH 7
+2026-09-11 15:30:22 (127.0.0.1) : [WARN]    ENZO received a warn: ERR MOSTER_NOT_FOUND_IN_THIS_ROOM
+2026-09-11 15:30:24 (127.0.0.1) : [COMMAND] ENZO use MOVE
+2026-09-11 15:30:24 (127.0.0.1) : [WARN]    ENZO received a warn: ERR 302 NO_DIRECTION_SEND
+2026-09-11 15:30:28 (127.0.0.1) : [COMMAND] ENZO use MOVE NORTH
+2026-09-11 15:30:28 (127.0.0.1) : [SERVER]  To ENZO: OK Forêt, épisode 1
+2026-09-11 15:30:35 (127.0.0.1) : [COMMAND] ENZO use SEARCH 7
+2026-09-11 15:30:35 (127.0.0.1) : [SERVER]  To ENZO: failed to summon a monster
+2026-09-11 15:31:17 (127.0.0.1) : [COMMAND] ENZO use SEARCH 7
+2026-09-11 15:31:17 (127.0.0.1) : [SERVER]  EVT Percepteur des impôts[1] summon in this room 
+2026-09-11 15:31:28 (127.0.0.1) : [ERROR]   Read error: EOF
+2026-09-11 15:31:28 (127.0.0.1) : [INFO]    Player ENZO disconnected
