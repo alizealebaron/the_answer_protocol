@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 15:01:30 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/14 16:18:47 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -68,11 +68,11 @@ var allCommand = map[string]commandModel{
 }
 
 var commandByCategory = map[string][]string{
-	"Environment": {"LOOK", "MOVE", "WHO"},
-	"Social":      {"TALK", "CHAT", "GROUP"},
+	"Environment": {"LOOK", "MOVE", "SEARCH", "WHO"},
+	"Social":      {"CHAT", "GROUP", "TALK"},
 	"Fight":       {"ATTACK", "STATUS"},
 	"Quest":       {"QUEST", "QUESTS"},
-	"Inventory":   {"INVENTORY", "USE", "TRADE", "BUY", "SELL", "TAKE", "DROP"},
+	"Inventory":   {"BUY", "DROP", "INVENTORY", "SELL", "TAKE", "TRADE", "USE"},
 	"Gambling":    {"GAMBLING"},
 }
 
@@ -139,6 +139,9 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		fmt.Println("WHO")
 
 	case "SEARCH":
+		commands.Search(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Environment", subCommandBox, stdin, listener, playerName, subScroll)
+		})
 
 		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 		// |                                                            Social                                                               |

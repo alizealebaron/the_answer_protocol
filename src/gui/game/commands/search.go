@@ -1,0 +1,66 @@
+/* *********************************************************************** */
+/*                                                                         */
+/*                                                     :::      ::::::::   */
+/* search.go                                         :+:      :+:    :+:   */
+/*                                                 +:+ +:+         +:+     */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/*                                             +#+#+#+#+#+   +#+           */
+/* Created: 2026/09/14 16:10:58 by rruiz           #+#    #+#              */
+/* Updated: 2026/09/14 16:17:01 by rruiz           ###   ########.fr       */
+/*                                                                         */
+/* *********************************************************************** */
+
+package commands
+
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"strings"
+	"the_answer_protocol/src/gui/game/types"
+
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/widget"
+)
+
+func Search(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	var id int
+	id = listener.Subscribe(func(line string) {
+		if !strings.HasPrefix(line, "OK {\"id\":") {
+			return
+		}
+		room := strings.TrimPrefix(line, "OK ")
+		var data types.LookInfo
+		if err := json.Unmarshal([]byte(room), &data); err != nil {
+			listener.Unsubscribe(id)
+			return
+		}
+		listener.Unsubscribe(id)
+		showSearchableEnemy(stdin, subCommandBox, data, back)
+	})
+	fmt.Fprintf(stdin, "LOOK\n")
+}
+
+func showSearchableEnemy(stdin io.WriteCloser, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
+	subCommandBox.RemoveAll()
+
+	len := 0
+
+	for _, enemy := range room.Ennemies {
+		enemyName := enemy.Name
+		enemyId := enemy.Id
+		enemyButton := widget.NewButton(enemyName, func() {
+			fmt.Fprintf(stdin, "SEARCH %d\n", enemyId)
+			fmt.Printf("SEARCH %d\n", enemyId)
+			back()
+		})
+		enemyButton.Importance = widget.LowImportance
+		subCommandBox.Add(enemyButton)
+		len += 1
+	}
+	if len == 0 {
+		back()
+	}
+
+	subCommandBox.Refresh()
+}
