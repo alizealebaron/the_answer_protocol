@@ -151,6 +151,9 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		})
 	case "TRADE":
 	case "BUY":
+		commands.Buy(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
+		})
 	case "SELL":
 	case "TAKE":
 		commands.Take(stdin, listener, subCommandBox, func() {

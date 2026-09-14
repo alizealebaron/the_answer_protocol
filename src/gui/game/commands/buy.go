@@ -24,24 +24,6 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func GetMoney(stdin io.WriteCloser, listener *types.Listener, callback func(int)) {
-	var id int
-	id = listener.Subscribe(func(line string) {
-		if !strings.HasPrefix(line, "OK {\"items\":") {
-			return
-		}
-		raw := strings.TrimPrefix(line, "OK ")
-		var data types.InventoryInfo
-		if err := json.Unmarshal([]byte(raw), &data); err != nil {
-			listener.Unsubscribe(id)
-			return
-		}
-		listener.Unsubscribe(id)
-		callback(data.Money)
-	})
-	fmt.Fprintf(stdin, "INVENTORY\n")
-}
-
 func Buy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
 	var id int
 	id = listener.Subscribe(func(line string) {
