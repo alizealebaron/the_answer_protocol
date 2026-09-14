@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 16:23:04 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/14 17:32:31 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -153,6 +153,9 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		})
 
 	case "CHAT":
+		commands.Chat(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Social", subCommandBox, stdin, listener, playerName, subScroll)
+		})
 
 	case "GROUP":
 		commands.Group(stdin, listener, subCommandBox, playerName, func() {
