@@ -1,20 +1,11 @@
-2026-09-14 10:27:59 (127.0.0.1) : [ERROR]   Connection attempt failed
-2026-09-14 10:28:07 (127.0.0.1) : [INFO]    Player ALE connected
-2026-09-14 10:30:04 (127.0.0.1) : [COMMAND] ALE use LOOK
-2026-09-14 10:30:04 (127.0.0.1) : [SERVER]  To ALE: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile","is_trader":false,"is_qg":false}],"ennemies":[{"id":11,"name":"Tanard"}],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[],"arena":[]}
-2026-09-14 10:30:09 (127.0.0.1) : [COMMAND] ALE use TAKE 11
-2026-09-14 10:30:09 (127.0.0.1) : [WARN]    ALE received a warn: ERR 404 ITEM_NOT_FOUND
-2026-09-14 10:30:14 (127.0.0.1) : [COMMAND] ALE use TAKE 14
-2026-09-14 10:30:14 (127.0.0.1) : [SERVER]  To ALE: OK taken=Kayou
-2026-09-14 10:30:16 (127.0.0.1) : [COMMAND] ALE use INVENTORY
-2026-09-14 10:30:16 (127.0.0.1) : [SERVER]  To ALE: OK {"items":[{"id":14,"name":"Kayou","quantity":1,"is_usable":false,"is_weapon":false}],"money":10}
-2026-09-14 10:30:24 (127.0.0.1) : [COMMAND] ALE use MOVE WEST
-2026-09-14 10:30:24 (127.0.0.1) : [SERVER]  To ALE: OK Fontaine
-2026-09-14 10:30:26 (127.0.0.1) : [COMMAND] ALE use LOOK
-2026-09-14 10:30:26 (127.0.0.1) : [SERVER]  To ALE: {"id":4,"name":"Fontaine","allies":[{"id":1,"name":"Grégoin","is_trader":true,"is_qg":false}],"ennemies":[],"items":[],"neighborRoom":{"north":0,"south":1,"east":2,"west":14},"fishing":[{"itemId":12,"lootRate":90},{"itemId":1,"lootRate":10}],"arena":[]}
-2026-09-14 10:30:32 (127.0.0.1) : [COMMAND] ALE use TRADE 1
-2026-09-14 10:30:32 (127.0.0.1) : [SERVER]  To ALE: OK trade=[{"id":4,"name":"Baguette de pain","cost":10},{"id":5,"name":"Épée de bwa","cost":10},{"id":6,"name":"Hache en mousse","cost":10},{"id":7,"name":"Propulseur de fléchette","cost":10}]
-2026-09-14 10:30:44 (127.0.0.1) : [COMMAND] ALE use BUY 1 6 1
-2026-09-14 10:30:44 (127.0.0.1) : [SERVER]  To ALE: OK buy={{"id":6,"name":Hache en mousse,"quantity":1}, price=10}
-2026-09-14 10:30:48 (127.0.0.1) : [COMMAND] ALE use INVENTORY
-2026-09-14 10:30:48 (127.0.0.1) : [SERVER]  To ALE: OK {"items":[{"id":14,"name":"Kayou","quantity":1,"is_usable":false,"is_weapon":false},{"id":6,"name":"Hache en mousse","quantity":1,"is_usable":false,"is_weapon":true}],"money":0}
+2026-09-14 11:51:32 (127.0.0.1) : [INFO]    Player ALE connected
+2026-09-14 11:51:38 (127.0.0.1) : [COMMAND] ALE use LOOK
+2026-09-14 11:51:38 (127.0.0.1) : [SERVER]  To ALE: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile","is_trader":false,"is_qg":false}],"ennemies":[{"id":11,"name":"Tanard"}],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[],"arena":[]}
+2026-09-14 11:51:44 (127.0.0.1) : [COMMAND] ALE use TAKE 14
+2026-09-14 11:51:44 (127.0.0.1) : [WORLD]   ALE took a "Kayou" in room "Place Sénile"
+2026-09-14 11:51:44 (127.0.0.1) : [SERVER]  To ALE: OK taken=Kayou
+2026-09-14 11:51:47 (127.0.0.1) : [COMMAND] ALE use DROP 14
+2026-09-14 11:51:47 (127.0.0.1) : [WORLD]   ALE dropped a "Kayou" in room "Place Sénile"
+2026-09-14 11:51:47 (127.0.0.1) : [SERVER]  To ALE: OK dropped=Kayou
+2026-09-14 11:52:49 (127.0.0.1) : [COMMAND] ALE use TALK 3
+2026-09-14 11:52:49 (127.0.0.1) : [SERVER]  To ALE: OK Premier dialogue FR

@@ -98,8 +98,6 @@ func (q QuestModel) ToStringQuest(p Player) string {
 		desc = q.DescriptionEn
 	}
 
-	fmt.Println(q.Reward)
-
 	progress := fmt.Sprintf("%d/%d", q.Progress, q.SearchQuantity)
 
 	out := struct {
@@ -137,8 +135,6 @@ func (q *QuestModel) UpdateProgress(quantity int) {
 }
 
 func (q *QuestModel) UpdateProgressBrut(quantity int) {
-
-	fmt.Println(quantity)
 
 	if (q.Status != "rewarded") {
 		q.Progress = quantity

@@ -55,6 +55,7 @@ func Drop(args []string, tapManager *models.TapManager, player *models.Player) e
 	// === Envoie des messages au client et dans les logs === //
 	str_ret := "OK dropped=" + (*item).GetName() + "\n"
 	server_write.ServerWrite(player.Conn, str_ret)
+	server_write.WriteLog(player.Conn, "WORLD", player.Name + " dropped a \"" + (*item).GetName() + "\" in room \"" + room.Name + "\"\n")
 	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + str_ret)
 
 	return nil
