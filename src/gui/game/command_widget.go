@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 16:18:47 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/14 16:23:04 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -149,7 +149,7 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 
 	case "TALK":
 		commands.Talk(stdin, listener, subCommandBox, func() {
-			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
+			showCommandCategory("Social", subCommandBox, stdin, listener, playerName, subScroll)
 		})
 
 	case "CHAT":
@@ -174,8 +174,13 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 
 	case "QUEST":
+		commands.Quest(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Quest", subCommandBox, stdin, listener, playerName, subScroll)
+		})
 
 	case "QUESTS":
+		fmt.Fprintf(stdin, "QUESTS\n")
+		fmt.Println("QUESTS")
 
 		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 		// |                                                         Inventory                                                               |
@@ -187,7 +192,7 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 
 	case "USE":
 		commands.Use(stdin, listener, subCommandBox, func() {
-			showCommandCategory("Social", subCommandBox, stdin, listener, playerName, subScroll)
+			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
 		})
 
 	case "TRADE":
