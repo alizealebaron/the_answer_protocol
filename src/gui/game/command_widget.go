@@ -85,58 +85,59 @@ func commandWidget(stdin io.WriteCloser, listener *types.Listener, playerName st
 	subScroll := container.NewScroll(subCommandBox)
 
 	buttonBar := container.NewGridWithColumns(6,
-		createButton("Environment", subCommandBox, stdin, listener, playerName),
-		createButton("Social", subCommandBox, stdin, listener, playerName),
-		createButton("Fight", subCommandBox, stdin, listener, playerName),
-		createButton("Quest", subCommandBox, stdin, listener, playerName),
-		createButton("Inventory", subCommandBox, stdin, listener, playerName),
-		createButton("Gambling", subCommandBox, stdin, listener, playerName),
+		createButton("Environment", subCommandBox, stdin, listener, playerName, subScroll),
+		createButton("Social", subCommandBox, stdin, listener, playerName, subScroll),
+		createButton("Fight", subCommandBox, stdin, listener, playerName, subScroll),
+		createButton("Quest", subCommandBox, stdin, listener, playerName, subScroll),
+		createButton("Inventory", subCommandBox, stdin, listener, playerName, subScroll),
+		createButton("Gambling", subCommandBox, stdin, listener, playerName, subScroll),
 	)
 
 	layout := container.NewBorder(buttonBar, nil, nil, nil, subScroll)
 	return container.NewStack(commandFrame, container.NewPadded(layout))
 }
 
-func createButton(category string, subCommandBox *fyne.Container, stdin io.WriteCloser, listener *types.Listener, playerName string) *widget.Button {
+func createButton(category string, subCommandBox *fyne.Container, stdin io.WriteCloser, listener *types.Listener, playerName string, subScroll *container.Scroll) *widget.Button {
 	button := widget.NewButton(category, func() {
-		showCommandCategory(category, subCommandBox, stdin, listener, playerName)
+		showCommandCategory(category, subCommandBox, stdin, listener, playerName, subScroll)
 	})
 	return button
 }
 
-func showCommandCategory(category string, subCommandBox *fyne.Container, stdin io.WriteCloser, listener *types.Listener, playerName string) {
+func showCommandCategory(category string, subCommandBox *fyne.Container, stdin io.WriteCloser, listener *types.Listener, playerName string, subScroll *container.Scroll) {
 	subCommandBox.RemoveAll()
 
 	for _, command := range commandByCategory[category] {
 		commandButton := widget.NewButton(command, func() {
-			executeCommand(stdin, command, listener, subCommandBox, playerName)
+			executeCommand(stdin, command, listener, subCommandBox, playerName, subScroll)
 		})
 		commandButton.Importance = widget.LowImportance
 		subCommandBox.Add(commandButton)
 	}
+	subScroll.ScrollToTop()
 	subCommandBox.Refresh()
 }
 
-func executeCommand(stdin io.WriteCloser, command string, listener *types.Listener, subCommandBox *fyne.Container, playerName string) {
+func executeCommand(stdin io.WriteCloser, command string, listener *types.Listener, subCommandBox *fyne.Container, playerName string, subScroll *container.Scroll) {
 	switch command {
 	case "LOOK":
 		fmt.Fprintf(stdin, "LOOK\n")
 		fmt.Println("LOOK")
 	case "MOVE":
 		commands.Move(stdin, listener, subCommandBox, func() {
-			showCommandCategory("Environment", subCommandBox, stdin, listener, playerName)
+			showCommandCategory("Environment", subCommandBox, stdin, listener, playerName, subScroll)
 		})
 	case "WHO":
 		fmt.Fprintf(stdin, "WHO\n")
 		fmt.Println("WHO")
 	case "TALK":
 		commands.Talk(stdin, listener, subCommandBox, func() {
-			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName)
+			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
 		})
 	case "CHAT":
 	case "GROUP":
 		commands.Group(stdin, listener, subCommandBox, playerName, func() {
-			showCommandCategory("Social", subCommandBox, stdin, listener, playerName)
+			showCommandCategory("Social", subCommandBox, stdin, listener, playerName, subScroll)
 		})
 	case "STATUS":
 		fmt.Fprintf(stdin, "STATUS\n")
@@ -145,20 +146,23 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		fmt.Fprintf(stdin, "INVENTORY\n")
 		fmt.Println("INVENTORY")
 	case "USE":
+		commands.Use(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Social", subCommandBox, stdin, listener, playerName, subScroll)
+		})
 	case "TRADE":
 	case "BUY":
 	case "SELL":
 	case "TAKE":
 		commands.Take(stdin, listener, subCommandBox, func() {
-			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName)
+			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
 		})
 	case "DROP":
 		commands.Drop(stdin, listener, subCommandBox, func() {
-			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName)
+			showCommandCategory("Inventory", subCommandBox, stdin, listener, playerName, subScroll)
 		})
 	case "GAMBLING":
 		commands.Gambling(stdin, listener, subCommandBox, func() {
-			showCommandCategory("Gambling", subCommandBox, stdin, listener, playerName)
+			showCommandCategory("Gambling", subCommandBox, stdin, listener, playerName, subScroll)
 		})
 	}
 }
