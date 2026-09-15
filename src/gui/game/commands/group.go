@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/11 18:00:00 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/11 22:25:52 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:06:26 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -39,6 +39,7 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 		}},
 		{"INVITE", func() {
 			showPlayersToInvite(stdin, listener, subCommandBox, playerName, back)
+			fmt.Println("1")
 		}},
 		{"JOIN", func() {
 			showJoinForm(stdin, subCommandBox, back)
@@ -70,12 +71,19 @@ func showPlayersToInvite(stdin io.WriteCloser, listener *types.Listener, subComm
 		var data types.Secret
 		if err := json.Unmarshal([]byte(line), &data); err != nil {
 			listener.Unsubscribe(id)
+			fmt.Println("3")
 			return
 		}
+		fmt.Println("4")
+
 		listener.Unsubscribe(id)
+		fmt.Println("5")
+
 		showInvitablePlayers(stdin, subCommandBox, data, playerName, back)
 	})
 	fmt.Fprintf(stdin, "SECRET\n")
+	fmt.Println("2")
+
 }
 
 func showInvitablePlayers(stdin io.WriteCloser, subCommandBox *fyne.Container, who types.Secret, playerName string, back func()) {
@@ -84,11 +92,14 @@ func showInvitablePlayers(stdin io.WriteCloser, subCommandBox *fyne.Container, w
 	len := 0
 
 	for _, player := range who.Players {
+		fmt.Printf("%d", 6+len)
+
 		otherPlayerName := player.Name
 		if otherPlayerName == playerName {
 			continue
 		}
 		playerButton := widget.NewButton(otherPlayerName, func() {
+			fmt.Println("TEST")
 			fmt.Fprintf(stdin, "GROUP INVITE %s\n", otherPlayerName)
 			fmt.Printf("GROUP INVITE %s\n", otherPlayerName)
 			back()
@@ -98,6 +109,7 @@ func showInvitablePlayers(stdin io.WriteCloser, subCommandBox *fyne.Container, w
 		len += 1
 	}
 	if len == 0 {
+		fmt.Println("CACA")
 		back()
 	}
 

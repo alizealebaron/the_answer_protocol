@@ -75,8 +75,8 @@ type NpcInfo struct {
 	DialogueFr    []string `json:"dialogueFr"`
 	DialogueEn    []string `json:"dialogueEn"`
 	QuestId       int      `json:"quest"`
-	DialogueFinFr []string `json:"dialogueFinFr"`
-	DialogueFinEn []string `json:"dialogueFinEn"`
+	DialogueFinFr string   `json:"dialogueFinFr"`
+	DialogueFinEn string   `json:"dialogueFinEn"`
 	InventoryId   []int    `json:"inventory"`
 }
 
