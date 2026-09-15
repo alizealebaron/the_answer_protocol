@@ -152,7 +152,9 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			if strings.HasPrefix(line, "OK connected") {
 				go stdoutListening(stdout, listener)
 				go fyne.Do(func() {
-					window.SetContent(game.GameView(window, stdin, listener, name))
+					window.SetContent(game.GameView(window, size, stdin, listener, name, func() {
+						window.SetContent(HomeView(window, size))
+					}))
 				})
 			} else {
 				displayError(errText, errContent, "Error, during connection to the network.", size)
