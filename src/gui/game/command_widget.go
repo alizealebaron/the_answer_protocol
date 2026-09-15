@@ -37,7 +37,7 @@ var commandByCategory = map[string][]string{
 }
 
 // Creating the widget with the scrollable frame and the button bar.
-func commandWidget(stdin io.WriteCloser, listener *types.Listener, playerName string) *fyne.Container {
+func commandWidget(stdin io.WriteCloser, listener *types.Listener, playerName string, backToHome func()) *fyne.Container {
 	commandFrame := canvas.NewRectangle(color.Transparent)
 	commandFrame.StrokeColor = color.White
 	commandFrame.StrokeWidth = float32(2)
@@ -54,7 +54,13 @@ func commandWidget(stdin io.WriteCloser, listener *types.Listener, playerName st
 		createButton("Gambling", subCommandBox, stdin, listener, playerName, subScroll),
 	)
 
-	layout := container.NewBorder(buttonBar, nil, nil, nil, subScroll)
+	quitButton := widget.NewButton("Quit", func() {
+		fmt.Fprintf(stdin, "QUIT\n")
+		fmt.Println("QUIT")
+		backToHome()
+	})
+
+	layout := container.NewBorder(buttonBar, quitButton, nil, nil, subScroll)
 	return container.NewStack(commandFrame, container.NewPadded(layout))
 }
 

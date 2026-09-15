@@ -63,13 +63,13 @@ func newRatioSplit(ratio float32, horizontal bool, gap float32, a, b fyne.Canvas
 	return container.New(&ratioLayout{ratio: ratio, horizontal: horizontal, gap: gap}, a, b)
 }
 
-func GameView(window fyne.Window, stdin io.WriteCloser, listener *types.Listener, playerName string) fyne.CanvasObject {
+func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener *types.Listener, playerName string, backToHome func()) fyne.CanvasObject {
 	const gap = float32(8)
 
 	subscribeGameData(listener)
 	fmt.Fprintf(stdin, "SECRET\n")
 
-	commandBox := commandWidget(stdin, listener, playerName)
+	commandBox := commandWidget(stdin, listener, playerName, backToHome)
 	scrollBox := actionWidget()
 	right := newRatioSplit(0.72, false, gap, commandBox, scrollBox)
 
