@@ -31,6 +31,7 @@ import (
 func main() {
     if len(os.Args) != 2 {
         fmt.Printf("ERR 904 WRONG_COMMAND_ARG")
+        os.Exit(0)
     }
 
     if os.Args[1] == "server" {
