@@ -22,7 +22,7 @@ run-gui: build
 	./main gui
 
 run-cli:
-	nc $(IP)
+	nc $(IP) 8090
 
 clean:
 	rm -rf log
