@@ -61,18 +61,24 @@ func showCategory(category string, subBox *fyne.Container, subScroll *container.
 	currentCategory = category
 
 	for _, line := range getMessages(category) {
-		subBox.Add(widget.NewLabel(line))
+		subBox.Add(newWrappingLabel(line))
 	}
 	subScroll.ScrollToBottom()
 
 	subBox.Refresh()
 }
 
+func newWrappingLabel(line string) *widget.Label {
+	label := widget.NewLabel(line)
+	label.Wrapping = fyne.TextWrapWord
+	return label
+}
+
 func onLogLine(category, line string) {
 	if category != currentCategory || logSubBox == nil {
 		return
 	}
-	logSubBox.Add(widget.NewLabel(line))
+	logSubBox.Add(newWrappingLabel(line))
 	logSubScroll.ScrollToBottom()
 	logSubBox.Refresh()
 }

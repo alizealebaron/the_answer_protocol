@@ -57,6 +57,9 @@ func subscribeGameData(listener *types.Listener) {
 
 func subscribeLogs(listener *types.Listener) {
 	listener.Subscribe(func(line string) {
+		if strings.HasPrefix(line, "OK SECRET ") {
+			return
+		}
 		category := getTypeLine(line)
 		addMessage(category, line)
 		onLogLine(category, line)
