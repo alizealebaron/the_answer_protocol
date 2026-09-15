@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/11 18:00:00 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 10:43:01 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 14:45:20 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -67,7 +67,7 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 func showPlayersToInvite(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, playerName string, back func()) {
 	var id int
 	id = listener.Subscribe(func(line string) {
-		if !strings.HasPrefix(line, "{\"lst_item\":[") {
+		if !strings.HasPrefix(line, "OK SECRET") {
 			return
 		}
 		var data types.Secret

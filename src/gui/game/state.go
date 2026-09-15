@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/08 23:23:01 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/09 14:48:19 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 14:35:21 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -22,6 +22,12 @@ import (
 
 var gameData types.Secret
 var gameDataMutex sync.RWMutex
+
+var logMessages []string
+var globalMessages []string
+var roomMessages []string
+var groupMessages []string
+var logsMutex sync.RWMutex
 
 func setGameData(data types.Secret) {
 	gameDataMutex.Lock()
@@ -47,4 +53,55 @@ func subscribeGameData(listener *types.Listener) {
 		}
 		setGameData(data)
 	})
+}
+
+func subscribeLogs(listener *types.Listener) {
+	listener.Subscribe(func(line string) {
+		category := getTypeLine(line)
+		addMessage(category, line)
+		onLogLine(category, line)
+	})
+}
+
+func getTypeLine(line string) string {
+	switch {
+	case strings.HasPrefix(line, "EVT GLOBAL"):
+		return "GLOBAL"
+	case strings.HasPrefix(line, "EVT ROOM"):
+		return "ROOM"
+	case strings.HasPrefix(line, "EVT GROUP"):
+		return "GROUP"
+	default:
+		return "LOG"
+	}
+}
+
+func addMessage(category string, line string) {
+	logsMutex.Lock()
+	defer logsMutex.Unlock()
+	switch category {
+	case "GLOBAL":
+		globalMessages = append(globalMessages, line)
+	case "ROOM":
+		roomMessages = append(roomMessages, line)
+	case "GROUP":
+		groupMessages = append(groupMessages, line)
+	default:
+		logMessages = append(logMessages, line)
+	}
+}
+
+func getMessages(category string) []string {
+	logsMutex.RLock()
+	defer logsMutex.RUnlock()
+	switch category {
+	case "GLOBAL":
+		return globalMessages
+	case "ROOM":
+		return roomMessages
+	case "GROUP":
+		return groupMessages
+	default:
+		return logMessages
+	}
 }

@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/25 22:16:01 by emarette        #+#    #+#              */
-/* Updated: 2026/08/26 16:34:03 by alebaron        ###   ########.fr       */
+/* Updated: 2026/09/15 14:40:47 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -54,10 +54,12 @@ func Chat(args []string, tapManager *models.TapManager, player *models.Player) e
 			}
 		}
 	} else if scope == "GROUP" {
-		for _, p := range player.Group.Lst_Player {
-			output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
-			server_write.ServerWrite(p.Conn, output)
-			server_write.WriteLog(player.Conn, "CHAT", output)
+		if player.Group != nil {
+			for _, p := range player.Group.Lst_Player {
+				output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
+				server_write.ServerWrite(p.Conn, output)
+				server_write.WriteLog(player.Conn, "CHAT", output)
+			}
 		}
 	}
 	return nil

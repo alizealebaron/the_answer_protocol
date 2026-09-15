@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:21 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/09 10:58:12 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 14:44:39 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -67,10 +67,11 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 	const gap = float32(8)
 
 	subscribeGameData(listener)
+	subscribeLogs(listener)
 	fmt.Fprintf(stdin, "SECRET\n")
 
 	commandBox := commandWidget(stdin, listener, playerName, backToHome)
-	scrollBox := actionWidget()
+	scrollBox := logWidget()
 	right := newRatioSplit(0.72, false, gap, commandBox, scrollBox)
 
 	mapBox := mapWidget()
@@ -85,17 +86,6 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 	centerRight := newRatioSplit(0.571, true, gap, mapBox, right)
 
 	return newRatioSplit(0.3, true, gap, left, centerRight)
-}
-
-func actionWidget() *fyne.Container {
-	frame := canvas.NewRectangle(color.Transparent)
-	frame.StrokeColor = color.White
-	frame.StrokeWidth = float32(2)
-
-	content := container.NewVBox()
-	scroll := container.NewScroll(content)
-
-	return container.NewStack(frame, scroll)
 }
 
 func mapWidget() *fyne.Container {
