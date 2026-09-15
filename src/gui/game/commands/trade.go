@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/14 14:23:20 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 14:40:15 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:47:35 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -23,7 +23,11 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// Start of TRADE. Retrieving information from the "LOOK" command.
 func Trade(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	// Usage of listener to send the command.
+	// Retrieve the information in a dedicated structure, and execute the rest of the command.
+	// Used in virtually all commands.
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -41,6 +45,7 @@ func Trade(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
+// Displays the traders present in the room as buttons, then sends the TRADE command when one is selected.
 func showTrader1(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 

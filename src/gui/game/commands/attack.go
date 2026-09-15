@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/15 08:53:30 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 09:26:22 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:52:15 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -23,7 +23,11 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// Start of ATTACK. Retrieving information from the “LOOK” command.
 func Attack(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	// Usage of listener to send the command.
+	// Retrieve the information in a dedicated structure, and execute the rest of the command.
+	// Used in virtually all commands.
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -41,6 +45,7 @@ func Attack(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
+// Displays the enemies available in the arena, selecting one retrieves the player's inventory to choose a weapon.
 func showEnemy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 
@@ -76,6 +81,7 @@ func showEnemy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fy
 	subCommandBox.Refresh()
 }
 
+// Shows the available weapons to launch an ATTACK, or fights bare-handed if none are owned.
 func showWeapon(stdin io.WriteCloser, subCommandBox *fyne.Container, enemyId int, inventory types.InventoryInfo, back func()) {
 	subCommandBox.RemoveAll()
 

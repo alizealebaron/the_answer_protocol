@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/11 18:00:00 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 10:06:26 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:43:01 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -28,6 +28,7 @@ type groupAction struct {
 	run  func()
 }
 
+// Start of GROUP. Displays the group actions (CREATE, INVITE, JOIN, LEAVE) as a button menu.
 func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, playerName string, back func()) {
 	subCommandBox.RemoveAll()
 
@@ -62,6 +63,7 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 	subCommandBox.Refresh()
 }
 
+// Requests the SECRET data to list the players available for an invitation.
 func showPlayersToInvite(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, playerName string, back func()) {
 	var id int
 	id = listener.Subscribe(func(line string) {
@@ -86,6 +88,7 @@ func showPlayersToInvite(stdin io.WriteCloser, listener *types.Listener, subComm
 
 }
 
+// Displays the other players as buttons to invite them to the group, or returns if there is no one.
 func showInvitablePlayers(stdin io.WriteCloser, subCommandBox *fyne.Container, who types.Secret, playerName string, back func()) {
 	subCommandBox.RemoveAll()
 
@@ -116,6 +119,7 @@ func showInvitablePlayers(stdin io.WriteCloser, subCommandBox *fyne.Container, w
 	subCommandBox.Refresh()
 }
 
+// Asks for a group id and sends the GROUP JOIN command with it.
 func showJoinForm(stdin io.WriteCloser, subCommandBox *fyne.Container, back func()) {
 	subCommandBox.RemoveAll()
 

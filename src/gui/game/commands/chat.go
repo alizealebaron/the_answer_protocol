@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/14 17:07:41 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 17:38:47 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:42:18 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -26,6 +26,7 @@ type chatAction struct {
 	run  func()
 }
 
+// Start of CHAT. Displays the chat scopes (GLOBAL, ROOM, GROUP) as a button menu.
 func Chat(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
 	subCommandBox.RemoveAll()
 
@@ -53,6 +54,7 @@ func Chat(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 	subCommandBox.Refresh()
 }
 
+// Asks for a message and sends the CHAT command in the given scope.
 func sendMessage(stdin io.WriteCloser, subCommandBox *fyne.Container, scope string, back func()) {
 	subCommandBox.RemoveAll()
 

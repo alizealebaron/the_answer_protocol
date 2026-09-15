@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/14 14:44:04 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 16:07:02 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:47:23 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -24,7 +24,11 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// Start of SELL. Retrieving information from the "LOOK" command.
 func Sell(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	// Usage of listener to send the command.
+	// Retrieve the information in a dedicated structure, and execute the rest of the command.
+	// Used in virtually all commands.
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -42,6 +46,7 @@ func Sell(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
+// Displays the traders present in the room as buttons, then retrieves the player's inventory when one is selected.
 func showTrader2(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 
@@ -77,6 +82,7 @@ func showTrader2(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 	subCommandBox.Refresh()
 }
 
+// Displays the player's items that can be sold, along with their resale price.
 func showInventory(stdin io.WriteCloser, subCommandBox *fyne.Container, inventory types.InventoryInfo, traderId int, back func()) {
 	subCommandBox.RemoveAll()
 
@@ -99,6 +105,7 @@ func showInventory(stdin io.WriteCloser, subCommandBox *fyne.Container, inventor
 	subCommandBox.Refresh()
 }
 
+// Asks for the quantity to sell, validates it and sends the SELL command.
 func showQuantityEntrySell(stdin io.WriteCloser, subCommandBox *fyne.Container, traderId int, itemId int, itemQuantity int, back func()) {
 	subCommandBox.RemoveAll()
 

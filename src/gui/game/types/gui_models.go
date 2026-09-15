@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/08 21:22:30 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 09:21:32 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:34:23 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -139,6 +139,7 @@ type IdNameNpcInfo struct {
 	Is_qg     bool   `json:"is_qg"`
 }
 
+// Is a mirror of the JSON returned by the WHO command.
 type WhoInfo struct {
 	RoomInfo   []string `json:"room"`
 	ServerInfo int      `json:"server"`

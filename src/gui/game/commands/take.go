@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/11 15:28:14 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/11 17:31:27 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:47:26 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -23,7 +23,11 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// Start of TAKE. Retrieving information from the "LOOK" command.
 func Take(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	// Usage of listener to send the command.
+	// Retrieve the information in a dedicated structure, and execute the rest of the command.
+	// Used in virtually all commands.
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -41,6 +45,7 @@ func Take(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
+// Displays the items present in the room as buttons, or returns if there are none.
 func showSelectableObjects(stdin io.WriteCloser, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 

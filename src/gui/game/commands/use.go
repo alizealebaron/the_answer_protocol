@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/12 15:43:01 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/12 16:31:37 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:47:55 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -23,7 +23,11 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// Start of USE. Retrieving information from the "INVENTORY" command.
 func Use(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	// Usage of listener to send the command.
+	// Retrieve the information in a dedicated structure, and execute the rest of the command.
+	// Used in virtually all commands.
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"items\":") {
@@ -41,6 +45,7 @@ func Use(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Con
 	fmt.Fprintf(stdin, "INVENTORY\n")
 }
 
+// Displays the usable items as buttons, or returns if there are none.
 func showUsableObjects(stdin io.WriteCloser, subCommandBox *fyne.Container, inventory types.InventoryInfo, back func()) {
 	subCommandBox.RemoveAll()
 

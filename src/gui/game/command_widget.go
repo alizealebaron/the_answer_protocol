@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 09:32:24 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:34:47 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -26,47 +26,7 @@ import (
 	"the_answer_protocol/src/gui/game/types"
 )
 
-var list = "list"
-var field = "field"
-
-type parameter struct {
-	name        string
-	form        string
-	next        *parameter
-	placeholder string
-}
-
-type commandModel struct {
-	name       string
-	parameters parameter
-}
-
-var allCommand = map[string]commandModel{
-	"LOOK": {name: "LOOK"},
-	"MOVE": {name: "MOVE", parameters: parameter{name: "direction", form: list, placeholder: "Select a direction."}},
-	"WHO":  {name: "WHO"},
-
-	"TALK":  {name: "TALK", parameters: parameter{name: "npc", form: list, placeholder: "Choose an NPC to talk to."}},
-	"CHAT":  {name: "CHAT", parameters: parameter{name: "scope", form: list, placeholder: "Choose the scope of the message.", next: &parameter{name: "text", form: field, placeholder: "Enter your message"}}},
-	"GROUP": {name: "GROUP", parameters: parameter{name: "action", form: list, placeholder: "Choose a group action."}},
-
-	// "ATTACK":    {name: "ATTACK"},
-	"STATUS": {name: "STATUS"},
-
-	// "QUEST":     {name: "QUEST"},
-	// "QUESTS":    {name: "QUESTS"},
-
-	"INVENTORY": {name: "INVENTORY"},
-	"USE":       {name: "USE", parameters: parameter{name: "item", form: list, placeholder: "Choose an object to use."}},
-	"TRADE":     {name: "TRADE", parameters: parameter{name: "trade things", form: list, placeholder: "Choose a merchant."}},
-	"BUY":       {name: "BUY", parameters: parameter{name: "trader", form: list, placeholder: "Choose a merchant.", next: &parameter{name: "item", form: list, placeholder: "Choose an item to buy.", next: &parameter{name: "quantity", form: field, placeholder: "Enter the quantity."}}}},
-	"SELL":      {name: "SELL", parameters: parameter{name: "trader", form: list, placeholder: "Choose a merchant.", next: &parameter{name: "item", form: list, placeholder: "Choose an item to sell.", next: &parameter{name: "quantity", form: field, placeholder: "Enter the quantity."}}}},
-	"TAKE":      {name: "TAKE", parameters: parameter{name: "take item", form: list, placeholder: "Choose an item to pick-up"}},
-	"DROP":      {name: "DROP", parameters: parameter{name: "drop item", form: list, placeholder: "Choose an item to drop"}},
-
-	"GAMBLING": {name: "GAMBLING", parameters: parameter{name: "quantity", form: "field", placeholder: "Enter the amount (in gambling coins)."}},
-}
-
+// All commands sorted by category.
 var commandByCategory = map[string][]string{
 	"Environment": {"LOOK", "MOVE", "SEARCH", "WHO"},
 	"Social":      {"CHAT", "GROUP", "TALK"},
@@ -76,6 +36,7 @@ var commandByCategory = map[string][]string{
 	"Gambling":    {"GAMBLING"},
 }
 
+// Creating the widget with the scrollable frame and the button bar.
 func commandWidget(stdin io.WriteCloser, listener *types.Listener, playerName string) *fyne.Container {
 	commandFrame := canvas.NewRectangle(color.Transparent)
 	commandFrame.StrokeColor = color.White
@@ -97,6 +58,7 @@ func commandWidget(stdin io.WriteCloser, listener *types.Listener, playerName st
 	return container.NewStack(commandFrame, container.NewPadded(layout))
 }
 
+// Creating category buttons with a command to generate game commands.
 func createButton(category string, subCommandBox *fyne.Container, stdin io.WriteCloser, listener *types.Listener, playerName string, subScroll *container.Scroll) *widget.Button {
 	button := widget.NewButton(category, func() {
 		showCommandCategory(category, subCommandBox, stdin, listener, playerName, subScroll)
@@ -104,6 +66,7 @@ func createButton(category string, subCommandBox *fyne.Container, stdin io.Write
 	return button
 }
 
+// Create the category buttons when the category is clicked, along with code to define their functionality.
 func showCommandCategory(category string, subCommandBox *fyne.Container, stdin io.WriteCloser, listener *types.Listener, playerName string, subScroll *container.Scroll) {
 	subCommandBox.RemoveAll()
 
@@ -118,6 +81,7 @@ func showCommandCategory(category string, subCommandBox *fyne.Container, stdin i
 	subCommandBox.Refresh()
 }
 
+// A clunky switch-case statement to handle button functionality in a simple way.
 func executeCommand(stdin io.WriteCloser, command string, listener *types.Listener, subCommandBox *fyne.Container, playerName string, subScroll *container.Scroll) {
 	switch command {
 

@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/12 10:02:26 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/12 15:23:52 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:47:04 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -24,7 +24,11 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// Start of GAMBLING. Retrieving information from the "LOOK" command.
 func Gambling(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	// Usage of listener to send the command.
+	// Retrieve the information in a dedicated structure, and execute the rest of the command.
+	// Used in virtually all commands.
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -45,6 +49,7 @@ func Gambling(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyn
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
+// Retrieves the player's inventory to look for the gambling coins they own.
 func askCoinInventory(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
 	var id int
 	id = listener.Subscribe(func(line string) {
@@ -63,6 +68,7 @@ func askCoinInventory(stdin io.WriteCloser, listener *types.Listener, subCommand
 	fmt.Fprintf(stdin, "INVENTORY\n")
 }
 
+// Asks how many coins to bet, validates the amount and sends the GAMBLING command.
 func showCoinSelection(stdin io.WriteCloser, subCommandBox *fyne.Container, inventory types.InventoryInfo, back func()) {
 	subCommandBox.RemoveAll()
 

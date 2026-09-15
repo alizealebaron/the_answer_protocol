@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/12 16:32:52 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 16:01:02 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:46:53 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -24,7 +24,11 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// Start of BUY. Retrieving information from the “LOOK” command.
 func Buy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	// Usage of listener to send the command.
+	// Retrieve the information in a dedicated structure, and execute the rest of the command.
+	// Used in virtually all commands.
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -42,6 +46,7 @@ func Buy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Con
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
+// Displays the traders present in the room as buttons, then retrieves the trader's inventory when one is selected.
 func showTrader(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 
@@ -77,6 +82,7 @@ func showTrader(stdin io.WriteCloser, listener *types.Listener, subCommandBox *f
 	subCommandBox.Refresh()
 }
 
+// Displays the trader's saleable items as buttons with their price.
 func showTraderInventory(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, traderInventory []types.TradeInfo, traderId int, back func()) {
 	subCommandBox.RemoveAll()
 
@@ -94,6 +100,7 @@ func showTraderInventory(stdin io.WriteCloser, listener *types.Listener, subComm
 	subCommandBox.Refresh()
 }
 
+// Asks for the quantity to buy, checks the player's money and sends the BUY command.
 func showQuantityEntryBuy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, traderId int, itemId int, itemCost int, back func()) {
 	subCommandBox.RemoveAll()
 
@@ -139,6 +146,7 @@ func showQuantityEntryBuy(stdin io.WriteCloser, listener *types.Listener, subCom
 
 }
 
+// Retrieves the player's money via INVENTORY and passes it to the callback.
 func getPlayerMoney(stdin io.WriteCloser, listener *types.Listener, callback func(int)) {
 	var id int
 	id = listener.Subscribe(func(line string) {

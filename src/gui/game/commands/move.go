@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/09 10:10:18 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/11 17:29:16 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 10:51:02 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -23,7 +23,11 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// Start of MOVE. Retrieving information from the "LOOK" command.
 func Move(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	// Usage of listener to send the command.
+	// Retrieve the information in a dedicated structure, and execute the rest of the command.
+	// Used in virtually all commands.
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -41,9 +45,11 @@ func Move(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
+// Displays the available directions as buttons, or returns to the previous menu if there are none.
 func showDirections(stdin io.WriteCloser, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 
+	// A map of directions link with the corresponding room IDs.
 	directions := map[string]int{
 		"NORTH": room.NeighborRoom.North,
 		"EAST":  room.NeighborRoom.East,
