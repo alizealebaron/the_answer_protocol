@@ -112,5 +112,19 @@
 		"quest": 1,
 		"dialogueFinFr": ["(TODO)", "(TODO)"],
 		"dialogueFinEn": ["(TODO)", "(TODO)"]
+	},
+	{
+        "id": 13,
+        "name": "Gambling Master",
+        "dialogueFr": ["TOIN TOIN !"],
+		"dialogueEn": ["TOIN TOIN !"],
+		"pv": 1000000,
+		"attack": 0,
+		"defense": 8,
+		"isBoss": false,
+		"loot": 1,
+		"quantityMin": 1,
+		"quantityMax": 1,
+		"spawnRate": 1
 	}
 ]

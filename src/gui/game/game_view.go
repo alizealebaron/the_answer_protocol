@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:21 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 14:44:39 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 14:54:07 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -74,7 +74,7 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 	scrollBox := logWidget()
 	right := newRatioSplit(0.72, false, gap, commandBox, scrollBox)
 
-	mapBox := mapWidget()
+	mapBox := MapWidget()
 
 	whathappened := goingOnWidget()
 	playersLabel := playerCountLabel(listener)
@@ -88,13 +88,24 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 	return newRatioSplit(0.3, true, gap, left, centerRight)
 }
 
-func mapWidget() *fyne.Container {
+func actionWidget() *fyne.Container {
 	frame := canvas.NewRectangle(color.Transparent)
 	frame.StrokeColor = color.White
 	frame.StrokeWidth = float32(2)
 
-	return container.NewStack(frame)
+	content := container.NewVBox()
+	scroll := container.NewScroll(content)
+
+	return container.NewStack(frame, scroll)
 }
+
+// func mapWidget() *fyne.Container {
+// 	frame := canvas.NewRectangle(color.Transparent)
+// 	frame.StrokeColor = color.White
+// 	frame.StrokeWidth = float32(2)
+
+// 	return container.NewStack(frame)
+// }
 
 func goingOnWidget() *fyne.Container {
 	frame := canvas.NewRectangle(color.Transparent)

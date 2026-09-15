@@ -172,5 +172,17 @@
 		"type": "forest",
 		"x": -2,
 		"y": 0
+	},
+	{
+		"id": 15,
+		"name": "Salle VIP Ordutan",
+		"allies": [13],
+		"ennemies": [13],
+		"items": [],
+		"neighborRoom": { "north": 0, "south": 0, "east": 0, "west": 0 },
+		"fishing": [],
+		"type": "casino",
+		"x": -1,
+		"y": -2
 	}
 ]

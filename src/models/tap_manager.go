@@ -96,6 +96,17 @@ func (tm *TapManager) GetGroupById(id int) (*Group, error) {
 	return nil, errors.New("ERR 404 GROUP_NOT_FOUND")
 }
 
+func (tm *TapManager) GetMonsterMaxPv(id int) (int, error) {
+
+	for i := range tm.Lst_Monster {
+		if tm.Lst_Monster[i].Id == id {
+			return tm.Lst_Monster[i].Pv, nil
+		}
+	}
+
+	return 0, errors.New("ERR 404 MONSTER_NOT_FOUND")
+}
+
 /* +---------------------------------------------------------------------+ */
 /* |                             Fonctions                               | */
 /* +---------------------------------------------------------------------+ */
@@ -141,7 +152,7 @@ func (tap *TapManager) FindPlayerRoom(player_id int) (*Room, error) {
 		}
 	}
 
-	return nil, errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+	return nil, errors.New("ERR 404 PLAYER_NOT_FOUND")
 }
 
 func (tap *TapManager) FindMonsterRoom(monster_id int) (*Room, error) {

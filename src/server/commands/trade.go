@@ -43,7 +43,7 @@ func Trade(args []string, tapManager *models.TapManager, player *models.Player) 
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) != 1 {
-		return errors.New("ERR 302 NO_PNJ_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// === Récupération de la room actuelle du Joueur === //
@@ -73,7 +73,7 @@ func Trade(args []string, tapManager *models.TapManager, player *models.Player) 
 
 	inv_json, err := json.Marshal(items)
 	if err != nil {
-		return errors.New("ERR 666 ENCODAGE_ERROR")
+		return errors.New("ERR 999 MARSHAL_ENCODING_ERROR")
 	}
 
 	output := "OK trade=" + string(inv_json) + "\n"
@@ -91,7 +91,7 @@ func Buy(args []string, tapManager *models.TapManager, player *models.Player) er
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) < 1 {
-		return errors.New("ERR 302 NO_PNJ_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// === Récupération de la room actuelle du Joueur === //
@@ -120,12 +120,12 @@ func Buy(args []string, tapManager *models.TapManager, player *models.Player) er
 
 	quantite, err := strconv.Atoi(args[2])
 	if quantite <= 0 {
-		return errors.New("ERR 411 INVALID_QUANTITY")
+		return errors.New("ERR 408 INVALID_QUANTITY")
 	}
 
 	prix := quantite * item.GetCost()
 	if prix > player.Money {
-		return errors.New("ERR 411 NOT_ENOUGH_MONEY")
+		return errors.New("ERR 407 NOT_ENOUGH_MONEY")
 	}
 
 	// === Ajout de l'item à l'inventaire du joueur === //
@@ -149,7 +149,7 @@ func Sell(args []string, tapManager *models.TapManager, player *models.Player) e
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) < 3 {
-		return errors.New("ERR 302 NO_PNJ_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// === Récupération de la room actuelle du Joueur === //
@@ -176,7 +176,7 @@ func Sell(args []string, tapManager *models.TapManager, player *models.Player) e
 	}
 
 	if (quantite <= 0) {
-		return errors.New("ERR 411 INVALID_QUANTITY")
+		return errors.New("ERR 408 INVALID_QUANTITY")
 	}
 
 	_, err = player.RemoveItemToPlayerWQuantity(id_item, quantite)
