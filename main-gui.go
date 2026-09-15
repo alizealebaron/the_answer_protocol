@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* main.go                                           :+:      :+:    :+:   */
+/* main-gui.go                                       :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/18 19:15:04 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/25 13:32:59 by emarette        ###   ########.fr       */
+/* Created: 2026/09/15 14:18:03 by alebaron        #+#    #+#              */
+/* Updated: 2026/09/15 14:18:26 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -17,9 +17,7 @@
 package main
 
 import (
-    // "fmt"
-    "the_answer_protocol/src/server"
-    "the_answer_protocol/src/server/server_write"
+    "the_answer_protocol/src/gui"
 )
 
 /* ----------------------------------------------------------------------- */
@@ -27,8 +25,6 @@ import (
 /* ----------------------------------------------------------------------- */
 
 func main() {
-    tapManager := server.ParseJSONFile()
-    // fmt.Printf("%+v\n", tapManager.Lst_Quest[1])
-    server_write.CreateLogFolder()
-    server.Tcp_server(&tapManager)
+    gui.Run(true)
+    // gui.Run(false)
 }

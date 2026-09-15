@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/24 17:28:51 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/26 10:59:01 by alebaron        ###   ########.fr       */
+/* Updated: 2026/09/15 14:26:50 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -44,8 +44,6 @@ func Look(args []string, tapManager *models.TapManager, player *models.Player) e
 	if room.Name == "CASINO" && quantity >= 1000 {
 		copy_room.NeighborRoom.South = 15
 	}
-
-	fmt.Printf("%+v", copy_room)
 
 	server_write.ServerWrite(player.Conn, "OK " + copy_room.ToString() + "\n")
 	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + room.ToString())

@@ -1,17 +1,13 @@
-2026-09-15 13:42:53 (10.11.6.17): [INFO]    Player ALE connected
-2026-09-15 13:42:55 (10.11.6.17): [COMMAND] ALE use MOVE SOUTH
-2026-09-15 13:42:55 (10.11.6.17): [SERVER]  To ALE: OK Rue de l'avenue
-2026-09-15 13:42:58 (10.11.6.17): [COMMAND] ALE use MOVE WEST
-2026-09-15 13:42:58 (10.11.6.17): [SERVER]  To ALE: OK CASINO
-2026-09-15 13:43:00 (10.11.6.17): [COMMAND] ALE use LOOK
-2026-09-15 13:43:00 (10.11.6.17): [SERVER]  To ALE: {"id":1,"name":"CASINO","allies":[{"id":12,"name":"Gauss","is_trader":true,"is_qg":false}],"ennemies":[],"items":[{"id":1,"name":"Gambling Coin"},{"id":1,"name":"Gambling Coin"}],"neighborRoom":{"north":4,"south":0,"east":3,"west":0},"fishing":[],"arena":[]}
-2026-09-15 13:43:06 (10.11.6.17): [COMMAND] ALE use MOVE SOUTH
-2026-09-15 13:43:06 (10.11.6.17): [SERVER]  To ALE: OK Salle VIP Ordutan
-2026-09-15 13:43:10 (10.11.6.17): [COMMAND] ALE use LOOK
-2026-09-15 13:43:10 (10.11.6.17): [SERVER]  To ALE: {"id":15,"name":"Salle VIP Ordutan","allies":[{"id":13,"name":"Gambling Master","is_trader":false,"is_qg":false}],"ennemies":[{"id":13,"name":"Gambling Master"}],"items":[],"neighborRoom":{"north":0,"south":0,"east":0,"west":0},"fishing":[],"arena":[]}
-2026-09-15 13:43:21 (10.11.6.17): [COMMAND] ALE use SEARCH 13
-2026-09-15 13:43:21 (10.11.6.17): [SERVER]  OK summon={"monster": "Gambling Master", "id": 1}
-2026-09-15 13:43:21 (10.11.6.17): [WORLD]   ALE summoned a "Gambling Master" in "Salle VIP Ordutan"
-2026-09-15 13:43:24 (10.11.6.17): [COMMAND] ALE use SEARCH 13
-2026-09-15 13:43:24 (10.11.6.17): [SERVER]  OK summon={"monster": "Gambling Master", "id": 2}
-2026-09-15 13:43:24 (10.11.6.17): [WORLD]   ALE summoned a "Gambling Master" in "Salle VIP Ordutan"
+2026-09-15 14:25:08 (127.0.0.1) : [INFO]    Player ALE connected
+2026-09-15 14:25:35 (127.0.0.1) : [COMMAND] ALE use LOOK
+2026-09-15 14:25:35 (127.0.0.1) : [SERVER]  To ALE: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile","is_trader":false,"is_qg":false}],"ennemies":[{"id":11,"name":"Tanard"}],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[],"arena":[]}
+2026-09-15 14:25:36 (127.0.0.1) : [COMMAND] ALE use LOOK
+2026-09-15 14:25:36 (127.0.0.1) : [SERVER]  To ALE: {"id":2,"name":"Place Sénile","allies":[{"id":3,"name":"Vieux Sénile","is_trader":false,"is_qg":false}],"ennemies":[{"id":11,"name":"Tanard"}],"items":[{"id":14,"name":"Kayou"}],"neighborRoom":{"north":6,"south":3,"east":5,"west":4},"fishing":[],"arena":[]}
+2026-09-15 14:25:37 (127.0.0.1) : [COMMAND] ALE use MOVE EAST
+2026-09-15 14:25:37 (127.0.0.1) : [SERVER]  To ALE: OK Taverne de la pucelle
+2026-09-15 14:25:38 (127.0.0.1) : [COMMAND] ALE use LOOK
+2026-09-15 14:25:38 (127.0.0.1) : [SERVER]  To ALE: {"id":5,"name":"Taverne de la pucelle","allies":[{"id":2,"name":"Jeanne","is_trader":false,"is_qg":false},{"id":10,"name":"Gaspard Savoureux","is_trader":false,"is_qg":true}],"ennemies":[],"items":[{"id":10,"name":"Jambon Beurre"}],"neighborRoom":{"north":0,"south":0,"east":0,"west":2},"fishing":[],"arena":[]}
+2026-09-15 14:25:41 (127.0.0.1) : [COMMAND] ALE use WHO
+2026-09-15 14:25:41 (127.0.0.1) : [SERVER]  To ALE: OK { "room": ["ALE"], "server": 1 }
+2026-09-15 14:25:57 (127.0.0.1) : [COMMAND] ALE use QUIT
+2026-09-15 14:25:57 (127.0.0.1) : [INFO]    Player ALE disconnected
