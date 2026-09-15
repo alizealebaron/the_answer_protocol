@@ -170,7 +170,7 @@ func handleConnection(conn net.Conn) {
 					server_write.ServerWrite(conn, err.Error())
 					return
 				}
-				server_write.ServerWrite(conn, string(output)+"\n")
+				server_write.ServerWrite(conn,"OK SECRET " + string(output) + "\n")
 			} else {
 				// Ecriture de la commande dans les logs
 				server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
