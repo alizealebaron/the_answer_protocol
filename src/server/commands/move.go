@@ -17,7 +17,7 @@
 package commands
 
 import (
-    "fmt"
+    // "fmt"
 	"errors"
 	"strings"
 	"the_answer_protocol/src/models"
@@ -33,13 +33,13 @@ func Move(args []string, tapManager *models.TapManager, player *models.Player) e
 	// === Gestion des erreurs potentielles === //
 
 	if len(args) != 1 {
-		return errors.New("ERR 302 NO_DIRECTION_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	room, err := tapManager.FindPlayerRoom(player.Id)
 
 	if err != nil {
-		return errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+		return errors.New("ERR 404 PLAYER_NOT_FOUND")
 	}
 	
 	// === Gestion de la direction du joueurs === //
@@ -57,8 +57,13 @@ func Move(args []string, tapManager *models.TapManager, player *models.Player) e
 	case "west":
         id_nei_room = room.NeighborRoom.West
 	default:
-		return errors.New("ERR 303 DIRECTION_INCORRECT")
+		return errors.New("ERR 408 DIRECTION_INCORRECT")
     }
+
+	q, _ := player.GetQuantityItem(1)
+	if room.Name == "CASINO" && q >= 1000 {
+		id_nei_room = 15
+	}
 
 	if id_nei_room == 0 {
 		return errors.New("ERR 301 NO_EXIT")
@@ -66,7 +71,7 @@ func Move(args []string, tapManager *models.TapManager, player *models.Player) e
 
 		nei_room, err := tapManager.GetRoomById(id_nei_room)
 		if err != nil {
-			return errors.New("ERR ROOM_NOT_FOUND")
+			return errors.New("ERR 404 ROOM_NOT_FOUND")
 		}
 
 		// === Ajout dans les nouvelles rooms et envoie du message === //
@@ -75,22 +80,6 @@ func Move(args []string, tapManager *models.TapManager, player *models.Player) e
 		nei_room.AddPlayerToRoom(*player)
 		server_write.ServerWrite(player.Conn, "OK " + nei_room.Name + "\n")
 		server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": OK " + nei_room.Name)
-
-		// === Envoie d'un message à tous les joueurs présents dans les rooms === //
-
-		// == Envoie à la room quittée == //
-
-		for _ , p := range room.Lst_Player {
-			output := fmt.Sprintf("EVT ROOM PRESENCE LEAVE %s\n", player.Name)
-			server_write.ServerWrite(p.Conn, output)
-		}
-
-		// == Envoie à la room d'arrivée == //
-
-		for _ , p := range nei_room.Lst_Player {
-			output := fmt.Sprintf("EVT ROOM PRESENCE ENTER %s\n", player.Name)
-			server_write.ServerWrite(p.Conn, output)
-		}
 	}
 
 	return nil

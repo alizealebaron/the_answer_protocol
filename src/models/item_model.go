@@ -1,18 +1,17 @@
-/* *********************************************************************** */
-/*                                                                         */
-/*                                                     :::      ::::::::   */
-/* item_model.go                                     :+:      :+:    :+:   */
-/*                                                 +:+ +:+         +:+     */
-/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
-/*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/19 11:04:48 by alebaron        #+#    #+#              */
-/* Updated: 2026/08/31 13:49:01 by alebaron        ###   ########.fr       */
-/*                                                                         */
-/* *********************************************************************** */
-
-/* +---------------------------------------------------------------------+ */
-/* |                          Package & Import                           | */
-/* +---------------------------------------------------------------------+ */
+/* ************************************************************************ */
+/*      _  _     ____                     ,~~.                              */
+/*     | || |   |___  \             ,   (  ^ )>                             */
+/*     | || |_    __) |             )\~~'   (       _      _      _         */
+/*     |__   _|  / __/             (  .__)   )    >(.)__ <(^)__ =(o)__      */
+/*        |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/      */
+/*                                                                          */
+/* ************************************************************************ */
+/* name   : item_model.go                                                   */
+/* author : alebaron <alebaron@student.42.fr>                               */
+/*                                                                          */
+/* creation : Invalid date        by -----------                            */
+/* update   : 2026/09/11 20:02:04 by alebaron                               */
+/* ************************************************************************ */
 
 package models
 
@@ -26,11 +25,10 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 type Item interface {
-	ToString()        string
-	GetId()           int
-	GetName()         string
-	IsItemAvailable() bool
-	GetCost()         int
+	ToString() string
+	GetId() int
+	GetName() string
+	GetCost() int
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -43,17 +41,11 @@ type Loot struct {
 	DescriptionFr string `json:"descriptionFr"`
 	DescriptionEn string `json:"descriptionEn"`
 	Cost          int    `json:"cost"`
-	NbCopies      int    `json:"nbCopies"`
-	NbAvail       int    `json:"nbAvail"`
 }
 
-func (l Loot) GetId()   int    { return l.Id   }
+func (l Loot) GetId() int      { return l.Id }
 func (l Loot) GetName() string { return l.Name }
 func (l Loot) GetCost() int    { return l.Cost }
-
-func (l Loot) IsItemAvailable() bool {
-	return (l.NbAvail > 0)
-}
 
 func (l Loot) ToString() string {
 	b, err := json.Marshal(l)
@@ -104,6 +96,7 @@ func (e Edible) ToString() string {
 
 type Usable struct {
 	Loot
+	Location string `json:"location"`
 }
 
 func (u Usable) ToString() string {

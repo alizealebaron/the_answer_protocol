@@ -1,12 +1,12 @@
 [
 	{
 		"id": 2,
-		"title": "Le fou du village.",
+		"title": "Le fou de la forêt.",
 		"descriptionFr": "Le fou de la forêt vous demande de tabasser quelques percepteurs des impôts qui traînent dans la forêt.",
 		"descriptionEn": "The forest madman wants you to beat up a few tax collectors who are hanging about in the forest.",
 		"reward": 8,
 		"quantity": 1,
-        "MonsterNeededId": 7,
-        "MonsterNeededQu": 3
+		"src_quantity": 3,
+        "monsterNeededId": 7
 	}
 ]

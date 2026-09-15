@@ -2,7 +2,7 @@
 	{
 		"id": 1,
 		"name": "CASINO",
-		"allies": [11],
+		"allies": [12],
 		"ennemies": [],
 		"items": [1, 1],
 		"neighborRoom": { "north": 4, "south": 0, "east": 3, "west": 0 },
@@ -102,7 +102,7 @@
 		"id": 9,
 		"name": "Forêt la revanche",
 		"allies": [5],
-		"ennemies": [6, 7],
+		"ennemies": [6],
 		"items": [],
 		"neighborRoom": { "north": 0, "south": 7, "east": 0, "west": 0 },
 		"fishing": [],
@@ -172,5 +172,17 @@
 		"type": "forest",
 		"x": -2,
 		"y": 0
+	},
+	{
+		"id": 15,
+		"name": "Salle VIP Ordutan",
+		"allies": [13],
+		"ennemies": [13],
+		"items": [],
+		"neighborRoom": { "north": 0, "south": 0, "east": 0, "west": 0 },
+		"fishing": [],
+		"type": "casino",
+		"x": -1,
+		"y": -2
 	}
 ]

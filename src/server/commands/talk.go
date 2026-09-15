@@ -31,13 +31,13 @@ func Talk(args []string, tapManager *models.TapManager, player *models.Player) e
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) != 1 {
-		return errors.New("ERR 302 NO_NPC_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// === Récupération de la room actuelle du Joueur === //
 	room, err := tapManager.FindPlayerRoom(player.Id)
 	if err != nil {
-		return errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+		return errors.New("ERR 404 PLAYER_NOT_FOUND")
 	}
 
 	// === Vérification de la présence du NPC dans la room === //
@@ -49,7 +49,26 @@ func Talk(args []string, tapManager *models.TapManager, player *models.Player) e
 	}
 
 	// === Envoie du dialogue du NPC === //
-	dialogue := player.GetNextDialogueLine(*npc)
+
+	// = Vérification qu'une quête n'est pas complétée = //
+
+	isRewarded := false
+	dialogue := ""
+
+	quest_giver, ok := (*npc).(models.QuestGiver)
+	if ok {
+		isRewarded = player.IsNpcQuestCompleted(quest_giver)
+	}
+
+	if (!isRewarded) {
+		dialogue = player.GetNextDialogueLine(*npc)
+	} else {
+		if player.Language == "FR" {
+			dialogue = quest_giver.DialogueFinFr
+		} else {
+			dialogue = quest_giver.DialogueFinEn
+		}
+	}
 
 	str_ret := "OK " + dialogue + "\n"
 	server_write.ServerWrite(player.Conn, str_ret)

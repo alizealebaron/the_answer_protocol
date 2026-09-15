@@ -43,3 +43,5 @@
 - [La programmation orientée objet dans le langage de programmation Go](https://devopssec.fr/article/programmation-orientee-objet-golang)
 - [Parsing JSON files With Go](https://tutorialedge.net/golang/parsing-json-with-golang/)
 - [How to read a file and convert JSON to Go Struct](https://dev.to/mxglt/wip-how-to-read-a-file-and-convert-json-to-go-struct-6m2)
+- [Fyne Documentation](https://docs.fyne.io/)
+- [Documentation pkg fyne](https://pkg.go.dev/fyne.io/fyne/v2#pkg-types)

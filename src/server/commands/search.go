@@ -1,18 +1,17 @@
-/* *********************************************************************** */
-/*                                                                         */
-/*                                                     :::      ::::::::   */
-/* search.go                                         :+:      :+:    :+:   */
-/*                                                 +:+ +:+         +:+     */
-/* By: rruiz, alebaron, emarette                 +#+  +:+       +#+        */
-/*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/30 13:19:42 by emarette        #+#    #+#              */
-/* Updated: 2026/08/30 13:42:40 by emarette        ###   ########.fr       */
-/*                                                                         */
-/* *********************************************************************** */
-
-/* +---------------------------------------------------------------------+ */
-/* |                          Package & Import                           | */
-/* +---------------------------------------------------------------------+ */
+/* ************************************************************************ */
+/*      _  _     ____                     ,~~.                              */
+/*     | || |   |___  \             ,   (  ^ )>                             */
+/*     | || |_    __) |             )\~~'   (       _      _      _         */
+/*     |__   _|  / __/             (  .__)   )    >(.)__ <(^)__ =(o)__      */
+/*        |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/      */
+/*                                                                          */
+/* ************************************************************************ */
+/* name   : search.go                                                       */
+/* author : alebaron <alebaron@student.42.fr>                               */
+/*                                                                          */
+/* creation : Invalid date        by -----------                            */
+/* update   : 2026/09/11 20:22:47 by alebaron                               */
+/* ************************************************************************ */
 
 package commands
 
@@ -33,20 +32,23 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 
 	// on verifie le nombre d'argument
 	if len(args) != 1 {
-		return errors.New("ERR 302 NO_ITEM_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// on cherche la room dans lequel se trouve le joueur
 	room, err := tapManager.FindPlayerRoom(player.Id)
 	if err != nil {
-		return errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+		return errors.New("ERR 404 PLAYER_NOT_FOUND")
 	}
 
+	// On vérifie l'ennemie que l'on veut faire spawn
 	for _, e := range room.Ennemies {
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
-			return errors.New("ERR ATOI_ERROR")
+			return errors.New("ERR 904 WRONG_COMMAND_ARG")
 		}
+
+		// Quand l'ennemi trouvé est le bon on tente de le faire spawn
 		if id == e.Id {
 			if e.IsBoss == true {
 				for _, mob := range room.Arena {
@@ -58,23 +60,26 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 			luck := rand.IntN(10) + 1
 
 			if luck >= e.SpawnRate {
+
+				// Récupération de l'index du monstre
 				e.Entity_id = tapManager.Entity_index
 				tapManager.Entity_index += 1
-				room.AddMonsterToRoom(e)
-				message := fmt.Sprintf("EVT %s[%d] summon in this room \n", e.Name, e.Entity_id)
 
-				for _, p := range room.Lst_Player {
-					server_write.ServerWrite(p.Conn, message)
-				}
+				// Envoie du message au joueur
+				message := fmt.Sprintf("OK summon={\"monster\": \"%s\", \"id\": %d}\n", e.Name, e.Entity_id)
+				server_write.ServerWrite(player.Conn, message)
 				server_write.WriteLog(player.Conn, "SERVER", message)
+
+				// Ajout du monstre à la room (Dans cet ordre pour un joli rendu côté client ~Alizéa)
+				room.AddMonsterToRoom(e)
+				server_write.WriteLog(player.Conn, "WORLD", player.Name + " summoned a \""+ e.GetName() +"\" in \""+ room.Name +"\"\n")
 				return nil
 			}
-			server_write.ServerWrite(player.Conn, "KO failed to summon monster in the arena"+"\n")
-			server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": failed to summon a monster")
+			server_write.ServerWrite(player.Conn, "ERR 409 FAILED_TO_SUMMON (TRY AGAIN)"+"\n")
+			server_write.WriteLog(player.Conn, "SERVER", "To "+player.Name+": "+room.ToString())
 			return nil
 		}
 	}
 
-	return errors.New("ERR MOSTER_NOT_FOUND_IN_THIS_ROOM")
-
+	return errors.New("ERR 404 MONSTER_NOT_FOUND")
 }

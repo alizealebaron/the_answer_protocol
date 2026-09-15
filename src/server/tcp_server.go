@@ -1,29 +1,29 @@
-/* *********************************************************************** */
-/*                                                                         */
-/*                                                     :::      ::::::::   */
-/* tcp_server.go                                       :+:      :+:    :+:   */
-/*                                                 +:+ +:+         +:+     */
-/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
-/*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/08/19 13:30:33 by emarette        #+#    #+#              */
-/* Updated: 2026/08/19 13:35:18 by emarette        ###   ########.fr       */
-/*                                                                         */
-/* *********************************************************************** */
-
-/* +---------------------------------------------------------------------+ */
-/* |                          Package & Import                           | */
-/* +---------------------------------------------------------------------+ */
+/* ************************************************************************ */
+/*      _  _     ____                     ,~~.                              */
+/*     | || |   |___  \             ,   (  ^ )>                             */
+/*     | || |_    __) |             )\~~'   (       _      _      _         */
+/*     |__   _|  / __/             (  .__)   )    >(.)__ <(^)__ =(o)__      */
+/*        |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/      */
+/*                                                                          */
+/* ************************************************************************ */
+/* name   : tcp_server.go                                                   */
+/* author : alebaron <alebaron@student.42.fr>                               */
+/*                                                                          */
+/* creation : Invalid date        by -----------                            */
+/* update   : 2026/09/11 19:25:15 by alebaron                               */
+/* ************************************************************************ */
 
 package server
 
 import (
+	"bufio"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net"
-	"bufio"
-	"errors"
+	"strconv"
 	"strings"
-	"encoding/json"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/commands"
 	"the_answer_protocol/src/server/server_write"
@@ -51,16 +51,18 @@ var map_commands = map[string]CommandFunc{
 	"TAKE":      commands.Take,
 	"TALK":      commands.Talk,
 	"GROUP":     commands.Group,
+	"QUEST":     commands.Quest,
 	"TRADE":     commands.Trade,
+	"ATTACK":    commands.Attack,
+	"QUESTS":    commands.Quests,
+	"SEARCH":    commands.Search,
 	"STATUS":    commands.Status,
 	"GAMBLING":  commands.Gambling,
 	"INVENTORY": commands.Inventory,
-	"SEARCH":    commands.Search,
-	"ATTACK":	 commands.Attack,
 }
 
 /* ----------------------------------------------------------------------- */
-/*                                Fonctions                                */
+/*                         Fonctions Principales                           */
 /* ----------------------------------------------------------------------- */
 
 func Tcp_server(tapManager *models.TapManager) {
@@ -121,8 +123,8 @@ func handleConnection(conn net.Conn) {
 		reader := bufio.NewReader(conn)
 		line, err := reader.ReadString('\n')
 		if err != nil {
-			server_write.WriteLog(conn, "ERROR", "Read error: " + err.Error())
-			if (err.Error() == "EOF" && is_connected == true) {
+			server_write.WriteLog(conn, "ERROR", "Read error: "+err.Error())
+			if err.Error() == "EOF" && is_connected == true {
 				commands.Quit(TapManager, self_player)
 			}
 			return
@@ -140,13 +142,22 @@ func handleConnection(conn net.Conn) {
 			if command[0] == "CONNECT" && len(command) == 3 {
 				self_player, code_error = commands.Connect(TapManager, conn, command[1], command[2])
 				if code_error != "" {
-					server_write.WriteLog(conn, "ERROR", "Connection attempt failed")
+					server_write.WriteLog(conn, "ERROR", "900 CONNECTION_FAILED")
 				} else {
 					server_write.WriteLog(conn, "INFO", "Player "+self_player.Name+" connected")
+
+					// === Envoie de l'évènement de compte de joueur === //
+					for _, p := range TapManager.Lst_Player {
+						server_write.ServerWrite(p.Conn, "EVT STATS players="+strconv.Itoa(len(TapManager.Lst_Player))+"\n")
+					}
+
 					is_connected = true
+					// item, _ := TapManager.GetItemById(1)
+					// self_player.AddItemToPlayerWQuantity(item, 1000)
 				}
 			} else {
-				server_write.ServerWrite(conn, "use 'CONNECT [Name] [Language]' or 'HELP' for more information\n")
+				server_write.ServerWrite(conn, "ERR 900 CONNECTION_FAILED\n")
+				server_write.ServerWrite(conn, "USE \"CONNECT [Name] [Language]\"\n")
 			}
 		} else {
 			if command[0] == "QUIT" {
@@ -159,7 +170,7 @@ func handleConnection(conn net.Conn) {
 					server_write.ServerWrite(conn, err.Error())
 					return
 				}
-				server_write.ServerWrite(conn, string(output)+"\n")
+				server_write.ServerWrite(conn,"OK SECRET " + string(output) + "\n")
 			} else {
 				// Ecriture de la commande dans les logs
 				server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
@@ -170,17 +181,14 @@ func handleConnection(conn net.Conn) {
 					server_write.ServerWrite(conn, err.Error()+"\n")
 				}
 			}
-			// fmt.Printf("%+v\n", TapManager.Lst_Group[0])
+			// fmt.Printf("%+v\n", self_player.Lst_Quest)
 		}
-
-		// ackMsg := strings.ToUpper(strings.TrimSpace(message))
-		// response := fmt.Sprintf("ACK: %s\n", ackMsg)
-		// _, err = conn.Write([]byte(response))
-		// if err != nil {
-		//     log.Printf("Server write error: %v", err)
-		// }
 	}
 }
+
+/* ----------------------------------------------------------------------- */
+/*                       Fonctions Supplémentaires                         */
+/* ----------------------------------------------------------------------- */
 
 func dispatch(fields []string, tap *models.TapManager, player *models.Player) error {
 

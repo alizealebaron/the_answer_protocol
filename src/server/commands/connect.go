@@ -17,6 +17,7 @@
 package commands
 
 import (
+	// "fmt"
 	"net"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
@@ -35,12 +36,13 @@ func Connect(tapManager *models.TapManager, conn net.Conn, name string, language
 		}
 	}
 	if language != "FR" && language != "EN" {
-		server_write.ServerWrite(conn, "ERR 202 LANGUAGE_IN_USE\n")
-		return player, "ERR 202 LANGUAGE_IN_USE"
+		server_write.ServerWrite(conn, "ERR 202 INCORRECT_LANGUAGE\n")
+		return player, "ERR 202 INCORRECT_LANGUAGE"
 	}
 
 	tapManager.Lst_Player = append(tapManager.Lst_Player, player)
-	tapManager.Lst_Room[1].Lst_Player = append(tapManager.Lst_Room[1].Lst_Player, player)
 	server_write.ServerWrite(conn, "OK connected\n")
+	tapManager.Lst_Room[1].AddPlayerToRoom(player)
+
 	return player, ""
 }

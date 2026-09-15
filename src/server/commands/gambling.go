@@ -17,11 +17,11 @@
 package commands
 
 import (
-	"errors"
 	"fmt"
 	"math"
-	"math/rand/v2"
+	"errors"
 	"strconv"
+	"math/rand/v2"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
 )
@@ -59,7 +59,7 @@ func Gambling(args []string, tapManager *models.TapManager, player *models.Playe
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) != 1 {
-		return errors.New("ERR 302 NO_BET_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// === Récupération de la room actuelle du Joueur === //
@@ -69,13 +69,13 @@ func Gambling(args []string, tapManager *models.TapManager, player *models.Playe
 	}
 
 	if room.Name != "CASINO" {
-		return errors.New("ERR 999 ROOM_IS_NOT_CASINO")
+		return errors.New("ERR 408 INVALID_LOCATION")
 	}
 
 	// === Récupération de la somme donnée === //
 	bet, err := strconv.Atoi(args[0])
 	if err != nil || bet < 10 {
-		return errors.New("ERR 999 INVALID_BET")
+		return errors.New("ERR 408 INVALID_BET")
 	}
 
 	// === Vérification de la quantité de gambling coin === //

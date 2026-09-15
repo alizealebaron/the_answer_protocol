@@ -32,19 +32,19 @@ func Drop(args []string, tapManager *models.TapManager, player *models.Player) e
 
 	// === Vérification de la longueur des arguments === //
 	if len(args) != 1 {
-		return errors.New("ERR 302 NO_ITEM_SEND")
+		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	// === Récupération de la room actuelle du Joueur === //
 	room, err := tapManager.FindPlayerRoom(player.Id)
 	if err != nil {
-		return errors.New("ERR PLAYER_NOT_FOUND_IN_ANY_ROOM")
+		return errors.New("ERR 404 PLAYER_NOT_FOUND")
 	}
 
 	// === Vérification de la présence de l'item dans l'inventaire === //
 	id, err := strconv.Atoi(args[0])
 
-	item, err := player.RemoveItemToPlayer(id)
+	item, err := player.RemoveItemToPlayerWQuantity(id, 1)
 	if err != nil {
 		return errors.New("ERR 404 ITEM_NOT_FOUND")
 	}
@@ -55,6 +55,7 @@ func Drop(args []string, tapManager *models.TapManager, player *models.Player) e
 	// === Envoie des messages au client et dans les logs === //
 	str_ret := "OK dropped=" + (*item).GetName() + "\n"
 	server_write.ServerWrite(player.Conn, str_ret)
+	server_write.WriteLog(player.Conn, "WORLD", player.Name + " dropped a \"" + (*item).GetName() + "\" in room \"" + room.Name + "\"\n")
 	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + str_ret)
 
 	return nil
