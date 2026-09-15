@@ -159,6 +159,7 @@ func (p *Player) InventoryToString() string {
 
 func (p *Player) PlayerDeath(tapManager *TapManager) error {
 	p.Pv = 30
+	p.Status = "bloody"
 	group, err := tapManager.GetGroupById(p.Id)
 	if err == nil {
 		group.RemovePlayerFromGroup(*p)
