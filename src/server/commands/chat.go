@@ -32,20 +32,20 @@ func Chat(args []string, tapManager *models.TapManager, player *models.Player) e
 	if len(args) != 2 {
 		return errors.New("ERR ARGUMENTS_NOT_FOUND")
 	}
-	
+
 	scope := args[0]
 	message := strings.Join(args[1:], " ")
 	if scope == "GLOBAL" {
-		for _ , p := range tapManager.Lst_Player {
+		for _, p := range tapManager.Lst_Player {
 			output := fmt.Sprintf("EVT GLOBAL CHAT %s %s\n", player.Name, message)
 			server_write.ServerWrite(p.Conn, output)
 			server_write.WriteLog(player.Conn, "CHAT", output)
-		} 
+		}
 	} else if scope == "ROOM" {
-		for _ , room := range tapManager.Lst_Room {
-			for _ , p := range room.Lst_Player {
+		for _, room := range tapManager.Lst_Room {
+			for _, p := range room.Lst_Player {
 				if p.Id == player.Id {
-					for _ , p := range room.Lst_Player {
+					for _, p := range room.Lst_Player {
 						output := fmt.Sprintf("EVT ROOM CHAT %s %s\n", player.Name, message)
 						server_write.ServerWrite(p.Conn, output)
 						server_write.WriteLog(player.Conn, "CHAT", output)
@@ -54,7 +54,7 @@ func Chat(args []string, tapManager *models.TapManager, player *models.Player) e
 			}
 		}
 	} else if scope == "GROUP" {
-		for _ , p := range player.Group.Lst_Player {
+		for _, p := range player.Group.Lst_Player {
 			output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
 			server_write.ServerWrite(p.Conn, output)
 			server_write.WriteLog(player.Conn, "CHAT", output)
