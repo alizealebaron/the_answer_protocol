@@ -39,6 +39,9 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	var status string
 	var message1 string
 	var message2 string
+	var is_defeated bool
+
+	is_defeated = false
 
 	if len(args) != 2 && len(args) != 1{
 		return errors.New("ERR 904 WRONG_COMMAND_ARG")
@@ -88,6 +91,12 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 		return errors.New("ERR 404 TARGET_NOT_FOUND")
 	}
 
+	// Récupération des pvs initiaux du monstre
+	max_hp, err := tapManager.GetMonsterMaxPv(target.Id)
+	if err != nil {
+		return err
+	}
+
 	// le joueur attaque la cible \\
 	// il lance un de d'attaque \\
 	attack_dice := rand.IntN(20 - 1) + 1
@@ -103,9 +112,9 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	}
 	
 	// on verifie et modifie si besoin le status de la cible
-	if target.Pv > 50 {
+	if target.Pv > (max_hp / 2) {
 		status = "healthy"
-	} else if target.Pv <= 50 && target.Pv > 0 {
+	} else if target.Pv <= (max_hp / 2) && target.Pv > 0 {
 		status = "bloody"
 	} else {
 		status = "dead"
@@ -118,12 +127,14 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 
 		// On envoie une log au serveur
 		server_write.WriteLog(player.Conn, "WORLD", player.Name + " defeated \""+ target.Name +"\" in \""+ p_room.Name +"\"\n")
+		
+		is_defeated = true
 
 		// On udpate les quêtes du joueurs si besoin
 		player.UpdateQuestMonster(*target)
 	}
 	// on ecris la premiere moitier du message
-	message1 = fmt.Sprintf("OK [{\"attacker\": %s, \"attack dice\": %d, \"attacker_hp\": %d, \"target_hp\": %d, \"damage\": %d, \"target_status\": %s}]", player.Name, attack_dice, player.Pv, target.Pv, damage, status)
+	message1 = fmt.Sprintf("OK attack={\"attacker\": \"%s\", \"attack dice\": %d, \"target_hp\": %d, \"damage\": %d, \"target_status\": \"%s\"}]", player.Name, attack_dice, target.Pv, damage, status)
 	
 	// la cible attack le joueur
 
@@ -145,11 +156,18 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	}
 	
 	// on ecris la deuxieme moitier du message
-	message2 = fmt.Sprintf(" [{\"attacker\": %s, \"attack dice\": %d, \"attacker_hp\": %d, \"target\": %s, \"target_hp\": %d, \"damage\": %d, \"target_status\": %s}]", target.Name, attack_dice, target.Pv, new_target.Name, new_target.Pv, damage, new_target.Status)
+	message2 = fmt.Sprintf(", defense={\"attacker\": \"%s\", \"attack dice\": %d, \"target\": \"%s\", \"target_hp\": %d, \"damage\": %d, \"target_status\": %s}", target.Name, attack_dice, new_target.Name, new_target.Pv, damage, new_target.Status)
 	
 	// on ecris le resultat de l'attaque
 	server_write.ServerWrite(player.Conn, message1+message2+"\n")
 	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + message1+message2+"\n")
+
+	if is_defeated {
+		// Envoie d'un évènement à tous les joueurs de la room
+		for _, p := range p_room.Lst_Player {
+			server_write.ServerWrite(p.Conn, "EVT ROOM MONSTER HAS BEEN DEFEATED\n")
+		}
+	}
 
 	// on verfie si le joueur est mort (Je le mets ici pour que le message de changement de room soit dans le bon ordre ~Alizéa)
 	if new_target.Status == "dead" {
