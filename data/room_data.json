@@ -176,8 +176,8 @@
 	{
 		"id": 15,
 		"name": "Salle VIP Ordutan",
-		"allies": [],
-		"ennemies": [],
+		"allies": [13],
+		"ennemies": [13],
 		"items": [],
 		"neighborRoom": { "north": 0, "south": 0, "east": 0, "west": 0 },
 		"fishing": [],

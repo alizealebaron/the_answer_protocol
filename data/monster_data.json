@@ -67,5 +67,18 @@
 		"quantityMin": 1,
 		"quantityMax": 1,
 		"spawnRate": 1
+	},
+	{
+        "id": 13,
+        "name": "Gambling Master",
+        "dialogueFr": ["..."],
+		"dialogueEn": ["..."],
+		"pv": 7,
+		"attack": 777,
+		"defense": 8,
+		"isBoss": true,
+		"loot": 1,
+		"quantityMin": 999,
+		"quantityMax": 999
 	}
 ]

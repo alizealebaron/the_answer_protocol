@@ -17,7 +17,7 @@
 package commands
 
 import (
-    // "fmt"
+    "fmt"
 	"errors"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/server_write"
@@ -29,13 +29,25 @@ import (
 
 func Look(args []string, tapManager *models.TapManager, player *models.Player) error {
 
+	var copy_room models.Room
+
 	room, err := tapManager.FindPlayerRoom(player.Id)
+	copy_room = (*room)
 
 	if err != nil {
 		return errors.New("ERR 404 PLAYER_NOT_FOUND")
 	}
 
-	server_write.ServerWrite(player.Conn, "OK " + room.ToString() + "\n")
+	// Easter-egg pour le CASINO //
+
+	quantity, _ := player.GetQuantityItem(1)
+	if room.Name == "CASINO" && quantity >= 1000 {
+		copy_room.NeighborRoom.South = 15
+	}
+
+	fmt.Printf("%+v", copy_room)
+
+	server_write.ServerWrite(player.Conn, "OK " + copy_room.ToString() + "\n")
 	server_write.WriteLog(player.Conn, "SERVER", "To " + player.Name + ": " + room.ToString())
 	return nil
 }

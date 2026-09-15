@@ -60,6 +60,11 @@ func Move(args []string, tapManager *models.TapManager, player *models.Player) e
 		return errors.New("ERR 408 DIRECTION_INCORRECT")
     }
 
+	q, _ := player.GetQuantityItem(1)
+	if room.Name == "CASINO" && q >= 1000 {
+		id_nei_room = 15
+	}
+
 	if id_nei_room == 0 {
 		return errors.New("ERR 301 NO_EXIT")
 	} else {

@@ -258,6 +258,9 @@ func get_all_room(lst_item []models.Item, lst_npc []models.Npc, lst_monster []mo
 		utils.ExitError("JSONParsingError", err)
 	}
 
+	// Easter-egg
+	lst_npc = append(lst_npc, lst_monster[5])
+
 	resolve_room_item(lst_room, lst_item)
 	resolve_room_allies(lst_room, lst_npc)
 	resolve_room_ennemy(lst_room, lst_monster)

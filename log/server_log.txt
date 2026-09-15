@@ -1,10 +1,17 @@
-2026-09-15 11:06:22 (10.11.6.17): [INFO]    Player ALE connected
-2026-09-15 11:06:25 (10.11.6.17): [COMMAND] ALE use MOVE NORTH
-2026-09-15 11:06:25 (10.11.6.17): [SERVER]  To ALE: OK Forêt, épisode 1
-2026-09-15 11:06:32 (10.11.6.17): [COMMAND] ALE use SEARCH 6
-2026-09-15 11:06:32 (10.11.6.17): [SERVER]  OK summon={"monster": "Gruiking", "id": 1}
-2026-09-15 11:06:32 (10.11.6.17): [WORLD]   ALE summoned a "Gruiking" in "Forêt, épisode 1"
-2026-09-15 11:06:37 (10.11.6.17): [COMMAND] ALE use ATTACK 1
-2026-09-15 11:06:37 (10.11.6.17): [SERVER]  To ALE: OK attack={"attacker": "ALE", "attack dice": 2, "target_hp": 20, "damage": 0, "target_status": "healthy"}], defense={"attacker": "Gruiking", "attack dice": 4, "target": "ALE", "target_hp": 100, "damage": 0, "target_status": healthy}
-2026-09-15 11:06:54 (10.11.6.17): [COMMAND] ALE use ATTACK 1
-2026-09-15 11:06:54 (10.11.6.17): [SERVER]  To ALE: OK attack={"attacker": "ALE", "attack dice": 18, "target_hp": 17, "damage": 3, "target_status": "healthy"}], defense={"attacker": "Gruiking", "attack dice": 11, "target": "ALE", "target_hp": 96, "damage": 4, "target_status": healthy}
+2026-09-15 13:42:53 (10.11.6.17): [INFO]    Player ALE connected
+2026-09-15 13:42:55 (10.11.6.17): [COMMAND] ALE use MOVE SOUTH
+2026-09-15 13:42:55 (10.11.6.17): [SERVER]  To ALE: OK Rue de l'avenue
+2026-09-15 13:42:58 (10.11.6.17): [COMMAND] ALE use MOVE WEST
+2026-09-15 13:42:58 (10.11.6.17): [SERVER]  To ALE: OK CASINO
+2026-09-15 13:43:00 (10.11.6.17): [COMMAND] ALE use LOOK
+2026-09-15 13:43:00 (10.11.6.17): [SERVER]  To ALE: {"id":1,"name":"CASINO","allies":[{"id":12,"name":"Gauss","is_trader":true,"is_qg":false}],"ennemies":[],"items":[{"id":1,"name":"Gambling Coin"},{"id":1,"name":"Gambling Coin"}],"neighborRoom":{"north":4,"south":0,"east":3,"west":0},"fishing":[],"arena":[]}
+2026-09-15 13:43:06 (10.11.6.17): [COMMAND] ALE use MOVE SOUTH
+2026-09-15 13:43:06 (10.11.6.17): [SERVER]  To ALE: OK Salle VIP Ordutan
+2026-09-15 13:43:10 (10.11.6.17): [COMMAND] ALE use LOOK
+2026-09-15 13:43:10 (10.11.6.17): [SERVER]  To ALE: {"id":15,"name":"Salle VIP Ordutan","allies":[{"id":13,"name":"Gambling Master","is_trader":false,"is_qg":false}],"ennemies":[{"id":13,"name":"Gambling Master"}],"items":[],"neighborRoom":{"north":0,"south":0,"east":0,"west":0},"fishing":[],"arena":[]}
+2026-09-15 13:43:21 (10.11.6.17): [COMMAND] ALE use SEARCH 13
+2026-09-15 13:43:21 (10.11.6.17): [SERVER]  OK summon={"monster": "Gambling Master", "id": 1}
+2026-09-15 13:43:21 (10.11.6.17): [WORLD]   ALE summoned a "Gambling Master" in "Salle VIP Ordutan"
+2026-09-15 13:43:24 (10.11.6.17): [COMMAND] ALE use SEARCH 13
+2026-09-15 13:43:24 (10.11.6.17): [SERVER]  OK summon={"monster": "Gambling Master", "id": 2}
+2026-09-15 13:43:24 (10.11.6.17): [WORLD]   ALE summoned a "Gambling Master" in "Salle VIP Ordutan"

@@ -152,6 +152,8 @@ func handleConnection(conn net.Conn) {
 					}
 
 					is_connected = true
+					item, _ := TapManager.GetItemById(1)
+					self_player.AddItemToPlayerWQuantity(item, 1000)
 				}
 			} else {
 				server_write.ServerWrite(conn, "ERR 900 CONNECTION_FAILED\n")
@@ -207,4 +209,3 @@ func dispatch(fields []string, tap *models.TapManager, player *models.Player) er
 
 	return fn(args, tap, player)
 }
-
