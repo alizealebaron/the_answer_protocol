@@ -16,10 +16,10 @@
 package models
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"net"
-	"errors"
-	"encoding/json"
 	"the_answer_protocol/src/server/server_write"
 )
 
@@ -132,6 +132,7 @@ func (p *Player) InventoryToString() string {
 		Quantity  int    `json:"quantity"`
 		Is_Usable bool   `json:"is_usable"`
 		Is_Weapon bool   `json:"is_weapon"`
+		Cost      int    `json:"cost"`
 	}
 
 	items := make([]ItemEntry, 0, len(p.Inventory))
@@ -150,6 +151,7 @@ func (p *Player) InventoryToString() string {
 			Quantity:  qty,
 			Is_Usable: is_usable,
 			Is_Weapon: is_weapon,
+			Cost:      it.GetCost(),
 		})
 	}
 
@@ -233,7 +235,7 @@ func (p *Player) AddQuestToPlayer(quest Quest) error {
 	// Ajout de la quête à la liste du joueur
 	p.Lst_Quest = append(p.Lst_Quest, quest)
 
-	server_write.WriteLog(p.Conn, "QUEST", p.Name + " started quest \"" + quest.GetTitle() + "\"\n")
+	server_write.WriteLog(p.Conn, "QUEST", p.Name+" started quest \""+quest.GetTitle()+"\"\n")
 
 	return nil
 }
@@ -295,7 +297,7 @@ func (p *Player) IsNpcQuestCompleted(npc QuestGiver) bool {
 				p.RemoveItemToPlayerWQuantity(itemquest.ItemNeededId, itemquest.SearchQuantity)
 			}
 
-			server_write.WriteLog(p.Conn, "QUEST", p.Name + " finished quest \"" + q.GetTitle() + "\"\n")
+			server_write.WriteLog(p.Conn, "QUEST", p.Name+" finished quest \""+q.GetTitle()+"\"\n")
 
 			return true
 		}

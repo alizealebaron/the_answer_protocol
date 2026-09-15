@@ -13,7 +13,6 @@
 /* update   : 2026/09/11 20:02:04 by alebaron                               */
 /* ************************************************************************ */
 
-
 package models
 
 import (
@@ -26,10 +25,10 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 type Item interface {
-	ToString()        string
-	GetId()           int
-	GetName()         string
-	GetCost()         int
+	ToString() string
+	GetId() int
+	GetName() string
+	GetCost() int
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -44,7 +43,7 @@ type Loot struct {
 	Cost          int    `json:"cost"`
 }
 
-func (l Loot) GetId()   int    { return l.Id   }
+func (l Loot) GetId() int      { return l.Id }
 func (l Loot) GetName() string { return l.Name }
 func (l Loot) GetCost() int    { return l.Cost }
 

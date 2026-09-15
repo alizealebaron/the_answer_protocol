@@ -6,16 +6,21 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:17 by rruiz           #+#    #+#              */
-/* Updated: 2026/08/26 18:12:01 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/09 10:57:32 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
-package gui
+package home
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"os/exec"
+	"regexp"
 	"strings"
+	"the_answer_protocol/src/gui/game"
+	"the_answer_protocol/src/gui/game/types"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -51,7 +56,7 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 	// Set up the error widget once so that it hides immediately, to avoid having to recreate it every time an error occurs.
 	errContent, errText := errorWidget("")
 	errContent.Resize(fyne.NewSize(width/5, height/10))
-	errContent.Move(fyne.NewPos(1, -100))
+	errContent.Move(fyne.NewPos(1, -height))
 	errContent.Hide()
 
 	// Language Selection Drop-Down Menu
@@ -84,10 +89,16 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 		// If any of the fields are empty, the error widget is displayed.
 		if ip == "" || name == "" {
 			if ip == "" {
-				displayError(errText, errContent, "Ip must not be empty.")
+				displayError(errText, errContent, "Ip must not be empty.", size)
 			} else {
-				displayError(errText, errContent, "Name must not be empty.")
+				displayError(errText, errContent, "Name must not be empty.", size)
 			}
+			return
+		}
+
+		matched, _ := regexp.MatchString("^[a-zA-Z0-9_]{1,15}$", name)
+		if !matched {
+			displayError(errText, errContent, "Invalid name format.", size)
 			return
 		}
 
@@ -99,13 +110,21 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			stdin, err := cmd.StdinPipe()
 			// If StdinPipe return a error
 			if err != nil {
-				displayError(errText, errContent, "System error: failed to create input pipe.")
+				displayError(errText, errContent, "System error: failed to create input pipe.", size)
 				return
 			}
 
+			stdout, err := cmd.StdoutPipe()
+			if err != nil {
+				displayError(errText, errContent, "System error: failed to create input pipe.", size)
+				return
+			}
+
+			listener := &types.Listener{}
+
 			// If Start() return a error.
 			if err := cmd.Start(); err != nil {
-				displayError(errText, errContent, "Unable to use netcat to connect to the network.")
+				displayError(errText, errContent, "Unable to use netcat to connect to the network.", size)
 				return
 			}
 			fmt.Println(strings.Join(cmd.Args, " "))
@@ -118,14 +137,35 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 				language = "EN"
 			}
 
+			reader := bufio.NewReader(stdout)
+			line, _ := reader.ReadString('\n')
+			line = strings.TrimSpace(line)
+
 			// Sends the command “CONNECT <name> <language>” to the server via stdin.
 			fmt.Fprintf(stdin, "CONNECT %s %s\n", name, language)
 			//Type the command “CONNECT <name> <language>” in the terminal.
 			fmt.Println("CONNECT", name, language)
 
+			line, _ = reader.ReadString('\n')
+			line = strings.TrimSpace(line)
+
+			if strings.HasPrefix(line, "OK connected") {
+				go stdoutListening(stdout, listener)
+				go fyne.Do(func() {
+					window.SetContent(game.GameView(window, size, stdin, listener, name, func() {
+						window.SetContent(HomeView(window, size))
+					}))
+				})
+			} else {
+				displayError(errText, errContent, "Error, during connection to the network.", size)
+				fmt.Println(strings.TrimSpace(line))
+				cmd.Process.Kill()
+				return
+			}
+
 			// Blocks the goroutine until netcat finishes. If it returns an error, it means that nc didn't finish properly.
 			if err := cmd.Wait(); err != nil {
-				displayError(errText, errContent, "Connection to the server failed.")
+				displayError(errText, errContent, "Connection to the server failed.", size)
 				return
 			}
 		}()
@@ -158,4 +198,19 @@ func quitButton(window fyne.Window, width float32, height float32) *widget.Butto
 	quitButton.Move(fyne.NewPos(width-1-width/19, 0))
 
 	return quitButton
+}
+
+func stdoutListening(stdout io.ReadCloser, listener *types.Listener) {
+	scanner := bufio.NewScanner(stdout)
+	for scanner.Scan() {
+		line := scanner.Text()
+		fyne.Do(func() {
+			listener.Distribute(line)
+		})
+	}
+	if err := scanner.Err(); err != nil {
+		fyne.Do(func() {
+			fmt.Println("Connection lost:", err)
+		})
+	}
 }
