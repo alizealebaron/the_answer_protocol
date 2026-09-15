@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/08 21:22:30 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 12:12:11 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 09:21:32 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -175,6 +175,7 @@ type InventoryItemInfo struct {
 	Name      string `json:"name"`
 	Quantity  int    `json:"quantity"`
 	Is_Usable bool   `json:"is_usable"`
+	Is_Weapon bool   `json:"is_weapon"`
 	Cost      int    `json:"cost"`
 }
 

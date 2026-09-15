@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/14 17:32:31 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/15 09:32:24 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -167,6 +167,9 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 
 	case "ATTACK":
+		commands.Attack(stdin, listener, subCommandBox, func() {
+			showCommandCategory("Fight", subCommandBox, stdin, listener, playerName, subScroll)
+		})
 
 	case "STATUS":
 		fmt.Fprintf(stdin, "STATUS\n")
