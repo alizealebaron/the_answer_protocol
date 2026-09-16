@@ -40,13 +40,13 @@ func Move(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 			return
 		}
 		listener.Unsubscribe(id)
-		showDirections(stdin, subCommandBox, data, back)
+		showDirections(stdin, listener, subCommandBox, data, back)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the available directions as buttons, or returns to the previous menu if there are none.
-func showDirections(stdin io.WriteCloser, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
+func showDirections(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 
 	// A map of directions link with the corresponding room IDs.
@@ -65,8 +65,21 @@ func showDirections(stdin io.WriteCloser, subCommandBox *fyne.Container, room ty
 			directionButton := widget.NewButton(dir, func() {
 				fmt.Fprintf(stdin, "MOVE %s\n", dir)
 				fmt.Printf("MOVE %s\n", dir)
-				back()
+
+				// Send LOOK only after the server has processed MOVE.
+				var listenerId int
+				listenerId = listener.Subscribe(func(line string) {
+					if strings.HasPrefix(line, "OK {\"id\":") {
+						return
+					}
+					if strings.HasPrefix(line, "OK ") || strings.HasPrefix(line, "ERR ") {
+						fmt.Fprintf(stdin, "LOOK\n")
+						listener.Unsubscribe(listenerId)
+						back()
+					}
+				})
 			})
+
 			directionButton.Importance = widget.LowImportance
 			subCommandBox.Add(directionButton)
 			len += 1
