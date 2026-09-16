@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/14 14:23:20 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 10:47:35 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/16 19:13:05 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -25,6 +25,13 @@ import (
 
 // Start of TRADE. Retrieving information from the "LOOK" command.
 func Trade(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	lookupPrefixes := []string{"OK {\"id\":"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	// Usage of listener to send the command.
 	// Retrieve the information in a dedicated structure, and execute the rest of the command.
 	// Used in virtually all commands.
@@ -37,10 +44,11 @@ func Trade(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 		var data types.LookInfo
 		if err := json.Unmarshal([]byte(room), &data); err != nil {
 			listener.Unsubscribe(id)
+			wrappedBack()
 			return
 		}
 		listener.Unsubscribe(id)
-		showTrader1(stdin, listener, subCommandBox, data, back)
+		showTrader1(stdin, listener, subCommandBox, data, wrappedBack)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
@@ -62,6 +70,7 @@ func showTrader1(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 					var data []types.TradeInfo
 					if err := json.Unmarshal([]byte(trade), &data); err != nil {
 						listener.Unsubscribe(id)
+						back()
 						return
 					}
 					listener.Unsubscribe(id)
@@ -76,6 +85,7 @@ func showTrader1(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 		}
 	}
 	if len == 0 {
+		listener.Distribute("No trader here to trade with.")
 		back()
 	}
 

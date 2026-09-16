@@ -88,6 +88,9 @@ func subscribeLogs(listener *types.Listener) {
 		if strings.HasPrefix(line, "OK SECRET ") {
 			return
 		}
+		if types.IsMuted(line) {
+			return
+		}
 		category := getTypeLine(line)
 		addMessage(category, line)
 		onLogLine(category, line)

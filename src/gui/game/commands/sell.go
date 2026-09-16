@@ -26,6 +26,13 @@ import (
 
 // Start of SELL. Retrieving information from the "LOOK" command.
 func Sell(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	lookupPrefixes := []string{"OK {\"id\":", "OK {\"items\":"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	// Usage of listener to send the command.
 	// Retrieve the information in a dedicated structure, and execute the rest of the command.
 	// Used in virtually all commands.
@@ -38,10 +45,11 @@ func Sell(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 		var data types.LookInfo
 		if err := json.Unmarshal([]byte(room), &data); err != nil {
 			listener.Unsubscribe(id)
+			wrappedBack()
 			return
 		}
 		listener.Unsubscribe(id)
-		showTrader2(stdin, listener, subCommandBox, data, back)
+		showTrader2(stdin, listener, subCommandBox, data, wrappedBack)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
@@ -59,14 +67,15 @@ func showTrader2(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 			traderButton := widget.NewButton(traderName, func() {
 				var id int
 				id = listener.Subscribe(func(line string) {
-					trade := strings.TrimPrefix(line, "OK ")
-					var data types.InventoryInfo
-					if err := json.Unmarshal([]byte(trade), &data); err != nil {
-						listener.Unsubscribe(id)
-						return
-					}
+trade := strings.TrimPrefix(line, "OK ")
+				var data types.InventoryInfo
+				if err := json.Unmarshal([]byte(trade), &data); err != nil {
 					listener.Unsubscribe(id)
-					showInventory(stdin, subCommandBox, data, traderId, back)
+					back()
+					return
+				}
+listener.Unsubscribe(id)
+				showInventory(stdin, listener, subCommandBox, data, traderId, back)
 				})
 				fmt.Fprintf(stdin, "INVENTORY\n")
 			})
@@ -76,6 +85,7 @@ func showTrader2(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 		}
 	}
 	if len == 0 {
+		listener.Distribute("No trader here to sell to.")
 		back()
 	}
 
@@ -83,10 +93,11 @@ func showTrader2(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 }
 
 // Displays the player's items that can be sold, along with their resale price.
-func showInventory(stdin io.WriteCloser, subCommandBox *fyne.Container, inventory types.InventoryInfo, traderId int, back func()) {
+func showInventory(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, inventory types.InventoryInfo, traderId int, back func()) {
 	subCommandBox.RemoveAll()
 
 	if len(inventory.Items) == 0 {
+		listener.Distribute("Nothing to sell.")
 		back()
 	}
 

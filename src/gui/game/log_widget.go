@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/15 13:07:38 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 14:43:04 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/16 22:49:09 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -63,9 +63,10 @@ func showCategory(category string, subBox *fyne.Container, subScroll *container.
 	for _, line := range getMessages(category) {
 		subBox.Add(newWrappingLabel(line))
 	}
-	subScroll.ScrollToBottom()
-
 	subBox.Refresh()
+	fyne.Do(func() {
+		subScroll.ScrollToBottom()
+	})
 }
 
 func newWrappingLabel(line string) *widget.Label {
@@ -79,6 +80,8 @@ func onLogLine(category, line string) {
 		return
 	}
 	logSubBox.Add(newWrappingLabel(line))
-	logSubScroll.ScrollToBottom()
 	logSubBox.Refresh()
+	fyne.Do(func() {
+		logSubScroll.ScrollToBottom()
+	})
 }

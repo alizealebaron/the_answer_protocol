@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/11 18:00:00 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 14:45:20 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/16 21:20:10 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -30,25 +30,31 @@ type groupAction struct {
 
 // Start of GROUP. Displays the group actions (CREATE, INVITE, JOIN, LEAVE) as a button menu.
 func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, playerName string, back func()) {
+	lookupPrefixes := []string{"OK SECRET"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	subCommandBox.RemoveAll()
 
 	actions := []groupAction{
 		{"CREATE", func() {
 			fmt.Fprintf(stdin, "GROUP CREATE\n")
 			fmt.Printf("GROUP CREATE\n")
-			back()
+			wrappedBack()
 		}},
 		{"INVITE", func() {
-			showPlayersToInvite(stdin, listener, subCommandBox, playerName, back)
-			fmt.Println("1")
+			showPlayersToInvite(stdin, listener, subCommandBox, playerName, wrappedBack)
 		}},
 		{"JOIN", func() {
-			showJoinForm(stdin, subCommandBox, back)
+			showJoinForm(stdin, subCommandBox, wrappedBack)
 		}},
 		{"LEAVE", func() {
 			fmt.Fprintf(stdin, "GROUP LEAVE\n")
 			fmt.Printf("GROUP LEAVE\n")
-			back()
+			wrappedBack()
 		}},
 	}
 
@@ -70,26 +76,24 @@ func showPlayersToInvite(stdin io.WriteCloser, listener *types.Listener, subComm
 		if !strings.HasPrefix(line, "OK SECRET") {
 			return
 		}
+		raw := strings.TrimPrefix(line, "OK SECRET ")
 		var data types.Secret
-		if err := json.Unmarshal([]byte(line), &data); err != nil {
+		if err := json.Unmarshal([]byte(raw), &data); err != nil {
 			listener.Unsubscribe(id)
-			fmt.Println("3")
+			back()
 			return
 		}
-		fmt.Println("4")
 
 		listener.Unsubscribe(id)
-		fmt.Println("5")
 
-		showInvitablePlayers(stdin, subCommandBox, data, playerName, back)
+		showInvitablePlayers(stdin, listener, subCommandBox, data, playerName, back)
 	})
 	fmt.Fprintf(stdin, "SECRET\n")
-	fmt.Println("2")
 
 }
 
 // Displays the other players as buttons to invite them to the group, or returns if there is no one.
-func showInvitablePlayers(stdin io.WriteCloser, subCommandBox *fyne.Container, who types.Secret, playerName string, back func()) {
+func showInvitablePlayers(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, who types.Secret, playerName string, back func()) {
 	subCommandBox.RemoveAll()
 
 	len := 0
@@ -102,7 +106,6 @@ func showInvitablePlayers(stdin io.WriteCloser, subCommandBox *fyne.Container, w
 			continue
 		}
 		playerButton := widget.NewButton(otherPlayerName, func() {
-			fmt.Println("TEST")
 			fmt.Fprintf(stdin, "GROUP INVITE %s\n", otherPlayerName)
 			fmt.Printf("GROUP INVITE %s\n", otherPlayerName)
 			back()
@@ -112,7 +115,7 @@ func showInvitablePlayers(stdin io.WriteCloser, subCommandBox *fyne.Container, w
 		len += 1
 	}
 	if len == 0 {
-		fmt.Println("CACA")
+		listener.Distribute("No one to invite to your group.")
 		back()
 	}
 

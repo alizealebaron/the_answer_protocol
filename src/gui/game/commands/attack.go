@@ -25,6 +25,13 @@ import (
 
 // Start of ATTACK. Retrieving information from the “LOOK” command.
 func Attack(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	lookupPrefixes := []string{"OK {\"id\":", "OK {\"items\":"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	// Usage of listener to send the command.
 	// Retrieve the information in a dedicated structure, and execute the rest of the command.
 	// Used in virtually all commands.
@@ -37,10 +44,11 @@ func Attack(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.
 		var data types.LookInfo
 		if err := json.Unmarshal([]byte(room), &data); err != nil {
 			listener.Unsubscribe(id)
+			wrappedBack()
 			return
 		}
 		listener.Unsubscribe(id)
-		showEnemy(stdin, listener, subCommandBox, data, back)
+		showEnemy(stdin, listener, subCommandBox, data, wrappedBack)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
@@ -63,6 +71,7 @@ func showEnemy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fy
 				var inventory types.InventoryInfo
 				if err := json.Unmarshal([]byte(room), &inventory); err != nil {
 					listener.Unsubscribe(id)
+					back()
 					return
 				}
 				listener.Unsubscribe(id)
@@ -75,6 +84,7 @@ func showEnemy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fy
 		len += 1
 	}
 	if len == 0 {
+		listener.Distribute("No enemy to attack here.")
 		back()
 	}
 

@@ -25,6 +25,13 @@ import (
 
 // Start of MOVE. Retrieving information from the "LOOK" command.
 func Move(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	lookupPrefixes := []string{"OK {\"id\":"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	// Usage of listener to send the command.
 	// Retrieve the information in a dedicated structure, and execute the rest of the command.
 	// Used in virtually all commands.
@@ -37,10 +44,11 @@ func Move(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 		var data types.LookInfo
 		if err := json.Unmarshal([]byte(room), &data); err != nil {
 			listener.Unsubscribe(id)
+			wrappedBack()
 			return
 		}
 		listener.Unsubscribe(id)
-		showDirections(stdin, listener, subCommandBox, data, back)
+		showDirections(stdin, listener, subCommandBox, data, wrappedBack)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
@@ -68,14 +76,18 @@ func showDirections(stdin io.WriteCloser, listener *types.Listener, subCommandBo
 
 				// Send LOOK only after the server has processed MOVE.
 				var listenerId int
+				moveDone := false
 				listenerId = listener.Subscribe(func(line string) {
-					if strings.HasPrefix(line, "OK {\"id\":") {
+					if moveDone {
+						if strings.HasPrefix(line, "OK {\"id\":") {
+							listener.Unsubscribe(listenerId)
+							back()
+						}
 						return
 					}
 					if strings.HasPrefix(line, "OK ") || strings.HasPrefix(line, "ERR ") {
 						fmt.Fprintf(stdin, "LOOK\n")
-						listener.Unsubscribe(listenerId)
-						back()
+						moveDone = true
 					}
 				})
 			})
@@ -86,6 +98,7 @@ func showDirections(stdin io.WriteCloser, listener *types.Listener, subCommandBo
 		}
 	}
 	if len == 0 {
+		listener.Distribute("No exit from this room.")
 		back()
 	}
 	subCommandBox.Refresh()
