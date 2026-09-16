@@ -29,3 +29,6 @@ sujet.md
 .vscode
 
 /log/*
+
+main-gui
+main-server
