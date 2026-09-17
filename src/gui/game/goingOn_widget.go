@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/17 09:56:18 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/17 14:45:36 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/17 14:53:20 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -89,12 +89,12 @@ func setImage(image *canvas.Image, id int) {
 func currentRoomImage(id int) string {
 	for _, room := range getGameData().Rooms {
 		if room.Id == id {
-			path := "assets/room/" + room.Type + ".png"
+			path := "assets/" + room.Type + ".png"
 			if _, err := os.Stat(path); err != nil {
-				return "assets/room/placeholder.png"
+				return "assets/placeholder.png"
 			}
 			return path
 		}
 	}
-	return "assets/room/placeholder.png"
+	return "assets/placeholder.png"
 }

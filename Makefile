@@ -10,3 +10,22 @@
 #                                                                           #
 # ************************************************************************* #
 
+IP ?=
+
+build:
+	go build main.go
+
+run-server: build
+	./main server
+
+run-gui: build
+	./main gui
+
+run-cli:
+	nc $(IP) 8090
+
+clean:
+	rm -rf log
+	rm -rf main
+
+.PHONY: build run_server run_cli run_gui
