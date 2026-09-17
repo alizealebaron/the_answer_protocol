@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/11 18:00:00 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/16 21:20:10 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/17 21:34:48 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -43,6 +43,7 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 		{"CREATE", func() {
 			fmt.Fprintf(stdin, "GROUP CREATE\n")
 			fmt.Printf("GROUP CREATE\n")
+			fmt.Fprintf(stdin, "SECRET\n")
 			wrappedBack()
 		}},
 		{"INVITE", func() {
@@ -54,6 +55,7 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 		{"LEAVE", func() {
 			fmt.Fprintf(stdin, "GROUP LEAVE\n")
 			fmt.Printf("GROUP LEAVE\n")
+			fmt.Fprintf(stdin, "SECRET\n")
 			wrappedBack()
 		}},
 	}
@@ -99,7 +101,6 @@ func showInvitablePlayers(stdin io.WriteCloser, listener *types.Listener, subCom
 	len := 0
 
 	for _, player := range who.Players {
-		fmt.Printf("%d", 6+len)
 
 		otherPlayerName := player.Name
 		if otherPlayerName == playerName {
@@ -108,6 +109,7 @@ func showInvitablePlayers(stdin io.WriteCloser, listener *types.Listener, subCom
 		playerButton := widget.NewButton(otherPlayerName, func() {
 			fmt.Fprintf(stdin, "GROUP INVITE %s\n", otherPlayerName)
 			fmt.Printf("GROUP INVITE %s\n", otherPlayerName)
+			fmt.Fprintf(stdin, "SECRET\n")
 			back()
 		})
 		playerButton.Importance = widget.LowImportance
@@ -136,6 +138,7 @@ func showJoinForm(stdin io.WriteCloser, subCommandBox *fyne.Container, back func
 		}
 		fmt.Fprintf(stdin, "GROUP JOIN %s\n", groupID)
 		fmt.Printf("GROUP JOIN %s\n", groupID)
+		fmt.Fprintf(stdin, "SECRET\n")
 		back()
 	})
 

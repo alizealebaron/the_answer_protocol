@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/06/22 13:23:57 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/09 10:50:30 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/17 21:06:32 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -33,7 +33,7 @@ func CreateMainWindow(a fyne.App, fullscreen bool) (fyne.Window, error) {
 	}
 
 	// Load icon.png if error occurs, return an error
-	res, err := fyne.LoadResourceFromPath("assets/other/icon.png")
+	res, err := fyne.LoadResourceFromPath("assets/icon.png")
 
 	// Returns nil and the error, or the window without an error
 	if err != nil {
