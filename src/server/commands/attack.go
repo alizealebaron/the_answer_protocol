@@ -158,7 +158,9 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	
 	attack_dice = rand.IntN(20 - 1) + 1
 	if attack_dice > new_target.Defense {
-		if attack_dice == 20 {
+		if target.Attack == 0 {
+			damage = 0
+		} else if attack_dice == 20 {
 			damage = rand.IntN(target.Attack - 1) + rand.IntN(target.Attack - 1) + 4
 		} else {
 			if target.Attack - 1 >= 0 {
@@ -169,7 +171,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 		}
 		new_target.AddLifePoint(-damage)
 	}
-	
+
 	// on ecris la deuxieme moitier du message
 	message2 = fmt.Sprintf(", defense={\"attacker\": \"%s\", \"attack dice\": %d, \"target\": \"%s\", \"target_hp\": %d, \"damage\": %d, \"target_status\": %s}", target.Name, attack_dice, new_target.Name, new_target.Pv, damage, new_target.Status)
 	
