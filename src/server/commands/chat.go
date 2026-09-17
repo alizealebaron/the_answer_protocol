@@ -29,7 +29,7 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 func Chat(args []string, tapManager *models.TapManager, player *models.Player) error {
-	if len(args) != 2 {
+	if len(args) <= 2 {
 		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
@@ -54,10 +54,12 @@ func Chat(args []string, tapManager *models.TapManager, player *models.Player) e
 			}
 		}
 	} else if scope == "GROUP" {
-		for _, p := range player.Group.Lst_Player {
-			output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
-			server_write.ServerWrite(p.Conn, output)
-			server_write.WriteLog(player.Conn, "CHAT", output)
+		if player.Group != nil {
+			for _, p := range player.Group.Lst_Player {
+				output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
+				server_write.ServerWrite(p.Conn, output)
+				server_write.WriteLog(player.Conn, "CHAT", output)
+			}
 		}
 	}
 	return nil

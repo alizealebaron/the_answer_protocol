@@ -139,6 +139,17 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	// la cible attack le joueur
 
 	if player.Group != nil {
+		var available_player []*models.Player 
+		
+		for _, p := range player.Group.Lst_Player {
+			nt_room, err := tapManager.FindPlayerRoom(p.Id)
+			if err == nil {
+				return err
+			}
+			if nt_room == p_room {
+				available_player = append(available_player, p)
+			}
+		}
 		index := rand.IntN(len(player.Group.Lst_Player))
 		new_target = player.Group.Lst_Player[index]
 	} else {
@@ -150,7 +161,11 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 		if attack_dice == 20 {
 			damage = rand.IntN(target.Attack - 1) + rand.IntN(target.Attack - 1) + 4
 		} else {
-			damage = rand.IntN(target.Attack - 1) + 3
+			if target.Attack - 1 >= 0 {
+				damage = rand.IntN(target.Attack - 1) + 3
+			} else {
+				damage = 3
+			}
 		}
 		new_target.AddLifePoint(-damage)
 	}
