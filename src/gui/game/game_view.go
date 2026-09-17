@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:21 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 14:54:07 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/17 10:07:26 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -23,7 +23,6 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
 )
 
 type ratioLayout struct {
@@ -82,7 +81,7 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 
 	mapBox := MapWidget()
 
-	whathappened := goingOnWidget()
+	whathappened := goingOnWidget(listener)
 	playersLabel := playerCountLabel(listener)
 	topleft := newRatioSplit(0.83, false, gap, whathappened, playersLabel)
 
@@ -102,33 +101,6 @@ func subscribeOnce(listener *types.Listener, prefix string, fn func()) {
 			listener.Unsubscribe(id)
 		}
 	})
-}
-
-func actionWidget() *fyne.Container {
-	frame := canvas.NewRectangle(color.Transparent)
-	frame.StrokeColor = color.White
-	frame.StrokeWidth = float32(2)
-
-	content := container.NewVBox()
-	scroll := container.NewScroll(content)
-
-	return container.NewStack(frame, scroll)
-}
-
-func goingOnWidget() *fyne.Container {
-	frame := canvas.NewRectangle(color.Transparent)
-	frame.StrokeColor = color.White
-	frame.StrokeWidth = float32(2)
-
-	label := widget.NewLabel("Texte juste pour tester que la longueur de ma chaine fasse bien et que ca wrap bien :)")
-	label.Alignment = fyne.TextAlignCenter
-
-	square := canvas.NewRectangle(color.Transparent)
-	square.StrokeColor = color.White
-	square.StrokeWidth = float32(2)
-
-	border := container.NewBorder(label, nil, nil, nil, square)
-	return container.NewStack(frame, border)
 }
 
 func groupWidget() *fyne.Container {
