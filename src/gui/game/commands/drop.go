@@ -25,6 +25,13 @@ import (
 
 // Start of DROP. Retrieving information from the "INVENTORY" command.
 func Drop(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	lookupPrefixes := []string{"OK {\"items\":"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	// Usage of listener to send the command.
 	// Retrieve the information in a dedicated structure, and execute the rest of the command.
 	// Used in virtually all commands.
@@ -37,16 +44,17 @@ func Drop(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 		var data types.InventoryInfo
 		if err := json.Unmarshal([]byte(room), &data); err != nil {
 			listener.Unsubscribe(id)
+			wrappedBack()
 			return
 		}
 		listener.Unsubscribe(id)
-		showDropableObjects(stdin, subCommandBox, data, back)
+		showDropableObjects(stdin, listener, subCommandBox, data, wrappedBack)
 	})
 	fmt.Fprintf(stdin, "INVENTORY\n")
 }
 
 // Displays the items present in the player's inventory as buttons, or returns if nothing can be dropped.
-func showDropableObjects(stdin io.WriteCloser, subCommandBox *fyne.Container, inventory types.InventoryInfo, back func()) {
+func showDropableObjects(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, inventory types.InventoryInfo, back func()) {
 	subCommandBox.RemoveAll()
 
 	len := 0
@@ -64,6 +72,7 @@ func showDropableObjects(stdin io.WriteCloser, subCommandBox *fyne.Container, in
 		len += 1
 	}
 	if len == 0 {
+		listener.Distribute("Nothing to drop.")
 		back()
 	}
 

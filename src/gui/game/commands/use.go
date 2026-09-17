@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/12 15:43:01 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 10:47:55 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/16 19:15:08 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -25,6 +25,13 @@ import (
 
 // Start of USE. Retrieving information from the "INVENTORY" command.
 func Use(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	lookupPrefixes := []string{"OK {\"items\":"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	// Usage of listener to send the command.
 	// Retrieve the information in a dedicated structure, and execute the rest of the command.
 	// Used in virtually all commands.
@@ -33,20 +40,21 @@ func Use(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Con
 		if !strings.HasPrefix(line, "OK {\"items\":") {
 			return
 		}
-		room := strings.TrimPrefix(line, "OK ")
+		inventory := strings.TrimPrefix(line, "OK ")
 		var data types.InventoryInfo
-		if err := json.Unmarshal([]byte(room), &data); err != nil {
+		if err := json.Unmarshal([]byte(inventory), &data); err != nil {
 			listener.Unsubscribe(id)
+			wrappedBack()
 			return
 		}
 		listener.Unsubscribe(id)
-		showUsableObjects(stdin, subCommandBox, data, back)
+		showUsableObjects(stdin, listener, subCommandBox, data, wrappedBack)
 	})
 	fmt.Fprintf(stdin, "INVENTORY\n")
 }
 
 // Displays the usable items as buttons, or returns if there are none.
-func showUsableObjects(stdin io.WriteCloser, subCommandBox *fyne.Container, inventory types.InventoryInfo, back func()) {
+func showUsableObjects(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, inventory types.InventoryInfo, back func()) {
 	subCommandBox.RemoveAll()
 
 	len := 0
@@ -66,6 +74,7 @@ func showUsableObjects(stdin io.WriteCloser, subCommandBox *fyne.Container, inve
 		}
 	}
 	if len == 0 {
+		listener.Distribute("Nothing to use in your inventory.")
 		back()
 	}
 

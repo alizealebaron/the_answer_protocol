@@ -25,6 +25,13 @@ import (
 
 // Start of QUEST. Retrieving information from the "LOOK" command.
 func Quest(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	lookupPrefixes := []string{"OK {\"id\":"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	// Usage of listener to send the command.
 	// Retrieve the information in a dedicated structure, and execute the rest of the command.
 	// Used in virtually all commands.
@@ -37,16 +44,17 @@ func Quest(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 		var data types.LookInfo
 		if err := json.Unmarshal([]byte(room), &data); err != nil {
 			listener.Unsubscribe(id)
+			wrappedBack()
 			return
 		}
 		listener.Unsubscribe(id)
-		showQuestGivers(stdin, subCommandBox, data, back)
+		showQuestGivers(stdin, listener, subCommandBox, data, wrappedBack)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the quest givers present in the room as buttons, or returns if there are none.
-func showQuestGivers(stdin io.WriteCloser, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
+func showQuestGivers(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 
 	len := 0
@@ -66,6 +74,7 @@ func showQuestGivers(stdin io.WriteCloser, subCommandBox *fyne.Container, room t
 		}
 	}
 	if len == 0 {
+		listener.Distribute("No quest giver here.")
 		back()
 	}
 

@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/01 09:04:16 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 10:34:47 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/16 19:26:47 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -89,6 +89,7 @@ func showCommandCategory(category string, subCommandBox *fyne.Container, stdin i
 
 // A clunky switch-case statement to handle button functionality in a simple way.
 func executeCommand(stdin io.WriteCloser, command string, listener *types.Listener, subCommandBox *fyne.Container, playerName string, subScroll *container.Scroll) {
+	types.ResetMute()
 	switch command {
 
 	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+

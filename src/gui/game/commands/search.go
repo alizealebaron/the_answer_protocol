@@ -25,6 +25,13 @@ import (
 
 // Start of SEARCH. Retrieving information from the "LOOK" command.
 func Search(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	lookupPrefixes := []string{"OK {\"id\":"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	// Usage of listener to send the command.
 	// Retrieve the information in a dedicated structure, and execute the rest of the command.
 	// Used in virtually all commands.
@@ -37,16 +44,17 @@ func Search(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.
 		var data types.LookInfo
 		if err := json.Unmarshal([]byte(room), &data); err != nil {
 			listener.Unsubscribe(id)
+			wrappedBack()
 			return
 		}
 		listener.Unsubscribe(id)
-		showSearchableEnemy(stdin, subCommandBox, data, back)
+		showSearchableEnemy(stdin, listener, subCommandBox, data, wrappedBack)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the enemies present in the room as buttons, or returns if there are none.
-func showSearchableEnemy(stdin io.WriteCloser, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
+func showSearchableEnemy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 
 	len := 0
@@ -64,6 +72,7 @@ func showSearchableEnemy(stdin io.WriteCloser, subCommandBox *fyne.Container, ro
 		len += 1
 	}
 	if len == 0 {
+		listener.Distribute("Nothing to search here.")
 		back()
 	}
 

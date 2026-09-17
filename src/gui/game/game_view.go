@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:21 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 14:39:38 by alebaron        ###   ########.fr       */
+/* Updated: 2026/09/17 10:07:26 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -15,6 +15,7 @@ package game
 import (
 	"fmt"
 	"io"
+	"strings"
 	"the_answer_protocol/src/gui/game/types"
 
 	"image/color"
@@ -22,7 +23,6 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
 )
 
 type ratioLayout struct {
@@ -67,15 +67,21 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 	const gap = float32(8)
 
 	subscribeGameData(listener)
+	subscribeLogs(listener)
+	subscribeMapData(listener)
+
 	fmt.Fprintf(stdin, "SECRET\n")
+	subscribeOnce(listener, "OK SECRET ", func() {
+		fmt.Fprintf(stdin, "LOOK\n")
+	})
 
 	commandBox := commandWidget(stdin, listener, playerName, backToHome)
-	scrollBox := actionWidget()
+	scrollBox := logWidget()
 	right := newRatioSplit(0.72, false, gap, commandBox, scrollBox)
 
 	mapBox := MapWidget()
 
-	whathappened := goingOnWidget()
+	whathappened := goingOnWidget(listener)
 	playersLabel := playerCountLabel(listener)
 	topleft := newRatioSplit(0.83, false, gap, whathappened, playersLabel)
 
@@ -87,39 +93,14 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 	return newRatioSplit(0.3, true, gap, left, centerRight)
 }
 
-func actionWidget() *fyne.Container {
-	frame := canvas.NewRectangle(color.Transparent)
-	frame.StrokeColor = color.White
-	frame.StrokeWidth = float32(2)
-
-	content := container.NewVBox()
-	scroll := container.NewScroll(content)
-
-	return container.NewStack(frame, scroll)
-}
-
-// func mapWidget() *fyne.Container {
-// 	frame := canvas.NewRectangle(color.Transparent)
-// 	frame.StrokeColor = color.White
-// 	frame.StrokeWidth = float32(2)
-
-// 	return container.NewStack(frame)
-// }
-
-func goingOnWidget() *fyne.Container {
-	frame := canvas.NewRectangle(color.Transparent)
-	frame.StrokeColor = color.White
-	frame.StrokeWidth = float32(2)
-
-	label := widget.NewLabel("Texte juste pour tester que la longueur de ma chaine fasse bien et que ca wrap bien :)")
-	label.Alignment = fyne.TextAlignCenter
-
-	square := canvas.NewRectangle(color.Transparent)
-	square.StrokeColor = color.White
-	square.StrokeWidth = float32(2)
-
-	border := container.NewBorder(label, nil, nil, nil, square)
-	return container.NewStack(frame, border)
+func subscribeOnce(listener *types.Listener, prefix string, fn func()) {
+	var id int
+	id = listener.Subscribe(func(line string) {
+		if strings.HasPrefix(line, prefix) {
+			fn()
+			listener.Unsubscribe(id)
+		}
+	})
 }
 
 func groupWidget() *fyne.Container {

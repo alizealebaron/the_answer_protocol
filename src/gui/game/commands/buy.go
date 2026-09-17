@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/12 16:32:52 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 10:46:53 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/16 19:29:32 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -26,6 +26,13 @@ import (
 
 // Start of BUY. Retrieving information from the “LOOK” command.
 func Buy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	lookupPrefixes := []string{"OK {\"id\":", "OK trade=", "OK {\"items\":"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	// Usage of listener to send the command.
 	// Retrieve the information in a dedicated structure, and execute the rest of the command.
 	// Used in virtually all commands.
@@ -38,10 +45,11 @@ func Buy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Con
 		var data types.LookInfo
 		if err := json.Unmarshal([]byte(room), &data); err != nil {
 			listener.Unsubscribe(id)
+			wrappedBack()
 			return
 		}
 		listener.Unsubscribe(id)
-		showTrader(stdin, listener, subCommandBox, data, back)
+		showTrader(stdin, listener, subCommandBox, data, wrappedBack)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
@@ -63,6 +71,7 @@ func showTrader(stdin io.WriteCloser, listener *types.Listener, subCommandBox *f
 					var data []types.TradeInfo
 					if err := json.Unmarshal([]byte(trade), &data); err != nil {
 						listener.Unsubscribe(id)
+						back()
 						return
 					}
 					listener.Unsubscribe(id)
@@ -76,6 +85,7 @@ func showTrader(stdin io.WriteCloser, listener *types.Listener, subCommandBox *f
 		}
 	}
 	if len == 0 {
+		listener.Distribute("No trader here to buy from.")
 		back()
 	}
 
@@ -125,7 +135,7 @@ func showQuantityEntryBuy(stdin io.WriteCloser, listener *types.Listener, subCom
 			return
 		}
 
-		getPlayerMoney(stdin, listener, func(money int) {
+		getPlayerMoney(stdin, listener, back, func(money int) {
 			if money < quantity*itemCost {
 				quantityEntry.SetPlaceHolder("You need to have enough money to buy it. ")
 
@@ -147,7 +157,7 @@ func showQuantityEntryBuy(stdin io.WriteCloser, listener *types.Listener, subCom
 }
 
 // Retrieves the player's money via INVENTORY and passes it to the callback.
-func getPlayerMoney(stdin io.WriteCloser, listener *types.Listener, callback func(int)) {
+func getPlayerMoney(stdin io.WriteCloser, listener *types.Listener, onError func(), callback func(int)) {
 	var id int
 	id = listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"items\":") {
@@ -157,6 +167,7 @@ func getPlayerMoney(stdin io.WriteCloser, listener *types.Listener, callback fun
 		var data types.InventoryInfo
 		if err := json.Unmarshal([]byte(raw), &data); err != nil {
 			listener.Unsubscribe(id)
+			onError()
 			return
 		}
 		listener.Unsubscribe(id)

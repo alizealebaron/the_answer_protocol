@@ -25,6 +25,13 @@ import (
 
 // Start of MOVE. Retrieving information from the "LOOK" command.
 func Move(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
+	lookupPrefixes := []string{"OK {\"id\":"}
+	types.Mute(lookupPrefixes...)
+	wrappedBack := func() {
+		types.Unmute(lookupPrefixes...)
+		back()
+	}
+
 	// Usage of listener to send the command.
 	// Retrieve the information in a dedicated structure, and execute the rest of the command.
 	// Used in virtually all commands.
@@ -37,16 +44,17 @@ func Move(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 		var data types.LookInfo
 		if err := json.Unmarshal([]byte(room), &data); err != nil {
 			listener.Unsubscribe(id)
+			wrappedBack()
 			return
 		}
 		listener.Unsubscribe(id)
-		showDirections(stdin, subCommandBox, data, back)
+		showDirections(stdin, listener, subCommandBox, data, wrappedBack)
 	})
 	fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the available directions as buttons, or returns to the previous menu if there are none.
-func showDirections(stdin io.WriteCloser, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
+func showDirections(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, room types.LookInfo, back func()) {
 	subCommandBox.RemoveAll()
 
 	// A map of directions link with the corresponding room IDs.
@@ -65,14 +73,32 @@ func showDirections(stdin io.WriteCloser, subCommandBox *fyne.Container, room ty
 			directionButton := widget.NewButton(dir, func() {
 				fmt.Fprintf(stdin, "MOVE %s\n", dir)
 				fmt.Printf("MOVE %s\n", dir)
-				back()
+
+				// Send LOOK only after the server has processed MOVE.
+				var listenerId int
+				moveDone := false
+				listenerId = listener.Subscribe(func(line string) {
+					if moveDone {
+						if strings.HasPrefix(line, "OK {\"id\":") {
+							listener.Unsubscribe(listenerId)
+							back()
+						}
+						return
+					}
+					if strings.HasPrefix(line, "OK ") || strings.HasPrefix(line, "ERR ") {
+						fmt.Fprintf(stdin, "LOOK\n")
+						moveDone = true
+					}
+				})
 			})
+
 			directionButton.Importance = widget.LowImportance
 			subCommandBox.Add(directionButton)
 			len += 1
 		}
 	}
 	if len == 0 {
+		listener.Distribute("No exit from this room.")
 		back()
 	}
 	subCommandBox.Refresh()
