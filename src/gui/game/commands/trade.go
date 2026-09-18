@@ -85,7 +85,7 @@ func showTrader1(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 		}
 	}
 	if len == 0 {
-		listener.Distribute("No trader here to trade with.")
+		listener.Distribute(types.Translate("No trader here to trade with."))
 		back()
 	}
 

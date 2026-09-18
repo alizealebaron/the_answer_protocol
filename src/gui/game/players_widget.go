@@ -30,7 +30,7 @@ func playerCountLabel(listener *types.Listener) *fyne.Container {
 	var lenServer int // Players on the server
 	var firstWho bool // True once a WHO reply has been received
 
-	label := widget.NewLabel("Use the \u2018WHO\u2019 command to view information about players number.")
+	label := widget.NewLabel(types.Translate("Use the \u2018WHO\u2019 command to view information about players number."))
 	listener.Subscribe(func(line string) {
 		// The WHO reply gives the starting room and server counts
 		if strings.HasPrefix(line, "OK { \"room\":") {
@@ -57,7 +57,7 @@ func playerCountLabel(listener *types.Listener) *fyne.Container {
 				lenRoom -= 1
 			}
 
-			label.SetText(fmt.Sprintf("Nombre de joueur dans la room: %d\nNombre de joueur global: %d", lenRoom, lenServer))
+			label.SetText(fmt.Sprintf(types.Translate("Players in room: %d\nPlayers on server: %d"), lenRoom, lenServer))
 		}
 
 	})

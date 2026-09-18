@@ -70,7 +70,7 @@ func showDirections(stdin io.WriteCloser, listener *types.Listener, subCommandBo
 	for direction, id := range directions {
 		if id != 0 {
 			dir := direction
-			directionButton := widget.NewButton(dir, func() {
+			directionButton := widget.NewButton(types.Translate(dir), func() {
 				fmt.Fprintf(stdin, "MOVE %s\n", dir)
 				fmt.Printf("MOVE %s\n", dir)
 
@@ -98,7 +98,7 @@ func showDirections(stdin io.WriteCloser, listener *types.Listener, subCommandBo
 		}
 	}
 	if len == 0 {
-		listener.Distribute("No exit from this room.")
+		listener.Distribute(types.Translate("No exit from this room."))
 		back()
 	}
 	subCommandBox.Refresh()

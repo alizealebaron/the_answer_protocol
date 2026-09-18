@@ -57,7 +57,7 @@ func currentRoomName() string {
 			return room.Name
 		}
 	}
-	return "You're lost!" // Room not found in the data
+	return types.Translate("You're lost!") // Room not found in the data
 }
 
 // On each LOOK reply, updates the label and the room image.

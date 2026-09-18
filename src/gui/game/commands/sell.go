@@ -67,15 +67,15 @@ func showTrader2(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 			traderButton := widget.NewButton(traderName, func() {
 				var id int
 				id = listener.Subscribe(func(line string) {
-trade := strings.TrimPrefix(line, "OK ")
-				var data types.InventoryInfo
-				if err := json.Unmarshal([]byte(trade), &data); err != nil {
+					trade := strings.TrimPrefix(line, "OK ")
+					var data types.InventoryInfo
+					if err := json.Unmarshal([]byte(trade), &data); err != nil {
+						listener.Unsubscribe(id)
+						back()
+						return
+					}
 					listener.Unsubscribe(id)
-					back()
-					return
-				}
-listener.Unsubscribe(id)
-				showInventory(stdin, listener, subCommandBox, data, traderId, back)
+					showInventory(stdin, listener, subCommandBox, data, traderId, back)
 				})
 				fmt.Fprintf(stdin, "INVENTORY\n")
 			})
@@ -85,7 +85,7 @@ listener.Unsubscribe(id)
 		}
 	}
 	if len == 0 {
-		listener.Distribute("No trader here to sell to.")
+		listener.Distribute(types.Translate("No trader here to sell to."))
 		back()
 	}
 
@@ -97,7 +97,7 @@ func showInventory(stdin io.WriteCloser, listener *types.Listener, subCommandBox
 	subCommandBox.RemoveAll()
 
 	if len(inventory.Items) == 0 {
-		listener.Distribute("Nothing to sell.")
+		listener.Distribute(types.Translate("Nothing to sell."))
 		back()
 	}
 
@@ -121,12 +121,12 @@ func showQuantityEntrySell(stdin io.WriteCloser, subCommandBox *fyne.Container, 
 	subCommandBox.RemoveAll()
 
 	quantityEntry := widget.NewEntry()
-	quantityEntry.SetPlaceHolder("Enter the quantity you would like to sell.")
+	quantityEntry.SetPlaceHolder(types.Translate("Enter the quantity you would like to sell."))
 
-	buyButton := widget.NewButton("SELL", func() {
+	buyButton := widget.NewButton(types.Translate("SELL"), func() {
 		quantity, err := strconv.Atoi(strings.TrimSpace(quantityEntry.Text))
 		if err != nil {
-			quantityEntry.SetPlaceHolder("The quantity must be an integer.")
+			quantityEntry.SetPlaceHolder(types.Translate("The quantity must be an integer."))
 
 			quantityEntry.SetText("")
 			quantityEntry.Refresh()
@@ -134,7 +134,7 @@ func showQuantityEntrySell(stdin io.WriteCloser, subCommandBox *fyne.Container, 
 		}
 
 		if quantity <= 0 {
-			quantityEntry.SetPlaceHolder("The quantity must be at least 1.")
+			quantityEntry.SetPlaceHolder(types.Translate("The quantity must be at least 1."))
 
 			quantityEntry.SetText("")
 			quantityEntry.Refresh()
@@ -142,7 +142,7 @@ func showQuantityEntrySell(stdin io.WriteCloser, subCommandBox *fyne.Container, 
 		}
 
 		if quantity > itemQuantity {
-			quantityEntry.SetPlaceHolder("You must own the item.")
+			quantityEntry.SetPlaceHolder(types.Translate("You must own the item."))
 
 			quantityEntry.SetText("")
 			quantityEntry.Refresh()

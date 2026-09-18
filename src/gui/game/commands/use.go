@@ -74,7 +74,7 @@ func showUsableObjects(stdin io.WriteCloser, listener *types.Listener, subComman
 		}
 	}
 	if len == 0 {
-		listener.Distribute("Nothing to use in your inventory.")
+		listener.Distribute(types.Translate("Nothing to use in your inventory."))
 		back()
 	}
 

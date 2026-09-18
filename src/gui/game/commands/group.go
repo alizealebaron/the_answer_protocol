@@ -63,7 +63,7 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 	for _, action := range actions {
 		actionName := action.name
 		actionRun := action.run
-		actionButton := widget.NewButton(actionName, actionRun)
+		actionButton := widget.NewButton(types.Translate(actionName), actionRun)
 		actionButton.Importance = widget.LowImportance
 		subCommandBox.Add(actionButton)
 	}
@@ -117,7 +117,7 @@ func showInvitablePlayers(stdin io.WriteCloser, listener *types.Listener, subCom
 		len += 1
 	}
 	if len == 0 {
-		listener.Distribute("No one to invite to your group.")
+		listener.Distribute(types.Translate("No one to invite to your group."))
 		back()
 	}
 
@@ -129,9 +129,9 @@ func showJoinForm(stdin io.WriteCloser, listener *types.Listener, subCommandBox 
 	subCommandBox.RemoveAll()
 
 	groupEntry := widget.NewEntry()
-	groupEntry.SetPlaceHolder("Enter the group id.")
+	groupEntry.SetPlaceHolder(types.Translate("Enter the group id."))
 
-	joinButton := widget.NewButton("JOIN", func() {
+	joinButton := widget.NewButton(types.Translate("JOIN"), func() {
 		groupID := strings.TrimSpace(groupEntry.Text)
 		if groupID == "" {
 			return

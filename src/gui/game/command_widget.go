@@ -54,7 +54,7 @@ func commandWidget(stdin io.WriteCloser, listener *types.Listener, playerName st
 		createButton("Gambling", subCommandBox, stdin, listener, playerName, subScroll),
 	)
 
-	quitButton := widget.NewButton("Quit", func() {
+	quitButton := widget.NewButton(types.Translate("Quit"), func() {
 		fmt.Fprintf(stdin, "QUIT\n")
 		fmt.Println("QUIT")
 		backToHome()
@@ -66,7 +66,7 @@ func commandWidget(stdin io.WriteCloser, listener *types.Listener, playerName st
 
 // Creating category buttons with a command to generate game commands.
 func createButton(category string, subCommandBox *fyne.Container, stdin io.WriteCloser, listener *types.Listener, playerName string, subScroll *container.Scroll) *widget.Button {
-	button := widget.NewButton(category, func() {
+	button := widget.NewButton(types.Translate(category), func() {
 		showCommandCategory(category, subCommandBox, stdin, listener, playerName, subScroll)
 	})
 	return button
@@ -77,7 +77,7 @@ func showCommandCategory(category string, subCommandBox *fyne.Container, stdin i
 	subCommandBox.RemoveAll()
 
 	for _, command := range commandByCategory[category] {
-		commandButton := widget.NewButton(command, func() {
+		commandButton := widget.NewButton(types.Translate(command), func() {
 			executeCommand(stdin, command, listener, subCommandBox, playerName, subScroll)
 		})
 		commandButton.Importance = widget.LowImportance

@@ -85,7 +85,7 @@ func showTrader(stdin io.WriteCloser, listener *types.Listener, subCommandBox *f
 		}
 	}
 	if len == 0 {
-		listener.Distribute("No trader here to buy from.")
+		listener.Distribute(types.Translate("No trader here to buy from."))
 		back()
 	}
 
@@ -115,12 +115,12 @@ func showQuantityEntryBuy(stdin io.WriteCloser, listener *types.Listener, subCom
 	subCommandBox.RemoveAll()
 
 	quantityEntry := widget.NewEntry()
-	quantityEntry.SetPlaceHolder("Enter the quantity you would like to purchase.")
+	quantityEntry.SetPlaceHolder(types.Translate("Enter the quantity you would like to purchase."))
 
-	buyButton := widget.NewButton("BUY", func() {
+	buyButton := widget.NewButton(types.Translate("BUY"), func() {
 		quantity, err := strconv.Atoi(strings.TrimSpace(quantityEntry.Text))
 		if err != nil {
-			quantityEntry.SetPlaceHolder("The quantity must be an integer.")
+			quantityEntry.SetPlaceHolder(types.Translate("The quantity must be an integer."))
 
 			quantityEntry.SetText("")
 			quantityEntry.Refresh()
@@ -128,7 +128,7 @@ func showQuantityEntryBuy(stdin io.WriteCloser, listener *types.Listener, subCom
 		}
 
 		if quantity <= 0 {
-			quantityEntry.SetPlaceHolder("The quantity must be at least 1.")
+			quantityEntry.SetPlaceHolder(types.Translate("The quantity must be at least 1."))
 
 			quantityEntry.SetText("")
 			quantityEntry.Refresh()
@@ -137,7 +137,7 @@ func showQuantityEntryBuy(stdin io.WriteCloser, listener *types.Listener, subCom
 
 		getPlayerMoney(stdin, listener, back, func(money int) {
 			if money < quantity*itemCost {
-				quantityEntry.SetPlaceHolder("You need to have enough money to buy it. ")
+				quantityEntry.SetPlaceHolder(types.Translate("You need to have enough money to buy it. "))
 
 				quantityEntry.SetText("")
 				quantityEntry.Refresh()

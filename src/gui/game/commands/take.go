@@ -72,7 +72,7 @@ func showSelectableObjects(stdin io.WriteCloser, listener *types.Listener, subCo
 		len += 1
 	}
 	if len == 0 {
-		listener.Distribute("Nothing to take here.")
+		listener.Distribute(types.Translate("Nothing to take here."))
 		back()
 	}
 

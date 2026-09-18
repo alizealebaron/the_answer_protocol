@@ -66,8 +66,10 @@ func newRatioSplit(ratio float32, horizontal bool, gap float32, a, b fyne.Canvas
 }
 
 // Builds the whole game screen.
-func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener *types.Listener, playerName string, backToHome func()) fyne.CanvasObject {
+func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener *types.Listener, playerName string, language string, backToHome func()) fyne.CanvasObject {
 	const gap = float32(8)
+
+	types.SetLanguage(language)
 
 	// Registers the listeners that feed the widgets with the server replies
 	subscribeGameData(listener)

@@ -73,7 +73,7 @@ func showTalkableNpc(stdin io.WriteCloser, listener *types.Listener, subCommandB
 	}
 
 	if len == 0 {
-		listener.Distribute("No one to talk to here.")
+		listener.Distribute(types.Translate("No one to talk to here."))
 		back()
 	}
 

@@ -84,7 +84,7 @@ func showEnemy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fy
 		len += 1
 	}
 	if len == 0 {
-		listener.Distribute("No enemy to attack here.")
+		listener.Distribute(types.Translate("No enemy to attack here."))
 		back()
 	}
 
@@ -100,7 +100,7 @@ func showWeapon(stdin io.WriteCloser, subCommandBox *fyne.Container, enemyId int
 	for _, item := range inventory.Items {
 		if item.Is_Weapon {
 			if len == 0 {
-				handButton := widget.NewButton("Hand", func() {
+				handButton := widget.NewButton(types.Translate("Hand"), func() {
 					fmt.Fprintf(stdin, "ATTACK %d\n", enemyId)
 					fmt.Printf("ATTACK %d\n", enemyId)
 					back()
@@ -111,7 +111,7 @@ func showWeapon(stdin io.WriteCloser, subCommandBox *fyne.Container, enemyId int
 
 			weaponName := item.Name
 			weaponId := item.Id
-			weaponButton := widget.NewButton(weaponName, func() {
+			weaponButton := widget.NewButton(types.Translate(weaponName), func() {
 				fmt.Fprintf(stdin, "ATTACK %d %d\n", enemyId, weaponId)
 				fmt.Printf("ATTACK %d %d\n", enemyId, weaponId)
 				back()

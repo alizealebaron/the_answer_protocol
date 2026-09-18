@@ -48,7 +48,7 @@ func groupWidget(stdin io.WriteCloser, listener *types.Listener, playerName stri
 
 		group, isOk := getPlayerGroup(playerName)
 		if !isOk {
-			label := widget.NewLabel("Not in a group")
+			label := widget.NewLabel(types.Translate("Not in a group"))
 			label.Alignment = fyne.TextAlignCenter
 			content.Add(label)
 			content.Refresh()
@@ -61,7 +61,7 @@ func groupWidget(stdin io.WriteCloser, listener *types.Listener, playerName stri
 				Alignment: fyne.TextAlignCenter,
 				SizeName:  theme.SizeNameHeadingText,
 			},
-			Text: fmt.Sprintf("In group (id=%d)", group.Id),
+			Text: fmt.Sprintf(types.Translate("In group (id=%d)"), group.Id),
 		})
 		title.Wrapping = fyne.TextWrapWord
 		content.Add(title)
@@ -71,7 +71,7 @@ func groupWidget(stdin io.WriteCloser, listener *types.Listener, playerName stri
 			memberName := member.Name
 			text := fmt.Sprintf("  - %s", memberName)
 			if memberName == playerName {
-				text += " (you)"
+				text += types.Translate("(you)")
 			}
 			memberLabel := widget.NewRichText(&widget.TextSegment{
 				Style: widget.RichTextStyle{SizeName: theme.SizeNameSubHeadingText},

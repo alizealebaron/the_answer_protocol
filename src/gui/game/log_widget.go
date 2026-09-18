@@ -14,6 +14,7 @@ package game
 
 import (
 	"image/color"
+	"the_answer_protocol/src/gui/game/types"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -56,7 +57,7 @@ func logWidget() *fyne.Container {
 
 // Creates a filter button for one log category.
 func createLogButton(category string, subBox *fyne.Container, subScroll *container.Scroll) *widget.Button {
-	button := widget.NewButton(category, func() {
+	button := widget.NewButton(types.Translate(category), func() {
 		showCategory(category, subBox, subScroll)
 	})
 	return button

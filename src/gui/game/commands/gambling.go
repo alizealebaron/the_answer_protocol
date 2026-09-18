@@ -50,7 +50,7 @@ func Gambling(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyn
 		}
 		listener.Unsubscribe(id)
 		if data.Name != "CASINO" {
-			listener.Distribute("You must be in a casino to gamble.")
+			listener.Distribute(types.Translate("You must be in a casino to gamble."))
 			wrappedBack()
 			return
 		}
@@ -93,18 +93,18 @@ func showCoinSelection(stdin io.WriteCloser, listener *types.Listener, subComman
 	}
 
 	if playerCoins < 10 {
-		listener.Distribute("You need at least 10 gambling coins to gamble.")
+		listener.Distribute(types.Translate("You need at least 10 gambling coins to gamble."))
 		back()
 		return
 	}
 
 	gamblingEntry := widget.NewEntry()
-	gamblingEntry.SetPlaceHolder("Enter the number of gambling coins you want to bet.")
+	gamblingEntry.SetPlaceHolder(types.Translate("Enter the number of gambling coins you want to bet."))
 
-	gamblingButton := widget.NewButton("GAMBLE", func() {
+	gamblingButton := widget.NewButton(types.Translate("GAMBLE"), func() {
 		quantityToGamble, err := strconv.Atoi(strings.TrimSpace(gamblingEntry.Text))
 		if err != nil || quantityToGamble < 10 {
-			gamblingEntry.SetPlaceHolder("The amount must be at least 10.")
+			gamblingEntry.SetPlaceHolder(types.Translate("The amount must be at least 10."))
 
 			gamblingEntry.SetText("")
 			gamblingEntry.Refresh()
@@ -112,7 +112,7 @@ func showCoinSelection(stdin io.WriteCloser, listener *types.Listener, subComman
 		}
 
 		if quantityToGamble > playerCoins {
-			gamblingEntry.SetPlaceHolder("You don't have that many gambling coins.")
+			gamblingEntry.SetPlaceHolder(types.Translate("You don't have that many gambling coins."))
 			gamblingEntry.SetText("")
 			gamblingEntry.Refresh()
 			return

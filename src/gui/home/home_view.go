@@ -153,7 +153,7 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			if strings.HasPrefix(line, "OK connected") {
 				go stdoutListening(stdout, listener)
 				go fyne.Do(func() {
-					window.SetContent(game.GameView(window, size, stdin, listener, name, func() {
+					window.SetContent(game.GameView(window, size, stdin, listener, name, language, func() {
 						window.SetContent(HomeView(window, size))
 					}))
 				})

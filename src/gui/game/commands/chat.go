@@ -46,7 +46,7 @@ func Chat(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 	for _, action := range actions {
 		actionName := action.name
 		actionRun := action.run
-		actionButton := widget.NewButton(actionName, actionRun)
+		actionButton := widget.NewButton(types.Translate(actionName), actionRun)
 		actionButton.Importance = widget.LowImportance
 		subCommandBox.Add(actionButton)
 	}
@@ -59,9 +59,9 @@ func sendMessage(stdin io.WriteCloser, subCommandBox *fyne.Container, scope stri
 	subCommandBox.RemoveAll()
 
 	messageEntry := widget.NewEntry()
-	messageEntry.SetPlaceHolder("Enter your message.")
+	messageEntry.SetPlaceHolder(types.Translate("Enter your message."))
 
-	chatButton := widget.NewButton("Send message", func() {
+	chatButton := widget.NewButton(types.Translate("Send message"), func() {
 		if messageEntry.Text == "" {
 			return
 		}

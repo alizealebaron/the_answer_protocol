@@ -72,7 +72,7 @@ func showSearchableEnemy(stdin io.WriteCloser, listener *types.Listener, subComm
 		len += 1
 	}
 	if len == 0 {
-		listener.Distribute("Nothing to search here.")
+		listener.Distribute(types.Translate("Nothing to search here."))
 		back()
 	}
 

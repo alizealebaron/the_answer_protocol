@@ -72,7 +72,7 @@ func showDropableObjects(stdin io.WriteCloser, listener *types.Listener, subComm
 		len += 1
 	}
 	if len == 0 {
-		listener.Distribute("Nothing to drop.")
+		listener.Distribute(types.Translate("Nothing to drop."))
 		back()
 	}
 

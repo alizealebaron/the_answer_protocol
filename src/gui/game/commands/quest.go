@@ -74,7 +74,7 @@ func showQuestGivers(stdin io.WriteCloser, listener *types.Listener, subCommandB
 		}
 	}
 	if len == 0 {
-		listener.Distribute("No quest giver here.")
+		listener.Distribute(types.Translate("No quest giver here."))
 		back()
 	}
 
