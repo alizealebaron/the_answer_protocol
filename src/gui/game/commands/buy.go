@@ -137,7 +137,7 @@ func showQuantityEntryBuy(stdin io.WriteCloser, listener *types.Listener, subCom
 
 		getPlayerMoney(stdin, listener, back, func(money int) {
 			if money < quantity*itemCost {
-				quantityEntry.SetPlaceHolder(types.Translate("You need to have enough money to buy it. "))
+				quantityEntry.SetPlaceHolder(types.Translate("You need to have enough money to buy it."))
 
 				quantityEntry.SetText("")
 				quantityEntry.Refresh()
