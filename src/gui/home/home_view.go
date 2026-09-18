@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/21 18:10:17 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 14:53:57 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/18 12:10:00 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -23,6 +23,7 @@ import (
 	"the_answer_protocol/src/gui/game/types"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 )
@@ -183,8 +184,12 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 	quitButton := quitButton(window, width, height)
 	quit := container.NewWithoutLayout(quitButton)
 
+	// Full screen background image
+	background := canvas.NewImageFromFile("assets/opening_screen.png")
+	background.FillMode = canvas.ImageFillStretch
+
 	// return the container at the good place.
-	return container.NewStack(container.NewBorder(nil, big, nil, nil), err, quit)
+	return container.NewStack(background, container.NewBorder(nil, big, nil, nil), err, quit)
 }
 
 func quitButton(window fyne.Window, width float32, height float32) *widget.Button {
