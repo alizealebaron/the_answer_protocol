@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/17 09:56:18 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/17 14:53:20 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/17 21:58:49 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -25,6 +25,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// Shows the room the player is in: its image in the middle, its name on top.
 func goingOnWidget(listener *types.Listener) *fyne.Container {
 	label := placeNameLabel()
 	image := placeImage()
@@ -40,6 +41,7 @@ func goingOnWidget(listener *types.Listener) *fyne.Container {
 	return container.NewBorder(label, nil, nil, nil, roomSquare)
 }
 
+// Label that shows the current room name.
 func placeNameLabel() *widget.Label {
 	placeLabel := widget.NewLabel(currentRoomName())
 	placeLabel.Alignment = fyne.TextAlignCenter
@@ -47,6 +49,7 @@ func placeNameLabel() *widget.Label {
 	return placeLabel
 }
 
+// Returns the name of the room the player is in.
 func currentRoomName() string {
 	id := getCurrentRoom()
 	for _, room := range getGameData().Rooms {
@@ -54,9 +57,10 @@ func currentRoomName() string {
 			return room.Name
 		}
 	}
-	return "You're lost!"
+	return "You're lost!" // Room not found in the data
 }
 
+// On each LOOK reply, updates the label and the room image.
 func subscribeRoomChange(listener *types.Listener, label *widget.Label, image *canvas.Image) {
 	listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -73,6 +77,7 @@ func subscribeRoomChange(listener *types.Listener, label *widget.Label, image *c
 	})
 }
 
+// Room image built from the current room type.
 func placeImage() *canvas.Image {
 	image := canvas.NewImageFromFile(currentRoomImage(getCurrentRoom()))
 	image.FillMode = canvas.ImageFillStretch
@@ -86,6 +91,7 @@ func setImage(image *canvas.Image, id int) {
 	image.Refresh()
 }
 
+// Returns the asset path matching the room type, or a placeholder if missing.
 func currentRoomImage(id int) string {
 	for _, room := range getGameData().Rooms {
 		if room.Id == id {

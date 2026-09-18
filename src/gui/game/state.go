@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/08 23:23:01 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/15 14:35:21 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/17 21:51:38 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -20,55 +20,34 @@ import (
 	"the_answer_protocol/src/gui/game/types"
 )
 
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+// |                                                            Game Data                                                            |
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
 var gameData types.Secret
+
 var gameDataMutex sync.RWMutex
 
-var logMessages []string
-var globalMessages []string
-var roomMessages []string
-var groupMessages []string
-var logsMutex sync.RWMutex
-
-var currentRoomId int
-var visitedRooms = make(map[int]bool)
-var knownRooms = make(map[int]bool)
-var mapMutex sync.RWMutex
-
-var minX int
-var minY int
-var maxX int
-var maxY int
-var boundsComputed bool
-var boundsMutex sync.RWMutex
-
+// Saves the new game data, then refreshes the widgets that use it.
 func setGameData(data types.Secret) {
 	gameDataMutex.Lock()
 	gameData = data
 	gameDataMutex.Unlock()
 
+	// The room list is only used to find the map limits.
 	computeMapBounds(data.Rooms)
 	triggerMapRedraw()
+	triggerGroupRedraw()
 }
 
-type roomState int
-
-const (
-	// iota simplifies the creation of incremented constants in a const block
-	roomHidden roomState = iota
-	roomKnown
-	roomVisited
-	roomCurrent
-)
-
-var mapRedrawFunc func()
-var redrawMutex sync.RWMutex
-
+// Returns a copy of the game data.
 func getGameData() types.Secret {
 	gameDataMutex.RLock()
 	defer gameDataMutex.RUnlock()
 	return gameData
 }
 
+// Listens to the "OK SECRET" lines and stores the data they contain.
 func subscribeGameData(listener *types.Listener) {
 	listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK SECRET ") {
@@ -83,6 +62,18 @@ func subscribeGameData(listener *types.Listener) {
 	})
 }
 
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+// |                                                              Logs                                                               |
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
+// One list of stored messages per category.
+var logMessages []string
+var globalMessages []string
+var roomMessages []string
+var groupMessages []string
+var logsMutex sync.RWMutex
+
+// Forwards every incoming line to the log widget.
 func subscribeLogs(listener *types.Listener) {
 	listener.Subscribe(func(line string) {
 		if strings.HasPrefix(line, "OK SECRET ") {
@@ -97,6 +88,7 @@ func subscribeLogs(listener *types.Listener) {
 	})
 }
 
+// Returns the category of a line based on its prefix.
 func getTypeLine(line string) string {
 	switch {
 	case strings.HasPrefix(line, "EVT GLOBAL"):
@@ -110,6 +102,7 @@ func getTypeLine(line string) string {
 	}
 }
 
+// Appends a line to the correct message list.
 func addMessage(category string, line string) {
 	logsMutex.Lock()
 	defer logsMutex.Unlock()
@@ -125,6 +118,7 @@ func addMessage(category string, line string) {
 	}
 }
 
+// Returns one category of the stored messages.
 func getMessages(category string) []string {
 	logsMutex.RLock()
 	defer logsMutex.RUnlock()
@@ -140,6 +134,35 @@ func getMessages(category string) []string {
 	}
 }
 
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+// |                                                               Map                                                               |
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
+var currentRoomId int
+var visitedRooms = make(map[int]bool)
+var knownRooms = make(map[int]bool)
+var mapMutex sync.RWMutex
+
+// Map limits, found the first time the room list is received.
+var minX int
+var minY int
+var maxX int
+var maxY int
+var boundsComputed bool
+var boundsMutex sync.RWMutex
+
+// How well the player knows a room, from unknown to current.
+type roomState int
+
+const (
+	// iota starts at 0 and adds 1 to each following value
+	roomHidden roomState = iota
+	roomKnown
+	roomVisited
+	roomCurrent
+)
+
+// Saves the room the player is in and marks it as visited.
 func setCurrentRoom(id int) {
 	mapMutex.Lock()
 	defer mapMutex.Unlock()
@@ -147,6 +170,7 @@ func setCurrentRoom(id int) {
 	visitedRooms[id] = true
 }
 
+// Marks a neighbor room as known on the map.
 func addKnownRoom(id int) {
 	mapMutex.Lock()
 	defer mapMutex.Unlock()
@@ -156,24 +180,28 @@ func addKnownRoom(id int) {
 	knownRooms[id] = true
 }
 
+// Returns the id of the room the player is in.
 func getCurrentRoom() int {
 	mapMutex.RLock()
 	defer mapMutex.RUnlock()
 	return currentRoomId
 }
 
+// Returns the rooms the player has already seen.
 func getVisitedRooms() map[int]bool {
 	mapMutex.RLock()
 	defer mapMutex.RUnlock()
 	return visitedRooms
 }
 
+// Returns the rooms the player knows about.
 func getKnownRooms() map[int]bool {
 	mapMutex.RLock()
 	defer mapMutex.RUnlock()
 	return knownRooms
 }
 
+// Listens to the LOOK replies to update the player position.
 func subscribeMapData(listener *types.Listener) {
 	listener.Subscribe(func(line string) {
 		if !strings.HasPrefix(line, "OK {\"id\":") {
@@ -195,6 +223,7 @@ func subscribeMapData(listener *types.Listener) {
 	})
 }
 
+// Finds the map limits from the room list, only once.
 func computeMapBounds(rooms []types.RoomInfo) {
 	boundsMutex.Lock()
 	defer boundsMutex.Unlock()
@@ -203,6 +232,7 @@ func computeMapBounds(rooms []types.RoomInfo) {
 		return
 	}
 
+	// Start from the first room, then widen the box with every other room
 	minX, maxX = rooms[0].X, rooms[0].X
 	minY, maxY = rooms[0].Y, rooms[0].Y
 
@@ -224,18 +254,21 @@ func computeMapBounds(rooms []types.RoomInfo) {
 	boundsComputed = true
 }
 
+// Returns the map limits.
 func getMapBounds() (int, int, int, int) {
 	boundsMutex.RLock()
 	defer boundsMutex.RUnlock()
 	return minX, maxX, minY, maxY
 }
 
+// Tells if the map limits are known, so the widget knows if it can draw.
 func areBoundsComputed() bool {
 	boundsMutex.RLock()
 	defer boundsMutex.RUnlock()
 	return boundsComputed
 }
 
+// Returns how well the player knows a room, from hidden to current.
 func getRoomState(id int) roomState {
 	if id == getCurrentRoom() {
 		return roomCurrent
@@ -249,17 +282,72 @@ func getRoomState(id int) roomState {
 	return roomHidden
 }
 
+var mapRedrawFunc func()
+var redrawMapMutex sync.RWMutex
+
+// Stores the redraw function the map widget gives us.
 func setMapRedrawFunc(f func()) {
-	redrawMutex.Lock()
-	defer redrawMutex.Unlock()
+	redrawMapMutex.Lock()
+	defer redrawMapMutex.Unlock()
 	mapRedrawFunc = f
 }
 
+// Calls the saved redraw function if one exists.
 func triggerMapRedraw() {
-	redrawMutex.RLock()
+	redrawMapMutex.RLock()
 	f := mapRedrawFunc
-	redrawMutex.RUnlock()
+	redrawMapMutex.RUnlock()
 	if f != nil {
 		f()
 	}
+}
+
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+// |                                                              Group                                                              |
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
+var groupRedrawFunc func()
+var redrawGroupMutex sync.RWMutex
+
+// Stores the redraw function the group widget gives us.
+func setGroupRedrawFunc(f func()) {
+	redrawGroupMutex.Lock()
+	defer redrawGroupMutex.Unlock()
+	groupRedrawFunc = f
+}
+
+// Calls the saved redraw function if one exists.
+func triggerGroupRedraw() {
+	redrawGroupMutex.RLock()
+	f := groupRedrawFunc
+	redrawGroupMutex.RUnlock()
+	if f != nil {
+		f()
+	}
+}
+
+// Returns the group the player is in, matching his id to skip ghost members.
+func getPlayerGroup(playerName string) (types.GroupInfo, bool) {
+	data := getGameData()
+	myId := -1
+
+	for _, p := range data.Players {
+		if p.Name == playerName {
+			myId = p.Id
+			break
+		}
+	}
+
+	if myId == -1 {
+		return types.GroupInfo{}, false
+	}
+	// A new connection gets a new id, so old disconnected members do not match
+	for _, group := range data.Groups {
+		for _, player := range group.LstPlayer {
+			if player.Id == myId {
+				return group, true
+			}
+		}
+	}
+	return types.GroupInfo{}, false
 }
