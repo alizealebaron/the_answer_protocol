@@ -1,29 +1,30 @@
-/* ************************************************************************ */
-/*      _  _     ____                     ,~~.                              */
-/*     | || |   |___  \             ,   (  ^ )>                             */
-/*     | || |_    __) |             )\~~'   (       _      _      _         */
-/*     |__   _|  / __/             (  .__)   )    >(.)__ <(^)__ =(o)__      */
-/*        |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/      */
-/*                                                                          */
-/* ************************************************************************ */
-/* name   : tcp_server.go                                                   */
-/* author : alebaron <alebaron@student.42.fr>                               */
-/*                                                                          */
-/* creation : Invalid date        by -----------                            */
-/* update   : 2026/09/11 19:25:15 by alebaron                               */
-/* ************************************************************************ */
+/* *********************************************************************** */
+/*                                                                         */
+/*                                                     :::      ::::::::   */
+/* tcp_server.go                                     :+:      :+:    :+:   */
+/*                                                 +:+ +:+         +:+     */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/*                                             +#+#+#+#+#+   +#+           */
+/* Created: 2026/09/18 10:45:59 by alebaron        #+#    #+#              */
+/* Updated: 2026/09/18 11:01:14 by alebaron        ###   ########.fr       */
+/*                                                                         */
+/* *********************************************************************** */
+
+/* +---------------------------------------------------------------------+ */
+/* |                          Package & Import                           | */
+/* +---------------------------------------------------------------------+ */
 
 package server
 
 import (
-	"bufio"
-	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
 	"net"
+	"bufio"
+	"errors"
 	"strconv"
 	"strings"
+	"encoding/json"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/commands"
 	"the_answer_protocol/src/server/server_write"
@@ -174,6 +175,16 @@ func handleConnection(conn net.Conn) {
 			} else {
 				// Ecriture de la commande dans les logs
 				server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
+
+				// Reconstruction de la commande sous forme de string pour la comparaison
+				rawCommand := strings.Join(command, " ")
+
+				// Vérification anti-spam
+				if self_player.AddCommandToHistory(rawCommand) {
+					server_write.WriteLog(conn, "WARN", self_player.Name+" is spamming: "+rawCommand)
+					server_write.ServerWrite(conn, "ERR 905 TOO_MANY_REQUESTS\n")
+					continue // on ignore la commande sans l'exécuter
+				}
 
 				// Envoie de la ligne parse dans les différentes commandes
 				if err := dispatch(command, TapManager, &self_player); err != nil {

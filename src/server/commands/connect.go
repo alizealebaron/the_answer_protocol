@@ -3,10 +3,10 @@
 /*                                                     :::      ::::::::   */
 /* connect.go                                        :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
-/* By: alebaron, ruiz, emarette                  +#+  +:+       +#+        */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/19 15:25:33 by emarette        #+#    #+#              */
-/* Updated: 2026/08/25 22:24:42 by emarette        ###   ########.fr       */
+/* Updated: 2026/09/18 10:49:09 by alebaron        ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -38,6 +38,10 @@ func Connect(tapManager *models.TapManager, conn net.Conn, name string, language
 	if language != "FR" && language != "EN" {
 		server_write.ServerWrite(conn, "ERR 202 INCORRECT_LANGUAGE\n")
 		return player, "ERR 202 INCORRECT_LANGUAGE"
+	}
+	if len(tapManager.Lst_Player) >= 4 {
+		server_write.ServerWrite(conn, "ERR 203 TO_MANY_PLAYER\n")
+		return player, "ERR 203 TO_MANY_PLAYER"
 	}
 
 	tapManager.Lst_Player = append(tapManager.Lst_Player, player)
