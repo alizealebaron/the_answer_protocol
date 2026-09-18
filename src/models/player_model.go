@@ -1,25 +1,26 @@
-/* ************************************************************************ */
-/*      _  _     ____                     ,~~.                              */
-/*     | || |   |___  \             ,   (  ^ )>                             */
-/*     | || |_    __) |             )\~~'   (       _      _      _         */
-/*     |__   _|  / __/             (  .__)   )    >(.)__ <(^)__ =(o)__      */
-/*        |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/      */
-/*                                                                          */
-/* ************************************************************************ */
-/* name   : player_model.go                                                 */
-/* author : alebaron <alebaron@student.42.fr>                               */
-/*                                                                          */
-/* creation : Invalid date        by -----------                            */
-/* update   : 2026/09/11 20:22:18 by alebaron                               */
-/* ************************************************************************ */
+/* *********************************************************************** */
+/*                                                                         */
+/*                                                     :::      ::::::::   */
+/* player_model.go                                   :+:      :+:    :+:   */
+/*                                                 +:+ +:+         +:+     */
+/* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
+/*                                             +#+#+#+#+#+   +#+           */
+/* Created: 2026/09/18 10:46:38 by alebaron        #+#    #+#              */
+/* Updated: 2026/09/18 10:57:13 by alebaron        ###   ########.fr       */
+/*                                                                         */
+/* *********************************************************************** */
+
+/* +---------------------------------------------------------------------+ */
+/* |                          Package & Import                           | */
+/* +---------------------------------------------------------------------+ */
 
 package models
 
 import (
-	"encoding/json"
-	"errors"
 	"fmt"
 	"net"
+	"errors"
+	"encoding/json"
 	"the_answer_protocol/src/server/server_write"
 )
 
@@ -48,6 +49,7 @@ type Player struct {
 	Conn             net.Conn     `json:"-"`
 	Group            *Group       `json:"-"`
 	DialogueProgress map[int]int  `json:"-"`
+	LastCommands     []string     `json:"-"`
 }
 
 /* +---------------------------------------------------------------------+ */
@@ -59,7 +61,8 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 	lstItem := make(map[Item]int)
 	dialogueProgress := make(map[int]int)
 	lst_quest := []Quest{}
-	player := Player{totalPlayer, name, 100, 100, "healthy", 5, 10, language, 10, lstItem, lst_quest, conn, nil, dialogueProgress}
+	last_cmd := []string{}
+	player := Player{totalPlayer, name, 100, 100, "healthy", 5, 10, language, 10, lstItem, lst_quest, conn, nil, dialogueProgress, last_cmd}
 	totalPlayer += 1
 	return player
 }
@@ -347,4 +350,34 @@ func (p *Player) GetNextDialogueLine(npc Npc) (line string) {
 
 	p.DialogueProgress[id] = idx + 1
 	return lines[idx]
+}
+
+/* +---------------------------------------------------------------------+ */
+/* |                        Gestion des commandes                        | */
+/* +---------------------------------------------------------------------+ */
+
+func (p *Player) AddCommandToHistory(cmd string) bool {
+	p.LastCommands = append(p.LastCommands, cmd)
+
+	// On garde uniquement les 5 dernières commandes
+	if len(p.LastCommands) > 5 {
+		p.LastCommands = p.LastCommands[len(p.LastCommands)-5:]
+	}
+
+	return isSpam(p.LastCommands)
+}
+
+func isSpam(commands []string) bool {
+
+	if len(commands) < 5 {
+		return false
+	}
+
+	first := commands[0]
+	for _, cmd := range commands {
+		if cmd != first {
+			return false
+		}
+	}
+	return true
 }

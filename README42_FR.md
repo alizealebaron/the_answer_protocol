@@ -67,6 +67,7 @@ En plus des erreurs déjà présentes dans le protocole fourni par le sujet, nou
 ```
 201 NAME_IN_USE             Le nom d'utilisateur demandé est déjà pris
 202 INCORRECT_LANGUAGE      Langue demandée inconnue
+203 TO_MANY_PLAYER          Trop de joueurs connectés
 
 301 NO_EXIT                 Direction de déplacement invalide
 
@@ -101,6 +102,7 @@ En plus des erreurs déjà présentes dans le protocole fourni par le sujet, nou
 902 COMMAND_UNKNOWN         Commande inconnue
 903 COMMAND_EMPTY           Aucune commande envoyée
 904 WRONG_COMMAND_ARG       Les arguments passés ne sont pas corrects
+905 TOO_MANY_REQUESTS       L'utilisateur spam la même commande
 
 999 GAMBLING_ROLL_FAILED    Problème de tirage avec le système de jeu
 999 FISHING_ROLL_FAILED     Problème de tirage avec la pêche

@@ -1,5 +1,6 @@
 201	NAME_IN_USE             Requested username already taken
 202 INCORRECT_LANGUAGE      Requested unknown language
+203 TO_MANY_PLAYER          Trop de joueurs connectés
 
 301	NO_EXIT                 Invalid movement direction
 
@@ -34,6 +35,7 @@
 902 COMMAND_UNKNOWN         Commande inconnue
 903 COMMAND_EMPTY           Aucune commande envoyée
 904 WRONG_COMMAND_ARG       Les arguments passés ne sont pas bons
+905 TOO_MANY_REQUESTS       L'utilisateur spam la même commande
 
 999 GAMBLING_ROLL_FAILED    Problème de roll avec le gambling
 999 FISHING_ROLL_FAILED     Problème de roll avec le FISHING
