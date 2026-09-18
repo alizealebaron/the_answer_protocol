@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/09/11 18:00:00 by rruiz           #+#    #+#              */
-/* Updated: 2026/09/17 21:34:48 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/18 12:00:00 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -43,19 +43,19 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 		{"CREATE", func() {
 			fmt.Fprintf(stdin, "GROUP CREATE\n")
 			fmt.Printf("GROUP CREATE\n")
-			fmt.Fprintf(stdin, "SECRET\n")
+			refreshGroupAfterReply(stdin, listener, "OK group=")
 			wrappedBack()
 		}},
 		{"INVITE", func() {
 			showPlayersToInvite(stdin, listener, subCommandBox, playerName, wrappedBack)
 		}},
 		{"JOIN", func() {
-			showJoinForm(stdin, subCommandBox, wrappedBack)
+			showJoinForm(stdin, listener, subCommandBox, wrappedBack)
 		}},
 		{"LEAVE", func() {
 			fmt.Fprintf(stdin, "GROUP LEAVE\n")
 			fmt.Printf("GROUP LEAVE\n")
-			fmt.Fprintf(stdin, "SECRET\n")
+			refreshGroupAfterReply(stdin, listener, "OK")
 			wrappedBack()
 		}},
 	}
@@ -109,7 +109,7 @@ func showInvitablePlayers(stdin io.WriteCloser, listener *types.Listener, subCom
 		playerButton := widget.NewButton(otherPlayerName, func() {
 			fmt.Fprintf(stdin, "GROUP INVITE %s\n", otherPlayerName)
 			fmt.Printf("GROUP INVITE %s\n", otherPlayerName)
-			fmt.Fprintf(stdin, "SECRET\n")
+			refreshGroupAfterReply(stdin, listener, "OK")
 			back()
 		})
 		playerButton.Importance = widget.LowImportance
@@ -125,7 +125,7 @@ func showInvitablePlayers(stdin io.WriteCloser, listener *types.Listener, subCom
 }
 
 // Asks for a group id and sends the GROUP JOIN command with it.
-func showJoinForm(stdin io.WriteCloser, subCommandBox *fyne.Container, back func()) {
+func showJoinForm(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
 	subCommandBox.RemoveAll()
 
 	groupEntry := widget.NewEntry()
@@ -138,7 +138,7 @@ func showJoinForm(stdin io.WriteCloser, subCommandBox *fyne.Container, back func
 		}
 		fmt.Fprintf(stdin, "GROUP JOIN %s\n", groupID)
 		fmt.Printf("GROUP JOIN %s\n", groupID)
-		fmt.Fprintf(stdin, "SECRET\n")
+		refreshGroupAfterReply(stdin, listener, "OK group=")
 		back()
 	})
 
@@ -146,4 +146,22 @@ func showJoinForm(stdin io.WriteCloser, subCommandBox *fyne.Container, back func
 	subCommandBox.Add(joinButton)
 
 	subCommandBox.Refresh()
+}
+
+// Sends SECRET once the server replies to a group action, so the widget get fresh game data.
+func refreshGroupAfterReply(stdin io.WriteCloser, listener *types.Listener, prefixes ...string) {
+	var id int
+	id = listener.Subscribe(func(line string) {
+		if strings.HasPrefix(line, "ERR ") {
+			listener.Unsubscribe(id)
+			return
+		}
+		for _, prefix := range prefixes {
+			if strings.HasPrefix(line, prefix) {
+				listener.Unsubscribe(id)
+				fmt.Fprintf(stdin, "SECRET\n")
+				return
+			}
+		}
+	})
 }
