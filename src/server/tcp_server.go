@@ -170,6 +170,9 @@ func handleConnection(conn net.Conn) {
 					// item, _ := TapManager.GetItemById(1)
 					// self_player.AddItemToPlayerWQuantity(item, 1000)
 				}
+			} else if command[0] == "QUIT" {
+				server_write.ServerWrite(conn, "OK bye\n")
+				return
 			} else {
 				server_write.ServerWrite(conn, "ERR 900 CONNECTION_FAILED\n")
 				server_write.ServerWrite(conn, "USE \"CONNECT [Name] [Language]\"\n")
