@@ -234,9 +234,43 @@ La carte contient notamment des lieux tels que :
 
 La conception du monde privilégie un mélange entre exploration libre et progression orientée quêtes, avec des zones plus hostiles et des zones plus sûres.
 
-## Interface GUI (A renommer si t'as de meilleures idées)
+## Interface graphique(GUI)
 
-[TODO: Rémy]
+Le GUI a été créé avec **Fyne** et se compose de 2 écrans : la **HomeView**, qui gère l'accueil et les connexions au jeu, et la **GameView**, qui est le jeu en lui-même. 
+
+### HomeView
+
+C'est l'écran affiché lorsqu'on lance le GUI, il contient un **formulaire de connexion**. Ce formulaire est composé de :
+
+- Un sélecteur entre français et anglais pour l'affichage des informations du GUI.
+
+-  Un champ pour mettre le pseudonyme que le joueur souhaite utiliser, il doit faire entre 1 et 15 caractères et doit être composé uniquement de caractères alphanumériques et d’underscore.
+
+- Un champ pour l'IP du serveur que le joueur souhaite rejoindre.
+
+Quand le joueur clique sur JOIN server, l'IP est utilisée pour essayer de se connecter au serveur, si ça marche, CONNECT <name> <language> est envoyé au serveur. Si le serveur répond "OK connected", l'écran change pour afficher le GameView.
+
+### GameView
+
+C'est le jeu, au démarrage, elle récupère les infos globales grâce à SECRET et au listener mis en place. Elle est composée de différents widgets qui fonctionnent séparément. Ces widgets sont :
+
+- Commandes (command_widget.go) : créer une barre de boutons de catégorie, cliquer sur un bouton affiche les éléments de cette catégorie qui sont les commandes disponibles dans le jeu. Ces commandes sont aussi des boutons, cliquer dessus permet au besoin de choisir les paramètres et ensuite de l'envoyer au serveur pour l'exécuter.
+
+- Log (log_widget.go) : le journal des messages, rangés par catégorie (GLOBAL, ROOM, GROUP, LOG).
+
+- Map (map_widget.go) : dessine les salles avec des couleurs selon si elles sont la salle actuelle, visitée, connue ou inconnue. Ce widget est mis à jour à chaque réponse LOOK.
+
+- GoingOn, la salle actuelle (goingOn_widget.go) : affiche la salle dans laquelle le joueur se trouve: son image est affichée et son nom est mis juste au dessus.
+
+- Players (players_widget.go) : affiche le nombre de joueurs dans la room et le nombre total de joueurs sur le serveur. Nécessite un premier WHO pour s'afficher et actualise le nombre de joueurs dans la room grâce à l'événement (EVT ROOM PRESENCE ENTER/LEAVE).
+
+- Groupe (group_widget.go) :  affiche si le joueur est dans un groupe ou non, si oui, la liste de ses membres est aussi affichée. Il se rafraîchit via SECRET quand le serveur émet un événement EVT GROUP.
+
+### Synchronisation avec le serveur
+
+Le Listener est un petit système pub/sub : les widgets et le state global s'abonnent à des lignes précises. Chaque ligne serveur est envoyée à tous les abonnés par Distribute.
+
+Le state global est une copie locale du SECRET serveur. À chaque réponse OK SECRET, setGameData met à jour les données puis déclenche le rafraîchissement des widgets qui en dépendent.
 
 ## Server Logging
 
