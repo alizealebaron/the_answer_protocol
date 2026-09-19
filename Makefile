@@ -28,4 +28,4 @@ clean:
 	rm -rf log
 	rm -rf main
 
-.PHONY: build run_server run_cli run_gui
+.PHONY: build run-server run-cli run-gui

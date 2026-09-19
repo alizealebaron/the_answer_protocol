@@ -19,12 +19,13 @@ Le thème général s’inspire du rétro-gaming et du fonctionnement des mondes
 
 ### Les commandes importantes
 
-```bash
-make install
-make build
-make run-server
-make run-client
-```
+| Commande | Description |
+|---|---|
+| `make build` | Compile le projet et génère l'exécutable `main` |
+| `make run-server` | Compile puis lance le serveur |
+| `make run-gui` | Compile puis lance le client graphique (GUI) |
+| `make run-cli IP=<adresse>` | Lance le client en ligne de commande |
+| `make clean` | Supprime l'exécutable `main` et le dossier `log` |
 
 ## Architecture
 
@@ -111,8 +112,6 @@ En plus des erreurs déjà présentes dans le protocole fourni par le sujet, nou
 ```
 
 ## Combat System
-
-[TODO: Enzo] (A relire et à étoffer)
 
 Le système de combat est tour par tour s'inspirant de celui présent dans le jeu de rôle **Donjon & Dragons**. Il s’appuie sur un principe de jet de dé et de comparaison de statistiques. 
 
@@ -234,7 +233,7 @@ La carte contient notamment des lieux tels que :
 
 La conception du monde privilégie un mélange entre exploration libre et progression orientée quêtes, avec des zones plus hostiles et des zones plus sûres.
 
-## Interface graphique(GUI)
+## Interface graphique (GUI)
 
 Le GUI a été créé avec **Fyne** et se compose de 2 écrans : la **HomeView**, qui gère l'accueil et les connexions au jeu, et la **GameView**, qui est le jeu en lui-même. 
 
@@ -323,7 +322,68 @@ La répartition est cohérente avec la structure du dépôt : le moteur principa
 
 ## Building and Running
 
-[TODO: Enzo]
+### Prérequis
+
+- [Go](https://go.dev/dl/) installé (`go version` pour vérifier)
+- `make`
+- `nc` (netcat), nécessaire uniquement pour le client CLI
+
+### Outil de build : Make
+
+Le projet utilise un `Makefile` qui regroupe toutes les commandes de compilation et de lancement.
+
+| Commande | Description |
+|---|---|
+| `make build` | Compile le projet et génère l'exécutable `main` |
+| `make run-server` | Compile puis lance le serveur |
+| `make run-gui` | Compile puis lance le client graphique (GUI) |
+| `make run-cli IP=<adresse>` | Lance le client en ligne de commande |
+| `make clean` | Supprime l'exécutable `main` et le dossier `log` |
+
+### Compilation
+
+```bash
+make build
+```
+
+Cette commande exécute `go build main.go` et produit l'exécutable `main` à la racine du projet.
+
+### Lancer le serveur
+
+```bash
+make run-server
+```
+
+Le serveur est compilé puis démarré (équivalent de `./main server`). Il écoute sur le port **8090**. Il doit être lancé **avant** les clients.
+
+### Lancer le client CLI
+
+```bash
+make run-cli IP=<adresse_du_serveur>
+```
+
+Le client CLI utilise `nc` (netcat) pour se connecter au serveur sur le port 8090. Le paramètre `IP` est obligatoire, par exemple :
+
+```bash
+make run-cli IP=127.0.0.1      # serveur sur la même machine
+make run-cli IP=192.168.1.42   # serveur sur une autre machine du réseau
+```
+
+### Lancer le client GUI
+
+```bash
+make run-gui
+```
+
+Le client est compilé puis l'interface graphique est lancée (équivalent de `./main gui`).
+
+### Nettoyage
+
+```bash
+make clean
+```
+
+Supprime l'exécutable `main` ainsi que le dossier `log` généré à l'exécution.
 
 ## Testing
 
@@ -416,6 +476,5 @@ L’intelligence artificielle a été utilisée de manière ciblée pour :
 
 ---
 
-**Dernière modification**: 16 Septembre 2026\
+**Dernière modification**: 19 Septembre 2026\
 **Contact :** alebaron@student.42lehavre.fr / rruiz@student.42lehavre.fr / emarette@student.42lehavre.fr
-
