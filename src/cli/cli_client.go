@@ -1,12 +1,12 @@
 /* *********************************************************************** */
 /*                                                                         */
 /*                                                     :::      ::::::::   */
-/* main.go                                           :+:      :+:    :+:   */
+/* cli_client.go                                     :+:      :+:    :+:   */
 /*                                                 +:+ +:+         +:+     */
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/09/15 14:18:03 by alebaron        #+#    #+#              */
-/* Updated: 2026/09/19 12:59:01 by rruiz           ###   ########.fr       */
+/* Created: 2026/09/19 10:00:00 by alebaron        #+#    #+#              */
+/* Updated: 2026/09/19 12:56:48 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -14,42 +14,45 @@
 /*                            Package & Import                             */
 /* ----------------------------------------------------------------------- */
 
-package main
+package cli
 
 import (
 	"fmt"
+	"io"
+	"net"
 	"os"
-	"the_answer_protocol/src/cli"
-	"the_answer_protocol/src/gui"
-	"the_answer_protocol/src/server"
-	"the_answer_protocol/src/server/server_write"
 )
 
+const Port = "8090"
+
 /* ----------------------------------------------------------------------- */
-/*                                  Main                                   */
+/*                             Fonction Principal                          */
 /* ----------------------------------------------------------------------- */
 
-func main() {
-
-	if len(os.Args) != 2 && len(os.Args) != 3 {
-		fmt.Printf("ERR 904 WRONG_COMMAND_ARG")
-		os.Exit(0)
+func Client(adress string) {
+	conn, err := net.Dial("tcp", net.JoinHostPort(adress, Port))
+	if err != nil {
+		fmt.Println("Cannot connect to", adress+":"+Port)
+		os.Exit(1)
 	}
 
-	switch os.Args[1] {
-	case "server":
-		tapManager := server.ParseJSONFile()
-		server_write.CreateLogFolder()
-		server.Tcp_server(&tapManager)
-	case "cli":
-		if len(os.Args) != 3 {
-			fmt.Println("Usage: go run main.go cli <adress>")
-			os.Exit(1)
-		}
-		cli.Client(os.Args[2])
-	case "gui":
-		gui.Run(true)
-	default:
-		fmt.Printf("ERR 904 WRONG_COMMAND_ARG")
-	}
+	defer conn.Close()
+
+	fmt.Println("Connected at", adress+":"+Port)
+	fmt.Println("Use QUIT to exit.")
+
+	channel := make(chan error, 2)
+
+	go func() {
+		_, err = io.Copy(os.Stdout, conn)
+		channel <- err
+	}()
+
+	go func() {
+		_, err = io.Copy(conn, os.Stdin)
+		channel <- err
+	}()
+
+	<-channel
+	conn.Close()
 }
