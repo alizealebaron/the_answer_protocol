@@ -56,13 +56,13 @@ func playerCountLabel(listener *types.Listener, stdin io.WriteCloser, playerName
 		if firstWho {
 			if strings.HasPrefix(line, "EVT ROOM PRESENCE ENTER ") {
 				if strings.TrimPrefix(line, "EVT ROOM PRESENCE ENTER ") == playerName {
-					fmt.Fprintf(stdin, "WHO\n")
+					_ , _ = fmt.Fprintf(stdin, "WHO\n")
 					return
 				}
 				lenRoom += 1
 			} else if strings.HasPrefix(line, "EVT ROOM PRESENCE LEAVE ") {
 				if strings.TrimPrefix(line, "EVT ROOM PRESENCE LEAVE ") == playerName {
-					fmt.Fprintf(stdin, "WHO\n")
+					_ , _ = fmt.Fprintf(stdin, "WHO\n")
 					return
 				}
 				lenRoom -= 1
