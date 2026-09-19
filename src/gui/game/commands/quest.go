@@ -50,7 +50,7 @@ func Quest(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 		listener.Unsubscribe(id)
 		showQuestGivers(stdin, listener, subCommandBox, data, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "LOOK\n")
+	_, _ = fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the quest givers present in the room as buttons, or returns if there are none.
@@ -64,8 +64,8 @@ func showQuestGivers(stdin io.WriteCloser, listener *types.Listener, subCommandB
 			qgName := npc.Name
 			qgId := npc.Id
 			qgButton := widget.NewButton(qgName, func() {
-				fmt.Fprintf(stdin, "QUEST %d\n", qgId)
-				fmt.Printf("QUEST %d\n", qgId)
+				_, _ = fmt.Fprintf(stdin, "QUEST %d\n", qgId)
+				_, _ = fmt.Printf("QUEST %d\n", qgId)
 				back()
 			})
 			qgButton.Importance = widget.LowImportance

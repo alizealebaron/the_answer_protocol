@@ -142,7 +142,10 @@ func join(args []string, player *models.Player, tap *models.TapManager) error {
 	}
 
 	// Ajout du joueur dans le groupe
-	group.AddPlayerToGroup(player)
+	err = group.AddPlayerToGroup(player)
+	if err != nil {
+		return errors.New("ERR 404 GROUP_NOT_FOUND")
+	}
 	player.Group = group
 
 	// On envoie les messages

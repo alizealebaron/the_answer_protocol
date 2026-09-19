@@ -77,9 +77,9 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 	subscribeMapData(listener)
 
 	// First SECRET to get the whole game, then LOOK to know where the player is
-	fmt.Fprintf(stdin, "SECRET\n")
+	_, _ = fmt.Fprintf(stdin, "SECRET\n")
 	subscribeOnce(listener, "OK SECRET ", func() {
-		fmt.Fprintf(stdin, "LOOK\n")
+		_, _ = fmt.Fprintf(stdin, "LOOK\n")
 	})
 
 	commandBox := commandWidget(stdin, listener, playerName, backToHome)

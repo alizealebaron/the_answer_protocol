@@ -10,7 +10,18 @@
 #                                                                           #
 # ************************************************************************* #
 
+# ------------------------------------------------------------------------- #
+#                                 Variables                                 #
+# ------------------------------------------------------------------------- #
+
 IP ?=
+GOPATH := $(shell go env GOPATH)
+PATH := $(GOPATH)/bin:$(PATH)
+LINTER := $(GOPATH)/bin/golangci-lint
+
+# ------------------------------------------------------------------------- #
+#                                 Commandes                                 #
+# ------------------------------------------------------------------------- #
 
 build:
 	go build main.go
@@ -18,7 +29,7 @@ build:
 run-server: build
 	./main server
 
-run-gui: build
+run-client-gui: build
 	./main gui
 
 run-cli:
@@ -28,4 +39,8 @@ clean:
 	rm -rf log
 	rm -rf main
 
-.PHONY: build run-server run-cli run-gui
+lint:
+	@which $(LINTER) >/dev/null 2>&1 || go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
+	$(LINTER) run ./...
+
+.PHONY: build run-server run-cli run-client-gui lint

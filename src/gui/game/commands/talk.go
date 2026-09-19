@@ -50,7 +50,7 @@ func Talk(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 		listener.Unsubscribe(id)
 		showTalkableNpc(stdin, listener, subCommandBox, data, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "LOOK\n")
+	_, _ = fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the NPCs present in the room as buttons, or returns if there are none.
@@ -63,8 +63,8 @@ func showTalkableNpc(stdin io.WriteCloser, listener *types.Listener, subCommandB
 		npcName := npc.Name
 		npcId := npc.Id
 		npcButton := widget.NewButton(npcName, func() {
-			fmt.Fprintf(stdin, "TALK %d\n", npcId)
-			fmt.Printf("TALK %d\n", npcId)
+			_, _ = fmt.Fprintf(stdin, "TALK %d\n", npcId)
+			_, _ = fmt.Printf("TALK %d\n", npcId)
 			back()
 		})
 		npcButton.Importance = widget.LowImportance

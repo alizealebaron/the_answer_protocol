@@ -50,7 +50,7 @@ func Drop(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 		listener.Unsubscribe(id)
 		showDropableObjects(stdin, listener, subCommandBox, data, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "INVENTORY\n")
+	_, _ = fmt.Fprintf(stdin, "INVENTORY\n")
 }
 
 // Displays the items present in the player's inventory as buttons, or returns if nothing can be dropped.
@@ -63,8 +63,8 @@ func showDropableObjects(stdin io.WriteCloser, listener *types.Listener, subComm
 		itemName := item.Name
 		itemId := item.Id
 		itemButton := widget.NewButton(itemName, func() {
-			fmt.Fprintf(stdin, "DROP %d\n", itemId)
-			fmt.Printf("DROP %d\n", itemId)
+			_, _ = fmt.Fprintf(stdin, "DROP %d\n", itemId)
+			_, _ = fmt.Printf("DROP %d\n", itemId)
 			back()
 		})
 		itemButton.Importance = widget.LowImportance

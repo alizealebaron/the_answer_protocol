@@ -51,7 +51,7 @@ func Search(args []string, tapManager *models.TapManager, player *models.Player)
 
 		// Quand l'ennemi trouvé est le bon on tente de le faire spawn
 		if id == e.Id {
-			if e.IsBoss == true {
+			if e.IsBoss {
 				for _, mob := range room.Arena {
 					if e.Name == mob.Name {
 						return errors.New("ERR BOSS_ALREADY_SPAWN")

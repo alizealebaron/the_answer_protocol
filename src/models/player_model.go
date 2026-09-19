@@ -74,7 +74,7 @@ func NewPlayer(name string, language string, conn net.Conn) Player {
 func (p *Player) GetItem(itID int) (*Item, error) {
 
 	// Parcours des objets de l'inventaire
-	for it, _ := range p.Inventory {
+	for it := range p.Inventory {
 		// Gestion des items si on le trouve
 		if it.GetId() == itID {
 			return &it, nil
@@ -102,7 +102,8 @@ func (p *Player) AddItemToPlayerWQuantity(it Item, q int) {
 	p.Inventory[it] += q
 
 	// Mise à jour des potentielles quêtes
-	p.UpdateQuestItem(it.GetId(), q)
+	err := p.UpdateQuestItem(it.GetId(), q)
+	if err != nil {return}
 }
 
 func (p *Player) RemoveItemToPlayerWQuantity(itID int, q int) (*Item, error) {
@@ -243,7 +244,7 @@ func (p *Player) AddQuestToPlayer(quest Quest) error {
 	return nil
 }
 
-func (p *Player) UpdateQuestMonster(monster Monster) error {
+func (p *Player) UpdateQuestMonster(monster Monster) {
 
 	for _, quest := range p.Lst_Quest {
 		questMonster, ok := quest.(*QuestMonster)
@@ -253,8 +254,6 @@ func (p *Player) UpdateQuestMonster(monster Monster) error {
 			}
 		}
 	}
-
-	return nil
 }
 
 func (p *Player) UpdateQuestItem(id_item int, quantity int) error {
@@ -271,7 +270,7 @@ func (p *Player) UpdateQuestItem(id_item int, quantity int) error {
 	return nil
 }
 
-func (p *Player) UpdateQuestItemBrut(id_item int, quantity int) error {
+func (p *Player) UpdateQuestItemBrut(id_item int, quantity int) {
 
 	for _, quest := range p.Lst_Quest {
 		questItem, ok := quest.(*QuestItem)
@@ -281,8 +280,6 @@ func (p *Player) UpdateQuestItemBrut(id_item int, quantity int) error {
 			}
 		}
 	}
-
-	return nil
 }
 
 func (p *Player) IsNpcQuestCompleted(npc QuestGiver) bool {
@@ -297,7 +294,8 @@ func (p *Player) IsNpcQuestCompleted(npc QuestGiver) bool {
 			// On retire les items demandés si c'est une quête d'item
 			itemquest, ok := q.(*QuestItem)
 			if ok {
-				p.RemoveItemToPlayerWQuantity(itemquest.ItemNeededId, itemquest.SearchQuantity)
+				_, err := p.RemoveItemToPlayerWQuantity(itemquest.ItemNeededId, itemquest.SearchQuantity)
+				if (err != nil) {continue}
 			}
 
 			server_write.WriteLog(p.Conn, "QUEST", p.Name+" finished quest \""+q.GetTitle()+"\"\n")

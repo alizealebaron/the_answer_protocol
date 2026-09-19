@@ -50,7 +50,7 @@ func Attack(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.
 		listener.Unsubscribe(id)
 		showEnemy(stdin, listener, subCommandBox, data, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "LOOK\n")
+	_, _ = fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the enemies available in the arena, selecting one retrieves the player's inventory to choose a weapon.
@@ -77,7 +77,7 @@ func showEnemy(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fy
 				listener.Unsubscribe(id)
 				showWeapon(stdin, subCommandBox, enemyId, inventory, back)
 			})
-			fmt.Fprintf(stdin, "INVENTORY\n")
+			_, _ = fmt.Fprintf(stdin, "INVENTORY\n")
 		})
 		enemyButton.Importance = widget.LowImportance
 		subCommandBox.Add(enemyButton)
@@ -101,8 +101,8 @@ func showWeapon(stdin io.WriteCloser, subCommandBox *fyne.Container, enemyId int
 		if item.Is_Weapon {
 			if len == 0 {
 				handButton := widget.NewButton(types.Translate("Hand"), func() {
-					fmt.Fprintf(stdin, "ATTACK %d\n", enemyId)
-					fmt.Printf("ATTACK %d\n", enemyId)
+					_, _ = fmt.Fprintf(stdin, "ATTACK %d\n", enemyId)
+					_, _ = fmt.Printf("ATTACK %d\n", enemyId)
 					back()
 				})
 				handButton.Importance = widget.LowImportance
@@ -112,8 +112,8 @@ func showWeapon(stdin io.WriteCloser, subCommandBox *fyne.Container, enemyId int
 			weaponName := item.Name
 			weaponId := item.Id
 			weaponButton := widget.NewButton(types.Translate(weaponName), func() {
-				fmt.Fprintf(stdin, "ATTACK %d %d\n", enemyId, weaponId)
-				fmt.Printf("ATTACK %d %d\n", enemyId, weaponId)
+				_, _ = fmt.Fprintf(stdin, "ATTACK %d %d\n", enemyId, weaponId)
+				_, _ = fmt.Printf("ATTACK %d %d\n", enemyId, weaponId)
 				back()
 			})
 			weaponButton.Importance = widget.LowImportance
@@ -123,8 +123,8 @@ func showWeapon(stdin io.WriteCloser, subCommandBox *fyne.Container, enemyId int
 	}
 
 	if len == 0 {
-		fmt.Fprintf(stdin, "ATTACK %d\n", enemyId)
-		fmt.Printf("ATTACK %d\n", enemyId)
+		_, _ = fmt.Fprintf(stdin, "ATTACK %d\n", enemyId)
+		_, _ = fmt.Printf("ATTACK %d\n", enemyId)
 		back()
 	}
 

@@ -32,29 +32,24 @@ func ParseJSONFile() models.TapManager {
 
 	// === Initialisation des Items ===
 
-	var lst_item []models.Item
-	lst_item = get_all_item()
+	lst_item := get_all_item()
 
 	// === Initialisation des Monstres ===
 
-	var lst_monster []models.Monster
-	lst_monster = get_monster(lst_item)
+	lst_monster := get_monster(lst_item)
 
 	// === Initialisation des Quests ===
 
-	var lst_quest []models.Quest
-	lst_quest = get_all_quest()
+	lst_quest := get_all_quest()
 	resolve_quest_rewards(lst_quest, lst_item)
 
 	// === Initialisation des NPCs ===
 
-	var lst_npc []models.Npc
-	lst_npc = get_all_npc(lst_item, lst_quest)
+	lst_npc := get_all_npc(lst_item, lst_quest)
 
 	// === Initialisation des Rooms ===
 
-	var lst_room []models.Room
-	lst_room = get_all_room(lst_item, lst_npc, lst_monster)
+	lst_room := get_all_room(lst_item, lst_npc, lst_monster)
 
 	// === Initialisation du tapManager ===
 	tapManager := models.NewTapManager(lst_item, lst_quest, lst_npc, lst_monster, lst_room)

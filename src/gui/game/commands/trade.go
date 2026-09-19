@@ -50,7 +50,7 @@ func Trade(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 		listener.Unsubscribe(id)
 		showTrader1(stdin, listener, subCommandBox, data, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "LOOK\n")
+	_, _ = fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the traders present in the room as buttons, then sends the TRADE command when one is selected.
@@ -75,8 +75,8 @@ func showTrader1(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 					}
 					listener.Unsubscribe(id)
 				})
-				fmt.Fprintf(stdin, "TRADE %d\n", traderId)
-				fmt.Printf("TRADE %d\n", traderId)
+				_, _ = fmt.Fprintf(stdin, "TRADE %d\n", traderId)
+				_, _ = fmt.Printf("TRADE %d\n", traderId)
 				back()
 			})
 			traderButton.Importance = widget.LowImportance

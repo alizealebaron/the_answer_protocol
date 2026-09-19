@@ -50,7 +50,7 @@ func Take(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 		listener.Unsubscribe(id)
 		showSelectableObjects(stdin, listener, subCommandBox, data, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "LOOK\n")
+	_, _ = fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the items present in the room as buttons, or returns if there are none.
@@ -63,8 +63,8 @@ func showSelectableObjects(stdin io.WriteCloser, listener *types.Listener, subCo
 		itemName := item.Name
 		itemId := item.Id
 		itemButton := widget.NewButton(itemName, func() {
-			fmt.Fprintf(stdin, "TAKE %d\n", itemId)
-			fmt.Printf("TAKE %d\n", itemId)
+			_, _ = fmt.Fprintf(stdin, "TAKE %d\n", itemId)
+			_, _ = fmt.Printf("TAKE %d\n", itemId)
 			back()
 		})
 		itemButton.Importance = widget.LowImportance

@@ -50,7 +50,7 @@ func Search(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.
 		listener.Unsubscribe(id)
 		showSearchableEnemy(stdin, listener, subCommandBox, data, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "LOOK\n")
+	_, _ = fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the enemies present in the room as buttons, or returns if there are none.
@@ -63,8 +63,8 @@ func showSearchableEnemy(stdin io.WriteCloser, listener *types.Listener, subComm
 		enemyName := enemy.Name
 		enemyId := enemy.Id
 		enemyButton := widget.NewButton(enemyName, func() {
-			fmt.Fprintf(stdin, "SEARCH %d\n", enemyId)
-			fmt.Printf("SEARCH %d\n", enemyId)
+			_, _ = fmt.Fprintf(stdin, "SEARCH %d\n", enemyId)
+			_, _ = fmt.Printf("SEARCH %d\n", enemyId)
 			back()
 		})
 		enemyButton.Importance = widget.LowImportance

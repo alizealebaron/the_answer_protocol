@@ -79,7 +79,13 @@ func Tcp_server(tapManager *models.TapManager) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer conn.Close()
+
+	defer func() {
+		if err := conn.Close(); err != nil {
+			log.Printf("ERR 900 CONNECTION_FAILED")
+		}
+	}()
+	
 	localAddr := conn.LocalAddr().(*net.UDPAddr)
 
 	// === Ouverture du port d'écoute du serveur === //
@@ -89,7 +95,11 @@ func Tcp_server(tapManager *models.TapManager) {
 		log.Fatal("Error listening:", err)
 	}
 
-	defer listener.Close()
+	defer func() {
+		if err := listener.Close(); err != nil {
+			log.Printf("ERR 900 CONNECTION_FAILED")
+		}
+	}()
 
 	fmt.Println("[\033[32mSUCCESS\033[0m] (⊃｡•́‿•̀｡)⊃━☆ﾟ* Server started ! Use nc", localAddr.IP.String(), "8090")
 	for {
@@ -106,7 +116,11 @@ func Tcp_server(tapManager *models.TapManager) {
 
 func handleConnection(conn net.Conn) {
 
-	defer conn.Close()
+	defer func() {
+		if err := conn.Close(); err != nil {
+			log.Printf("ERR 900 DECONNECTION_FAILED")
+		}
+	}()
 
 	// === Déclaraction des variables === //
 
@@ -125,7 +139,7 @@ func handleConnection(conn net.Conn) {
 		line, err := reader.ReadString('\n')
 		if err != nil {
 			server_write.WriteLog(conn, "ERROR", "Read error: "+err.Error())
-			if err.Error() == "EOF" && is_connected == true {
+			if err.Error() == "EOF" && is_connected {
 				commands.Quit(TapManager, self_player)
 			}
 			return
@@ -138,7 +152,7 @@ func handleConnection(conn net.Conn) {
 		}
 
 		// Gestion des commandes selon si l'utilisateur est connecté ou non //
-		if is_connected == false {
+		if !is_connected {
 			// 2 possbilités CONNECT ou autre
 			if command[0] == "CONNECT" && len(command) == 3 {
 				self_player, code_error = commands.Connect(TapManager, conn, command[1], command[2])
@@ -161,38 +175,38 @@ func handleConnection(conn net.Conn) {
 				server_write.ServerWrite(conn, "USE \"CONNECT [Name] [Language]\"\n")
 			}
 		} else {
-			if command[0] == "QUIT" {
-				server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
-				commands.Quit(TapManager, self_player)
-				return
-			} else if command[0] == "SECRET" {
-				output, err := json.Marshal(TapManager)
-				if err != nil {
-					server_write.ServerWrite(conn, err.Error())
+			switch command[0] {
+				case "QUIT":
+					server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
+					commands.Quit(TapManager, self_player)
 					return
-				}
-				server_write.ServerWrite(conn,"OK SECRET " + string(output) + "\n")
-			} else {
-				// Ecriture de la commande dans les logs
-				server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
+				case "SECRET":
+					output, err := json.Marshal(TapManager)
+					if err != nil {
+						server_write.ServerWrite(conn, err.Error())
+						return
+					}
+					server_write.ServerWrite(conn,"OK SECRET " + string(output) + "\n")
+				default:
+					// Ecriture de la commande dans les logs
+					server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
 
-				// Reconstruction de la commande sous forme de string pour la comparaison
-				rawCommand := strings.Join(command, " ")
+					// Reconstruction de la commande sous forme de string pour la comparaison
+					rawCommand := strings.Join(command, " ")
 
-				// Vérification anti-spam
-				if self_player.AddCommandToHistory(rawCommand) {
-					server_write.WriteLog(conn, "WARN", self_player.Name+" is spamming: "+rawCommand)
-					server_write.ServerWrite(conn, "ERR 905 TOO_MANY_REQUESTS\n")
-					continue // on ignore la commande sans l'exécuter
-				}
+					// Vérification anti-spam
+					if self_player.AddCommandToHistory(rawCommand) {
+						server_write.WriteLog(conn, "WARN", self_player.Name+" is spamming: "+rawCommand)
+						server_write.ServerWrite(conn, "ERR 905 TOO_MANY_REQUESTS\n")
+						continue // on ignore la commande sans l'exécuter
+					}
 
-				// Envoie de la ligne parse dans les différentes commandes
-				if err := dispatch(command, TapManager, &self_player); err != nil {
-					server_write.WriteLog(conn, "WARN", self_player.Name+" received a warn: "+err.Error())
-					server_write.ServerWrite(conn, err.Error()+"\n")
-				}
+					// Envoie de la ligne parse dans les différentes commandes
+					if err := dispatch(command, TapManager, &self_player); err != nil {
+						server_write.WriteLog(conn, "WARN", self_player.Name+" received a warn: "+err.Error())
+						server_write.ServerWrite(conn, err.Error()+"\n")
+					}
 			}
-			// fmt.Printf("%+v\n", self_player.Lst_Quest)
 		}
 	}
 }

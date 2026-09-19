@@ -43,6 +43,9 @@ func Take(args []string, tapManager *models.TapManager, player *models.Player) e
 
 	// === Vérification de la présence de l'item dans la room === //
 	id, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
 
 	item, err := room.RemoveItemToRoom(id)
 	if err != nil {

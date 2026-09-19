@@ -44,6 +44,9 @@ func Quest(args []string, tapManager *models.TapManager, player *models.Player) 
 
 	// === Récupération de la quête du QuestGiver === //
 	id, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
 
 	quest, err := getGiverQuest(*room, id)
 	if err != nil {

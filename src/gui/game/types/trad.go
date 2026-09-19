@@ -18,7 +18,7 @@ package types
 var translations = map[string]map[string]string{
 	"FR": {
 		// Categories of command buttons
-		"Environment": "Environnement",
+		"Environment": "Env.",
 		"Social":      "Social",
 		"Fight":       "Combat",
 		"Quest":       "Quête",
