@@ -99,7 +99,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 
 	// le joueur attaque la cible \\
 	// il lance un de d'attaque \\
-	attack_dice := rand.IntN(20 - 1) + 1
+	attack_dice := rand.IntN(20) + 1
 	//si le jet d'attacke est > a la classe d'armure de la cible
 	if attack_dice > target.Defense {
 	// si le jets est egal a 20 coup critique sinon coup simple
