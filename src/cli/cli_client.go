@@ -17,10 +17,11 @@
 package cli
 
 import (
-	"fmt"
 	"io"
-	"net"
 	"os"
+	"fmt"
+	"log"
+	"net"
 )
 
 const Port = "8090"
@@ -36,7 +37,11 @@ func Client(adress string) {
 		os.Exit(1)
 	}
 
-	defer conn.Close()
+	defer func() {
+		if err := conn.Close(); err != nil {
+			log.Printf("ERR 900 DECONNECTION_FAILED")
+		}
+	}()
 
 	fmt.Println("Connected at", adress+":"+Port)
 	fmt.Println("Use QUIT to exit.")
@@ -54,5 +59,5 @@ func Client(adress string) {
 	}()
 
 	<-channel
-	conn.Close()
+	_ = conn.Close()
 }
