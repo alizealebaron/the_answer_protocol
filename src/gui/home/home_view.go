@@ -140,12 +140,12 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 
 			reader := bufio.NewReader(stdout)
 			line, _ := reader.ReadString('\n')
-			line = strings.TrimSpace(line)
+			_ = strings.TrimSpace(line)
 
 			// Sends the command “CONNECT <name> <language>” to the server via stdin.
-			fmt.Fprintf(stdin, "CONNECT %s %s\n", name, language)
+			_, _ = fmt.Fprintf(stdin, "CONNECT %s %s\n", name, language)
 			//Type the command “CONNECT <name> <language>” in the terminal.
-			fmt.Println("CONNECT", name, language)
+			_, _ = fmt.Println("CONNECT", name, language)
 
 			line, _ = reader.ReadString('\n')
 			line = strings.TrimSpace(line)
@@ -160,7 +160,7 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			} else {
 				displayError(errText, errContent, "Error, during connection to the network.", size)
 				fmt.Println(strings.TrimSpace(line))
-				cmd.Process.Kill()
+				_ = cmd.Process.Kill()
 				return
 			}
 

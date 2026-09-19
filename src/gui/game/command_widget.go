@@ -55,8 +55,8 @@ func commandWidget(stdin io.WriteCloser, listener *types.Listener, playerName st
 	)
 
 	quitButton := widget.NewButton(types.Translate("Quit"), func() {
-		fmt.Fprintf(stdin, "QUIT\n")
-		fmt.Println("QUIT")
+		_, _ = fmt.Fprintf(stdin, "QUIT\n")
+		_, _ = fmt.Println("QUIT")
 		backToHome()
 	})
 
@@ -97,8 +97,8 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 
 	case "LOOK":
-		fmt.Fprintf(stdin, "LOOK\n")
-		fmt.Println("LOOK")
+		_, _ = fmt.Fprintf(stdin, "LOOK\n")
+		_, _ = fmt.Println("LOOK")
 
 	case "MOVE":
 		commands.Move(stdin, listener, subCommandBox, func() {
@@ -106,8 +106,8 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		})
 
 	case "WHO":
-		fmt.Fprintf(stdin, "WHO\n")
-		fmt.Println("WHO")
+		_, _ = fmt.Fprintf(stdin, "WHO\n")
+		_, _ = fmt.Println("WHO")
 
 	case "SEARCH":
 		commands.Search(stdin, listener, subCommandBox, func() {
@@ -143,8 +143,8 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		})
 
 	case "STATUS":
-		fmt.Fprintf(stdin, "STATUS\n")
-		fmt.Println("STATUS")
+		_, _ = fmt.Fprintf(stdin, "STATUS\n")
+		_, _ = fmt.Println("STATUS")
 
 		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 		// |                                                            Quest                                                                |
@@ -156,16 +156,16 @@ func executeCommand(stdin io.WriteCloser, command string, listener *types.Listen
 		})
 
 	case "QUESTS":
-		fmt.Fprintf(stdin, "QUESTS\n")
-		fmt.Println("QUESTS")
+		_, _ = fmt.Fprintf(stdin, "QUESTS\n")
+		_, _ = fmt.Println("QUESTS")
 
 		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 		// |                                                         Inventory                                                               |
 		// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 
 	case "INVENTORY":
-		fmt.Fprintf(stdin, "INVENTORY\n")
-		fmt.Println("INVENTORY")
+		_, _ = fmt.Fprintf(stdin, "INVENTORY\n")
+		_, _ = fmt.Println("INVENTORY")
 
 	case "USE":
 		commands.Use(stdin, listener, subCommandBox, func() {

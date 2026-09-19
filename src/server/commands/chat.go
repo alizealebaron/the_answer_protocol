@@ -35,32 +35,33 @@ func Chat(args []string, tapManager *models.TapManager, player *models.Player) e
 
 	scope := args[0]
 	message := strings.Join(args[1:], " ")
-	if scope == "GLOBAL" {
-		for _, p := range tapManager.Lst_Player {
-			output := fmt.Sprintf("EVT GLOBAL CHAT %s %s\n", player.Name, message)
-			server_write.ServerWrite(p.Conn, output)
-			server_write.WriteLog(player.Conn, "CHAT", output)
-		}
-	} else if scope == "ROOM" {
-		for _, room := range tapManager.Lst_Room {
-			for _, p := range room.Lst_Player {
-				if p.Id == player.Id {
-					for _, p := range room.Lst_Player {
-						output := fmt.Sprintf("EVT ROOM CHAT %s %s\n", player.Name, message)
-						server_write.ServerWrite(p.Conn, output)
-						server_write.WriteLog(player.Conn, "CHAT", output)
-					}
-				}
-			}
-		}
-	} else if scope == "GROUP" {
-		if player.Group != nil {
-			for _, p := range player.Group.Lst_Player {
-				output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
+	switch scope {
+		case "GLOBAL":
+			for _, p := range tapManager.Lst_Player {
+				output := fmt.Sprintf("EVT GLOBAL CHAT %s %s\n", player.Name, message)
 				server_write.ServerWrite(p.Conn, output)
 				server_write.WriteLog(player.Conn, "CHAT", output)
 			}
-		}
+		case "ROOM":
+			for _, room := range tapManager.Lst_Room {
+				for _, p := range room.Lst_Player {
+					if p.Id == player.Id {
+						for _, p := range room.Lst_Player {
+							output := fmt.Sprintf("EVT ROOM CHAT %s %s\n", player.Name, message)
+							server_write.ServerWrite(p.Conn, output)
+							server_write.WriteLog(player.Conn, "CHAT", output)
+						}
+					}
+				}
+			}
+		case "GROUP":
+			if player.Group != nil {
+				for _, p := range player.Group.Lst_Player {
+					output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
+					server_write.ServerWrite(p.Conn, output)
+					server_write.WriteLog(player.Conn, "CHAT", output)
+				}
+			}
 	}
 	return nil
 }

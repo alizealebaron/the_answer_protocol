@@ -44,6 +44,9 @@ func Use(args []string, tapManager *models.TapManager, player *models.Player) er
 
 	// === Vérification de la présence de l'item dans l'inventaire === //
 	id, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
 
 	item, err := player.GetItem(id)
 	if err != nil {
@@ -55,13 +58,14 @@ func Use(args []string, tapManager *models.TapManager, player *models.Player) er
 	edible, ok := (*item).(models.Edible)
 	if ok {
 		if edible.Effect == "HEAL" {
-			player.AddLifePoint(edible.Value)
+			_ = player.AddLifePoint(edible.Value)
 		}
 		if edible.Effect == "DAMAGE" {
-			player.AddLifePoint(-edible.Value)
+			_ = player.AddLifePoint(-edible.Value)
 		}
 
-		player.RemoveItemToPlayerWQuantity(edible.Id, 1)
+		_, _ = player.RemoveItemToPlayerWQuantity(edible.Id, 1)
+	
 		// === Envoie des messages au client et dans les logs === //
 
 		str_ret := fmt.Sprintf("OK {\"used\": \"%s\", \"effect\": \"%s\", \"value\": %d}\n", edible.Name, edible.Effect, edible.Value)

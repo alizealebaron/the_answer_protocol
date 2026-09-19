@@ -20,6 +20,7 @@ import (
     "os"
     "net"
     "fmt"
+    "log"
     "time"
     "strings"
 	"the_answer_protocol/src/utils"
@@ -41,8 +42,13 @@ func CreateLogFolder() {
         utils.ExitError("OPENFILE", err)
     }
 
-    _, err = file.WriteString("")
-    defer file.Close()
+    _, _ = file.WriteString("")
+
+    defer func() {
+		if err := file.Close(); err != nil {
+			log.Printf("Erreur lors de la création du fichier de log")
+		}
+	}()
 }
 
 func WriteLog(conn net.Conn, level string, texte string) {
@@ -55,7 +61,12 @@ func WriteLog(conn net.Conn, level string, texte string) {
     if err != nil {
         utils.ExitError("OPENFILE", err)
     }
-    defer file.Close()
+
+    defer func() {
+		if err := file.Close(); err != nil {
+			log.Printf("Erreur lors de la fermeture du fichier")
+		}
+	}()
 
     now := time.Now()
     formattedTime := now.Format("2006-01-02 15:04:05")

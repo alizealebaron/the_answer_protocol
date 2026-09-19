@@ -99,6 +99,7 @@ In addition to the errors already present in the protocol provided by the subjec
 409 FAILED_TO_SUMMON        Monster summoning attempt failed
 
 900 CONNECTION_FAILED       Failed to establish the connection
+900 DECONNECTION_FAILED     Failed to establish the deconnection
 901 SEND_FAILED             Failed to transmit the message
 902 COMMAND_UNKNOWN         Unknown command
 903 COMMAND_EMPTY           No command sent

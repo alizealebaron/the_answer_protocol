@@ -50,7 +50,7 @@ func Move(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 		listener.Unsubscribe(id)
 		showDirections(stdin, listener, subCommandBox, data, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "LOOK\n")
+	_, _ = fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the available directions as buttons, or returns to the previous menu if there are none.
@@ -71,8 +71,8 @@ func showDirections(stdin io.WriteCloser, listener *types.Listener, subCommandBo
 		if id != 0 {
 			dir := direction
 			directionButton := widget.NewButton(types.Translate(dir), func() {
-				fmt.Fprintf(stdin, "MOVE %s\n", dir)
-				fmt.Printf("MOVE %s\n", dir)
+				_, _ = fmt.Fprintf(stdin, "MOVE %s\n", dir)
+				_, _ = fmt.Printf("MOVE %s\n", dir)
 
 				// Send LOOK only after the server has processed MOVE.
 				var listenerId int
@@ -86,7 +86,7 @@ func showDirections(stdin io.WriteCloser, listener *types.Listener, subCommandBo
 						return
 					}
 					if strings.HasPrefix(line, "OK ") || strings.HasPrefix(line, "ERR ") {
-						fmt.Fprintf(stdin, "LOOK\n")
+						_, _ = fmt.Fprintf(stdin, "LOOK\n")
 						moveDone = true
 					}
 				})

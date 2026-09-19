@@ -54,6 +54,9 @@ func Trade(args []string, tapManager *models.TapManager, player *models.Player) 
 
 	// === Récupération de l'inventaire du Trader === //
 	id, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
 
 	inv, err := getTraderInventory(*room, id)
 	if err != nil {
@@ -102,6 +105,9 @@ func Buy(args []string, tapManager *models.TapManager, player *models.Player) er
 
 	// === Récupération de l'inventaire du Trader === //
 	id, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
 
 	inv, err := getTraderInventory(*room, id)
 	if err != nil {
@@ -110,6 +116,9 @@ func Buy(args []string, tapManager *models.TapManager, player *models.Player) er
 
 	// === Vérification de la présence de l'item === //
 	id, err = strconv.Atoi(args[1])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
 
 	item, err := getItemIventaire(inv, id)
 	if err != nil {
@@ -119,6 +128,10 @@ func Buy(args []string, tapManager *models.TapManager, player *models.Player) er
 	// === Vérification que le joueur a l'argent pour === //
 
 	quantite, err := strconv.Atoi(args[2])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
+
 	if quantite <= 0 {
 		return errors.New("ERR 408 INVALID_QUANTITY")
 	}
@@ -160,6 +173,9 @@ func Sell(args []string, tapManager *models.TapManager, player *models.Player) e
 
 	// === Récupération de l'inventaire du Trader === //
 	id, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
 
 	_ , err = getTraderInventory(*room, id)
 	if err != nil {
@@ -168,7 +184,14 @@ func Sell(args []string, tapManager *models.TapManager, player *models.Player) e
 
 	// === On retire la quantité de l'inventaire du Joueur === //
 	id_item, err := strconv.Atoi(args[1])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
+
 	quantite, err := strconv.Atoi(args[2])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
 
 	item, err := tapManager.GetItemById(id_item)
 	if err != nil {

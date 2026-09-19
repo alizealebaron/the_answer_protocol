@@ -21,11 +21,6 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-type chatAction struct {
-	name string
-	run  func()
-}
-
 // Start of CHAT. Displays the chat scopes (GLOBAL, ROOM, GROUP) as a button menu.
 func Chat(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Container, back func()) {
 	subCommandBox.RemoveAll()
@@ -66,8 +61,8 @@ func sendMessage(stdin io.WriteCloser, subCommandBox *fyne.Container, scope stri
 			return
 		}
 
-		fmt.Fprintf(stdin, "CHAT %s %s\n", scope, messageEntry.Text)
-		fmt.Printf("CHAT %s %s\n", scope, messageEntry.Text)
+		_, _ = fmt.Fprintf(stdin, "CHAT %s %s\n", scope, messageEntry.Text)
+		_, _ = fmt.Printf("CHAT %s %s\n", scope, messageEntry.Text)
 		back()
 	})
 

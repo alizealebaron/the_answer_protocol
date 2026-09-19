@@ -31,3 +31,4 @@ sujet.md
 /log/*
 
 main
+.golangci.yml

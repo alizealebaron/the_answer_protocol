@@ -38,7 +38,7 @@ func groupWidget(stdin io.WriteCloser, listener *types.Listener, playerName stri
 
 	listener.Subscribe(func(line string) {
 		if strings.HasPrefix(line, "EVT GROUP") {
-			fmt.Fprintf(stdin, "SECRET\n")
+			_, _ = fmt.Fprintf(stdin, "SECRET\n")
 		}
 	})
 

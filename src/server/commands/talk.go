@@ -42,6 +42,9 @@ func Talk(args []string, tapManager *models.TapManager, player *models.Player) e
 
 	// === Vérification de la présence du NPC dans la room === //
 	id, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.New("904 WRONG_COMMAND_ARG")
+	}
 
 	npc, err := room.GetNpc(id)
 	if err != nil {

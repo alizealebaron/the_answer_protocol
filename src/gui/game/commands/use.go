@@ -50,7 +50,7 @@ func Use(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Con
 		listener.Unsubscribe(id)
 		showUsableObjects(stdin, listener, subCommandBox, data, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "INVENTORY\n")
+	_, _ = fmt.Fprintf(stdin, "INVENTORY\n")
 }
 
 // Displays the usable items as buttons, or returns if there are none.
@@ -64,8 +64,8 @@ func showUsableObjects(stdin io.WriteCloser, listener *types.Listener, subComman
 			itemName := item.Name
 			itemId := item.Id
 			itemButton := widget.NewButton(itemName, func() {
-				fmt.Fprintf(stdin, "USE %d\n", itemId)
-				fmt.Printf("USE %d\n", itemId)
+				_, _ = fmt.Fprintf(stdin, "USE %d\n", itemId)
+				_, _ = fmt.Printf("USE %d\n", itemId)
 				back()
 			})
 			itemButton.Importance = widget.LowImportance

@@ -51,7 +51,7 @@ func Sell(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.Co
 		listener.Unsubscribe(id)
 		showTrader2(stdin, listener, subCommandBox, data, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "LOOK\n")
+	_, _ = fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Displays the traders present in the room as buttons, then retrieves the player's inventory when one is selected.
@@ -77,7 +77,7 @@ func showTrader2(stdin io.WriteCloser, listener *types.Listener, subCommandBox *
 					listener.Unsubscribe(id)
 					showInventory(stdin, listener, subCommandBox, data, traderId, back)
 				})
-				fmt.Fprintf(stdin, "INVENTORY\n")
+				_, _ = fmt.Fprintf(stdin, "INVENTORY\n")
 			})
 			traderButton.Importance = widget.LowImportance
 			subCommandBox.Add(traderButton)
@@ -149,8 +149,8 @@ func showQuantityEntrySell(stdin io.WriteCloser, subCommandBox *fyne.Container, 
 			return
 		}
 
-		fmt.Fprintf(stdin, "SELL %d %d %d\n", traderId, itemId, quantity)
-		fmt.Printf("SELL %d %d %d\n", traderId, itemId, quantity)
+		_, _ = fmt.Fprintf(stdin, "SELL %d %d %d\n", traderId, itemId, quantity)
+		_, _ = fmt.Printf("SELL %d %d %d\n", traderId, itemId, quantity)
 		back()
 	})
 

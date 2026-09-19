@@ -41,8 +41,8 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 
 	actions := []groupAction{
 		{"CREATE", func() {
-			fmt.Fprintf(stdin, "GROUP CREATE\n")
-			fmt.Printf("GROUP CREATE\n")
+			_, _ = fmt.Fprintf(stdin, "GROUP CREATE\n")
+			_, _ = fmt.Printf("GROUP CREATE\n")
 			refreshGroupAfterReply(stdin, listener, "OK group=")
 			wrappedBack()
 		}},
@@ -53,8 +53,8 @@ func Group(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyne.C
 			showJoinForm(stdin, listener, subCommandBox, wrappedBack)
 		}},
 		{"LEAVE", func() {
-			fmt.Fprintf(stdin, "GROUP LEAVE\n")
-			fmt.Printf("GROUP LEAVE\n")
+			_, _ = fmt.Fprintf(stdin, "GROUP LEAVE\n")
+			_, _ = fmt.Printf("GROUP LEAVE\n")
 			refreshGroupAfterReply(stdin, listener, "OK")
 			wrappedBack()
 		}},
@@ -90,7 +90,7 @@ func showPlayersToInvite(stdin io.WriteCloser, listener *types.Listener, subComm
 
 		showInvitablePlayers(stdin, listener, subCommandBox, data, playerName, back)
 	})
-	fmt.Fprintf(stdin, "SECRET\n")
+	_, _ = fmt.Fprintf(stdin, "SECRET\n")
 
 }
 
@@ -107,8 +107,8 @@ func showInvitablePlayers(stdin io.WriteCloser, listener *types.Listener, subCom
 			continue
 		}
 		playerButton := widget.NewButton(otherPlayerName, func() {
-			fmt.Fprintf(stdin, "GROUP INVITE %s\n", otherPlayerName)
-			fmt.Printf("GROUP INVITE %s\n", otherPlayerName)
+			_, _ = fmt.Fprintf(stdin, "GROUP INVITE %s\n", otherPlayerName)
+			_, _ = fmt.Printf("GROUP INVITE %s\n", otherPlayerName)
 			refreshGroupAfterReply(stdin, listener, "OK")
 			back()
 		})
@@ -136,8 +136,8 @@ func showJoinForm(stdin io.WriteCloser, listener *types.Listener, subCommandBox 
 		if groupID == "" {
 			return
 		}
-		fmt.Fprintf(stdin, "GROUP JOIN %s\n", groupID)
-		fmt.Printf("GROUP JOIN %s\n", groupID)
+		_, _ = fmt.Fprintf(stdin, "GROUP JOIN %s\n", groupID)
+		_, _ = fmt.Printf("GROUP JOIN %s\n", groupID)
 		refreshGroupAfterReply(stdin, listener, "OK group=")
 		back()
 	})
@@ -159,7 +159,7 @@ func refreshGroupAfterReply(stdin io.WriteCloser, listener *types.Listener, pref
 		for _, prefix := range prefixes {
 			if strings.HasPrefix(line, prefix) {
 				listener.Unsubscribe(id)
-				fmt.Fprintf(stdin, "SECRET\n")
+				_, _ = fmt.Fprintf(stdin, "SECRET\n")
 				return
 			}
 		}

@@ -56,7 +56,7 @@ func Gambling(stdin io.WriteCloser, listener *types.Listener, subCommandBox *fyn
 		}
 		askCoinInventory(stdin, listener, subCommandBox, wrappedBack)
 	})
-	fmt.Fprintf(stdin, "LOOK\n")
+	_, _ = fmt.Fprintf(stdin, "LOOK\n")
 }
 
 // Retrieves the player's inventory to look for the gambling coins they own.
@@ -76,7 +76,7 @@ func askCoinInventory(stdin io.WriteCloser, listener *types.Listener, subCommand
 		listener.Unsubscribe(id)
 		showCoinSelection(stdin, listener, subCommandBox, data, back)
 	})
-	fmt.Fprintf(stdin, "INVENTORY\n")
+	_, _ = fmt.Fprintf(stdin, "INVENTORY\n")
 }
 
 // Asks how many coins to bet, validates the amount and sends the GAMBLING command.
@@ -118,8 +118,8 @@ func showCoinSelection(stdin io.WriteCloser, listener *types.Listener, subComman
 			return
 		}
 
-		fmt.Fprintf(stdin, "GAMBLING %d\n", quantityToGamble)
-		fmt.Printf("GAMBLING %d\n", quantityToGamble)
+		_, _ = fmt.Fprintf(stdin, "GAMBLING %d\n", quantityToGamble)
+		_, _ = fmt.Printf("GAMBLING %d\n", quantityToGamble)
 		back()
 	})
 

@@ -254,13 +254,6 @@ func computeMapBounds(rooms []types.RoomInfo) {
 	boundsComputed = true
 }
 
-// Returns the map limits.
-func getMapBounds() (int, int, int, int) {
-	boundsMutex.RLock()
-	defer boundsMutex.RUnlock()
-	return minX, maxX, minY, maxY
-}
-
 // Tells if the map limits are known, so the widget knows if it can draw.
 func areBoundsComputed() bool {
 	boundsMutex.RLock()

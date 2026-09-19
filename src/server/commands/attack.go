@@ -54,7 +54,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 		if err != nil {
 			return errors.New("ERR 404 WEAPON_NOT_FOUND")
 		}
-		for i, _ := range player.Inventory {
+		for i := range player.Inventory {
 			if i.GetId() == id {
 				weapon, err := i.(models.Weapon)
 				if !err {
@@ -87,7 +87,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	} 
 
 	// si on ne trouve pas la cible on renvoie une erreur \\
-	if (target_exist == false) {
+	if !target_exist {
 		return errors.New("ERR 404 TARGET_NOT_FOUND")
 	}
 
@@ -119,7 +119,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	} else {
 		status = "dead"
 		// si la cible est morte on la retire de l'arene et on drop son loot au sol
-		p_room.RemoveMonsterToRoom(*target)
+		_, _ = p_room.RemoveMonsterToRoom(*target)
 		quantity := rand.IntN(target.QuantityMax - target.QuantityMin) + target.QuantityMax
 		for i := 1; i <= quantity; i++ {
 			p_room.AddItemToRoom(target.Loot)
@@ -139,23 +139,12 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 	// la cible attack le joueur
 
 	if player.Group != nil {
-		var available_player []*models.Player 
-		
-		for _, p := range player.Group.Lst_Player {
-			nt_room, err := tapManager.FindPlayerRoom(p.Id)
-			if err == nil {
-				return err
-			}
-			if nt_room == p_room {
-				available_player = append(available_player, p)
-			}
-		}
 		index := rand.IntN(len(player.Group.Lst_Player))
 		new_target = player.Group.Lst_Player[index]
 	} else {
 		new_target = player
 	}
-	
+
 	attack_dice = rand.IntN(20 - 1) + 1
 	if attack_dice > new_target.Defense {
 		if target.Attack == 0 {
@@ -169,7 +158,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 				damage = 3
 			}
 		}
-		new_target.AddLifePoint(-damage)
+		_ = new_target.AddLifePoint(-damage)
 	}
 
 	// on ecris la deuxieme moitier du message
@@ -188,7 +177,7 @@ func Attack(args []string, tapManager *models.TapManager, player *models.Player)
 
 	// on verfie si le joueur est mort (Je le mets ici pour que le message de changement de room soit dans le bon ordre ~Alizéa)
 	if new_target.Status == "dead" {
-		new_target.PlayerDeath(tapManager)
+		_ = new_target.PlayerDeath(tapManager)
 		server_write.WriteLog(player.Conn, "WORLD", player.Name + " was obliterated by a \""+ target.Name +"\" in \""+ p_room.Name +"\"\n")
 	}
 
