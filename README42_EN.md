@@ -143,6 +143,10 @@ The monster counter-attacks immediately after the player's attack if the monster
 
 When a monster appears in a room after being summoned, any player present is able to attack it. Once the monster is dead, the items it had drop to the ground in the room and the players present can use `TAKE` to pick them up.
 
+### Group Combat
+
+Since battles can take place with any other player currently in the room, We’ve chosen to implement group combat so that if one player strikes a monster, one of the other players in the group will take a counterattack. The process is random but allows for group combat and distributes damage among different members. This choice seemed the most logical to us given our combat system, which is open to all players on the server.
+
 ### Related commands
 
 The system includes the following commands:

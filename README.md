@@ -169,6 +169,10 @@ Le monstre contre-attaque immédiatement après l’attaque du joueur si le mons
 
 Lorsqu'un monstre apparaît dans une salle après avoir été invoqué, n'importe quel joueur présent est en capacité de pour l'attaquer. Une fois le monstre mort, les objets qu'il avait tombe alors au sol dans la salle et les joueurs présents peuvent utiliser `TAKE` pour les récupérer. 
 
+### Combat en groupe
+
+Étant donné que les combats peuvent se faire avec n'importe quel autre joueur actuellement dans la room. Nous avons choisi d'implémenter les combats de groupe de façon à ce que si un joueur frappe un monstre, un des joueurs du groupe se prendra une attaque en retour. Le processus est aléatoire mais permet d'intégrer les combats en groupe et de répartir les dégats entre différents membres. Ce choix nous semblait le plus logique vis à vis de notre système de combat ouvert à tous les joueurs du serveur.
+
 ### Commandes associées
 
 Le système comporte les commandes suivantes :

@@ -32,7 +32,7 @@ run-server: build
 run-client-gui: build
 	./main gui
 
-run-cli:
+run-client:
 	nc $(IP) 8090
 
 clean:
@@ -43,4 +43,4 @@ lint:
 	@which $(LINTER) >/dev/null 2>&1 || go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
 	$(LINTER) run ./...
 
-.PHONY: build run-server run-cli run-client-gui lint
+.PHONY: build run-server run-client run-client-gui lint
