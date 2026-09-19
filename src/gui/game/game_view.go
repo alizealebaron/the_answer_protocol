@@ -80,6 +80,9 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 	fmt.Fprintf(stdin, "SECRET\n")
 	subscribeOnce(listener, "OK SECRET ", func() {
 		fmt.Fprintf(stdin, "LOOK\n")
+		subscribeOnce(listener, "OK {\"id\":", func() {
+			fmt.Fprintf(stdin, "WHO\n")
+		})
 	})
 
 	commandBox := commandWidget(stdin, listener, playerName, backToHome)
@@ -89,7 +92,7 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 	mapBox := MapWidget()
 
 	whathappened := goingOnWidget(listener)
-	playersLabel := playerCountLabel(listener)
+	playersLabel := playerCountLabel(listener, stdin, playerName)
 	topleft := newRatioSplit(0.83, false, gap, whathappened, playersLabel)
 
 	groupBox := groupWidget(stdin, listener, playerName)

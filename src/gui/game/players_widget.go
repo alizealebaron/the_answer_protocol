@@ -15,6 +15,8 @@ package game
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"strconv"
 	"strings"
 
 	"fyne.io/fyne/v2"
@@ -25,12 +27,15 @@ import (
 )
 
 // Shows the number of players in the room and on the server.
-func playerCountLabel(listener *types.Listener) *fyne.Container {
+func playerCountLabel(listener *types.Listener, stdin io.WriteCloser, playerName string) *fyne.Container {
 	var lenRoom int   // Players in the current room
 	var lenServer int // Players on the server
 	var firstWho bool // True once a WHO reply has been received
 
-	label := widget.NewLabel(types.Translate("Use the \u2018WHO\u2019 command to view information about players number."))
+	label := widget.NewLabel(fmt.Sprintf(types.Translate("Players in room: %d\nPlayers on server: %d"), lenRoom, lenServer))
+	lookupPrefixes := []string{"OK { \"room\":"}
+	types.Mute(lookupPrefixes...)
+
 	listener.Subscribe(func(line string) {
 		// The WHO reply gives the starting room and server counts
 		if strings.HasPrefix(line, "OK { \"room\":") {
@@ -42,7 +47,6 @@ func playerCountLabel(listener *types.Listener) *fyne.Container {
 			}
 			lenRoom = len(data.RoomInfo)
 			lenServer = data.ServerInfo
-			fmt.Println(line)
 
 			if !firstWho {
 				firstWho = true
@@ -50,11 +54,20 @@ func playerCountLabel(listener *types.Listener) *fyne.Container {
 		}
 
 		if firstWho {
-			// A presence event changes the room count without asking the server
-			if strings.HasPrefix(line, "EVT ROOM PRESENCE ENTER") {
+			if strings.HasPrefix(line, "EVT ROOM PRESENCE ENTER ") {
+				if strings.TrimPrefix(line, "EVT ROOM PRESENCE ENTER ") == playerName {
+					fmt.Fprintf(stdin, "WHO\n")
+					return
+				}
 				lenRoom += 1
-			} else if strings.HasPrefix(line, "EVT ROOM PRESENCE LEAVE") {
+			} else if strings.HasPrefix(line, "EVT ROOM PRESENCE LEAVE ") {
+				if strings.TrimPrefix(line, "EVT ROOM PRESENCE LEAVE ") == playerName {
+					fmt.Fprintf(stdin, "WHO\n")
+					return
+				}
 				lenRoom -= 1
+			} else if strings.HasPrefix(line, "EVT STATS players=") {
+				lenServer, _ = strconv.Atoi(strings.TrimPrefix(line, "EVT STATS players="))
 			}
 
 			label.SetText(fmt.Sprintf(types.Translate("Players in room: %d\nPlayers on server: %d"), lenRoom, lenServer))

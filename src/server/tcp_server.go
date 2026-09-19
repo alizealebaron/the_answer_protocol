@@ -17,14 +17,14 @@
 package server
 
 import (
+	"bufio"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net"
-	"bufio"
-	"errors"
 	"strconv"
 	"strings"
-	"encoding/json"
 	"the_answer_protocol/src/models"
 	"the_answer_protocol/src/server/commands"
 	"the_answer_protocol/src/server/server_write"
@@ -119,9 +119,9 @@ func handleConnection(conn net.Conn) {
 
 	// === Gestion des demandes de l'utilisateur === //
 	is_connected := false
+	reader := bufio.NewReader(conn)
 	for {
 		// Récupération des commandes envoyées //
-		reader := bufio.NewReader(conn)
 		line, err := reader.ReadString('\n')
 		if err != nil {
 			server_write.WriteLog(conn, "ERROR", "Read error: "+err.Error())
@@ -171,7 +171,7 @@ func handleConnection(conn net.Conn) {
 					server_write.ServerWrite(conn, err.Error())
 					return
 				}
-				server_write.ServerWrite(conn,"OK SECRET " + string(output) + "\n")
+				server_write.ServerWrite(conn, "OK SECRET "+string(output)+"\n")
 			} else {
 				// Ecriture de la commande dans les logs
 				server_write.WriteLog(conn, "COMMAND", self_player.Name+" use "+line)
