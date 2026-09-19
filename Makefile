@@ -6,7 +6,7 @@
 #  By: emarette, rruiz, alebaron                 +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/14 16:53:12 by alebaron        #+#    #+#               #
-#  Updated: 2026/09/14 16:53:14 by alebaron        ###   ########.fr        #
+#  Updated: 2026/09/19 15:49:45 by rruiz           ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -14,7 +14,7 @@
 #                                 Variables                                 #
 # ------------------------------------------------------------------------- #
 
-IP ?=
+IP ?=127.0.0.1
 GOPATH := $(shell go env GOPATH)
 PATH := $(GOPATH)/bin:$(PATH)
 LINTER := $(GOPATH)/bin/golangci-lint
@@ -32,8 +32,8 @@ run-server: build
 run-client-gui: build
 	./main gui
 
-run-cli:
-	nc $(IP) 8090
+run-client:
+	./main cli $(IP)
 
 clean:
 	rm -rf log

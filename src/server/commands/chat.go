@@ -6,7 +6,7 @@
 /* By: emarette, rruiz, alebaron                 +#+  +:+       +#+        */
 /*                                             +#+#+#+#+#+   +#+           */
 /* Created: 2026/08/25 22:16:01 by emarette        #+#    #+#              */
-/* Updated: 2026/09/15 14:40:47 by rruiz           ###   ########.fr       */
+/* Updated: 2026/09/19 15:49:10 by rruiz           ###   ########.fr       */
 /*                                                                         */
 /* *********************************************************************** */
 
@@ -29,39 +29,39 @@ import (
 /* +---------------------------------------------------------------------+ */
 
 func Chat(args []string, tapManager *models.TapManager, player *models.Player) error {
-	if len(args) <= 2 {
+	if len(args) < 2 {
 		return errors.New("ERR 904 WRONG_COMMAND_ARG")
 	}
 
 	scope := args[0]
 	message := strings.Join(args[1:], " ")
 	switch scope {
-		case "GLOBAL":
-			for _, p := range tapManager.Lst_Player {
-				output := fmt.Sprintf("EVT GLOBAL CHAT %s %s\n", player.Name, message)
-				server_write.ServerWrite(p.Conn, output)
-				server_write.WriteLog(player.Conn, "CHAT", output)
-			}
-		case "ROOM":
-			for _, room := range tapManager.Lst_Room {
-				for _, p := range room.Lst_Player {
-					if p.Id == player.Id {
-						for _, p := range room.Lst_Player {
-							output := fmt.Sprintf("EVT ROOM CHAT %s %s\n", player.Name, message)
-							server_write.ServerWrite(p.Conn, output)
-							server_write.WriteLog(player.Conn, "CHAT", output)
-						}
+	case "GLOBAL":
+		for _, p := range tapManager.Lst_Player {
+			output := fmt.Sprintf("EVT GLOBAL CHAT %s %s\n", player.Name, message)
+			server_write.ServerWrite(p.Conn, output)
+			server_write.WriteLog(player.Conn, "CHAT", output)
+		}
+	case "ROOM":
+		for _, room := range tapManager.Lst_Room {
+			for _, p := range room.Lst_Player {
+				if p.Id == player.Id {
+					for _, p := range room.Lst_Player {
+						output := fmt.Sprintf("EVT ROOM CHAT %s %s\n", player.Name, message)
+						server_write.ServerWrite(p.Conn, output)
+						server_write.WriteLog(player.Conn, "CHAT", output)
 					}
 				}
 			}
-		case "GROUP":
-			if player.Group != nil {
-				for _, p := range player.Group.Lst_Player {
-					output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
-					server_write.ServerWrite(p.Conn, output)
-					server_write.WriteLog(player.Conn, "CHAT", output)
-				}
+		}
+	case "GROUP":
+		if player.Group != nil {
+			for _, p := range player.Group.Lst_Player {
+				output := fmt.Sprintf("EVT GROUP CHAT %s %s\n", player.Name, message)
+				server_write.ServerWrite(p.Conn, output)
+				server_write.WriteLog(player.Conn, "CHAT", output)
 			}
+		}
 	}
 	return nil
 }
