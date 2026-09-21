@@ -69,6 +69,8 @@ func newRatioSplit(ratio float32, horizontal bool, gap float32, a, b fyne.Canvas
 func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener *types.Listener, playerName string, language string, backToHome func()) fyne.CanvasObject {
 	const gap = float32(8)
 
+	resetState()
+
 	types.SetLanguage(language)
 
 	// Registers the listeners that feed the widgets with the server replies
@@ -79,9 +81,9 @@ func GameView(window fyne.Window, size fyne.Size, stdin io.WriteCloser, listener
 	// First SECRET to get the whole game, then LOOK to know where the player is
 	_, _ = fmt.Fprintf(stdin, "SECRET\n")
 	subscribeOnce(listener, "OK SECRET ", func() {
-		_ , _ = fmt.Fprintf(stdin, "LOOK\n")
+		_, _ = fmt.Fprintf(stdin, "LOOK\n")
 		subscribeOnce(listener, "OK {\"id\":", func() {
-			_ , _ = fmt.Fprintf(stdin, "WHO\n")
+			_, _ = fmt.Fprintf(stdin, "WHO\n")
 		})
 	})
 
