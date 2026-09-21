@@ -19,6 +19,7 @@ import (
 	"os/exec"
 	"regexp"
 	"strings"
+	"sync"
 	"the_answer_protocol/src/gui/game"
 	"the_answer_protocol/src/gui/game/types"
 
@@ -27,6 +28,11 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 )
+
+// Variables to check the status of the netcat connection.
+var connMu sync.Mutex
+var currentCmd *exec.Cmd
+var currentStdin io.WriteCloser
 
 func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 	// Definition of widget text to change based on the language selection button.
@@ -130,6 +136,12 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 			}
 			fmt.Println(strings.Join(cmd.Args, " "))
 
+			// Keep the reference to the connection so you can close it when you're done.
+			connMu.Lock()
+			currentCmd = cmd
+			currentStdin = stdin
+			connMu.Unlock()
+
 			// Retrieving the value of langSelect, if it nil, the language is english.
 			var language string
 			if langSelect.Selected == "Français" {
@@ -184,12 +196,33 @@ func HomeView(window fyne.Window, size fyne.Size) fyne.CanvasObject {
 	quitButton := quitButton(window, width, height)
 	quit := container.NewWithoutLayout(quitButton)
 
+	// When the window closes, kill netcat.
+	window.SetCloseIntercept(func() {
+		quitConnection()
+		window.Close()
+	})
+
 	// Full screen background image
 	background := canvas.NewImageFromFile("assets/opening_screen.png")
 	background.FillMode = canvas.ImageFillStretch
 
 	// return the container at the good place.
 	return container.NewStack(background, container.NewBorder(nil, big, nil, nil), err, quit)
+}
+
+// Préviens le serveur puis tue le netcat pour couper la connexion.
+func quitConnection() {
+	connMu.Lock()
+	defer connMu.Unlock()
+
+	if currentStdin != nil {
+		_, _ = fmt.Fprintf(currentStdin, "QUIT\n")
+	}
+	if currentCmd != nil && currentCmd.Process != nil {
+		_ = currentCmd.Process.Kill()
+	}
+	currentCmd = nil
+	currentStdin = nil
 }
 
 func quitButton(window fyne.Window, width float32, height float32) *widget.Button {
