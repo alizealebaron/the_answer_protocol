@@ -63,7 +63,7 @@ func currentRoomName() string {
 // On each LOOK reply, updates the label and the room image.
 func subscribeRoomChange(listener *types.Listener, label *widget.Label, image *canvas.Image) {
 	listener.Subscribe(func(line string) {
-		if !strings.HasPrefix(line, "OK {\"id\":") {
+		if !isLookReply(line) {
 			return
 		}
 

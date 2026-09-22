@@ -204,9 +204,10 @@ func getKnownRooms() map[int]bool {
 // Listens to the LOOK replies to update the player position.
 func subscribeMapData(listener *types.Listener) {
 	listener.Subscribe(func(line string) {
-		if !strings.HasPrefix(line, "OK {\"id\":") {
+		if !isLookReply(line) {
 			return
 		}
+
 		raw := strings.TrimPrefix(line, "OK ")
 		var data types.LookInfo
 		if err := json.Unmarshal([]byte(raw), &data); err != nil {
@@ -343,4 +344,38 @@ func getPlayerGroup(playerName string) (types.GroupInfo, bool) {
 		}
 	}
 	return types.GroupInfo{}, false
+}
+
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+// |                                                              Utils                                                              |
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
+// Forgets the previous session.
+func resetState() {
+	logsMutex.Lock()
+	logMessages = nil
+	globalMessages = nil
+	roomMessages = nil
+	groupMessages = nil
+	logsMutex.Unlock()
+
+	mapMutex.Lock()
+	currentRoomId = 0
+	visitedRooms = make(map[int]bool)
+	knownRooms = make(map[int]bool)
+	mapMutex.Unlock()
+
+	boundsMutex.Lock()
+	boundsComputed = false
+	boundsMutex.Unlock()
+
+	gameDataMutex.Lock()
+	gameData = types.Secret{}
+	gameDataMutex.Unlock()
+}
+
+// True only if line is LOOK reply.
+func isLookReply(line string) bool {
+	return strings.HasPrefix(line, "OK {\"id\":") &&
+		strings.Contains(line, "\"neighborRoom\"")
 }
