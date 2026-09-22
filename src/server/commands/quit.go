@@ -33,10 +33,12 @@ func Quit(tapManager *models.TapManager, player models.Player) {
 
 	// === Suppression du joueur de partout === //
 	room.RemovePlayerToRoom(player)
-	player.Group.RemovePlayerFromGroup(player)
-	// Envoie de l'évent à tous les joueurs
-	for _, player1 := range player.Group.Lst_Player {
-		server_write.ServerWrite(player1.Conn, "EVT GROUP LEAVE " + player.Name + "\n")
+	if (player.Group) != nil {
+		player.Group.RemovePlayerFromGroup(player)
+		// Envoie de l'évent à tous les joueurs
+		for _, player1 := range player.Group.Lst_Player {
+			server_write.ServerWrite(player1.Conn, "EVT GROUP LEAVE " + player.Name + "\n")
+		}
 	}
 	tapManager.RemovePlayer(player.Id)
 	server_write.ServerWrite(player.Conn, "OK bye\n")

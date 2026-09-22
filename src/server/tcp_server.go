@@ -118,7 +118,7 @@ func handleConnection(conn net.Conn) {
 
 	defer func() {
 		if err := conn.Close(); err != nil {
-			log.Printf("ERR 900 DECONNECTION_FAILED")
+			return
 		}
 	}()
 

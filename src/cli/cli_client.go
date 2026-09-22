@@ -19,7 +19,6 @@ package cli
 import (
 	"fmt"
 	"io"
-	"log"
 	"net"
 	"os"
 )
@@ -39,7 +38,7 @@ func Client(adress string) {
 
 	defer func() {
 		if err := conn.Close(); err != nil {
-			log.Printf("ERR 900 DECONNECTION_FAILED")
+			return
 		}
 	}()
 
